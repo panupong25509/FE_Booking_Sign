@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { Link } from "react-router-dom";
-
+import sweetalert from 'sweetalert2'
 
 class Booking extends React.Component {
     constructor(props) {
@@ -19,11 +19,16 @@ class Booking extends React.Component {
         }
     }   
     componentDidMount() {
-        axios.get('http://127.0.0.1:3000/allsign').then(signs => {
+        this.fetchSigns()
+    }
+    fetchSigns = async () => {
+        await axios.get('http://127.0.0.1:3000/allsign').then(signs => {
             this.setState({
                 signs : signs.data,
                 signname : signs.data[0].name
             })
+        }).catch(err => {
+            window.location.href = `/error/${err.response.status}`;
         })
     }
     handleChange(event, state) {
@@ -44,12 +49,23 @@ class Booking extends React.Component {
             headers: { 
               "Content-Type": "application/x-www-form-urlencoded",
             }
-          }).then(error =>{
-              if(error.data.error !== undefined) {
-                    window.alert(error.data.error)
-              }else{
-                    window.alert("Success")
-              }
+          }).then(status =>{
+            sweetalert.fire({
+                // position: 'top-end',
+                type: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.href = '/'
+            })
+          }).catch(err => {
+            sweetalert.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href>Why do I have this issue?</a>'
+              })
           })
         }
     }
@@ -57,14 +73,12 @@ class Booking extends React.Component {
         if(this.state.applicant !== "" && this.state.organization !== "" && this.state.signname !== ""){
             if(this.state.firstdate <= this.state.lastdate){
                 return true
-            }else{
+            }
                 window.alert("คุณเลือกวันที่ผิด")
                 return false
-            }
-        }else {
+        }
             window.alert("คุณกรอกข้อมูลไม่ครบ")
             return false
-        }
         
     }
     render() {

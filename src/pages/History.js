@@ -10,13 +10,14 @@ class Home extends React.Component {
             history : []
         }
     }
-    componentDidMount() {
+    componentWillMount() {
+        this.fetchHistory()
+    }
+    fetchHistory = async () => {
         axios.get('http://127.0.0.1:3000/allbooking').then(history => {
             this.setState({history:history.data})
         }).catch(err => {
-            if(err.response.status === 500) {
-                window.location.href = 'http://www.google.com';
-            }
+            window.location.href = `/error/${err.response.status}`;
         })
     }
     render() {
