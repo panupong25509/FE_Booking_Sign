@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from 'axios'
 import moment from 'moment'
 
@@ -11,9 +11,12 @@ class Home extends React.Component {
         }
     }
     componentDidMount() {
-        axios.get('http://127.0.0.1:3000/allbooking').then(his => {
-            this.setState({history:his.data})
-            console.log(his.data)
+        axios.get('http://127.0.0.1:3000/allbooking').then(history => {
+            this.setState({history:history.data})
+        }).catch(err => {
+            if(err.response.status === 500) {
+                window.location.href = 'http://www.google.com';
+            }
         })
     }
     render() {
@@ -54,6 +57,9 @@ class Home extends React.Component {
                     <Link to="/">
                         <button type="button" class="btn btn-warning">กลับ</button>
                     </Link>
+                    {/* <Link to="/"> */}
+                        <button type="button" class="btn btn-warning" onClick={this.handlePage}>กลับ</button>
+                    {/* </Link> */}
                 </div>
             </div>
         )

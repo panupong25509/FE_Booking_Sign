@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import {test,test2} from '../components/test'
 
 class Home extends React.Component {
     render() {
@@ -13,6 +14,10 @@ class Home extends React.Component {
                     <Link to="/History">
                         <button type="button" class="btn btn-info">History</button>
                     </Link>
+                    {/* <Link to="/History"> */}
+                        <button type="button" class="btn btn-info" onClick={test}>History</button>
+                        <button type="button" class="btn btn-info" onClick={test2}>History</button>
+                    {/* </Link> */}
                 </div>
             </div>
         )
