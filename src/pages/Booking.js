@@ -54,7 +54,7 @@ class Booking extends React.Component {
         }
     }
     checkForm() {
-        if(this.state.applicant != "" && this.state.organization != "" && this.state.signname!=""){
+        if(this.state.applicant !== "" && this.state.organization !== "" && this.state.signname !== ""){
             if(this.state.firstdate <= this.state.lastdate){
                 return true
             }else{
