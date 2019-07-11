@@ -1,0 +1,31 @@
+import React from 'react'
+import { Link } from "react-router-dom";
+
+class PageError extends React.Component {
+    state = {
+        status : 404
+    }
+    componentDidMount(){
+        const { status } = this.props.match.params
+        let error = 0
+        if (status == 500){
+            error = 500
+        }else{
+            error = 404
+        }
+        this.setState({
+            status : error
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>ERROR</h1>
+                <h2>{this.state.status}</h2>
+            </div>
+        )
+    }
+}
+
+export default PageError
