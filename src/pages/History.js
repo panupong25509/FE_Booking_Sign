@@ -42,8 +42,8 @@ class Home extends React.Component {
       <td>{booking.sign.location}</td>
       <td>{booking.applicant}</td>
       <td>{booking.organization}</td>
-      <td>{moment(booking.first_date).format('YYY-MM-DD')}</td>
-      <td>{moment(booking.last_date).format('YYY-MM-DD')}</td>
+      <td>{moment(booking.first_date).format('YYYY-MM-DD')}</td>
+      <td>{moment(booking.last_date).format('YYYY-MM-DD')}</td>
     </tr>
           )
       }))}
