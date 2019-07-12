@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from "react-router-dom";
 
 class PageError extends React.Component {
     state = {
@@ -8,7 +7,7 @@ class PageError extends React.Component {
     componentDidMount(){
         const { status } = this.props.match.params
         let error = 0
-        if (status == 500){
+        if (status === 500){
             error = 500
         }else{
             error = 404

@@ -21,6 +21,9 @@ class Booking extends React.Component {
     componentDidMount() {
         this.fetchSigns()
     }
+    handleChange = (event, state) => {
+        this.setState({[state]: event})
+    }
     fetchSigns = async () => {
         await axios.get('http://127.0.0.1:3000/allsign').then(signs => {
             this.setState({
@@ -31,10 +34,7 @@ class Booking extends React.Component {
             window.location.href = `/error/${err.response.status}`;
         })
     }
-    handleChange(event, state) {
-        this.setState({[state]: event})
-    }
-    handleBooking() {
+    handleBooking = () => {
         var bodyFormData = new FormData();
         bodyFormData.set('applicant', this.state.applicant);
         bodyFormData.append('organization', this.state.organization);
@@ -42,7 +42,24 @@ class Booking extends React.Component {
         bodyFormData.append('firstdate', moment(this.state.firstdate).format('YYYY-MM-DD'));
         bodyFormData.append('lastdate', moment(this.state.lastdate).format('YYYY-MM-DD'));
         if (this.checkForm()) {
-            axios({
+            sweetalert.fire({
+                title: `คุณ ${this.state.applicant} ยืนยันจะจองป้ายตามนี้ใช่ไหม?`,
+                text: `ป้าย ${this.state.signname} วันที่ ${moment(this.state.firstdate).format('YYYY-MM-DD')} ถึง ${moment(this.state.lastdate).format('YYYY-MM-DD')}`,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่ใช่'
+              }).then((result) => {
+                if (result.value) {
+                    this.postBooking(bodyFormData)
+                }
+              })
+        }
+    }
+    postBooking = (bodyFormData) => {
+        axios({
             method: 'post',
             url: 'http://127.0.0.1:3000/addbooking',
             data: bodyFormData,
@@ -50,34 +67,38 @@ class Booking extends React.Component {
               "Content-Type": "application/x-www-form-urlencoded",
             }
           }).then(status =>{
-            sweetalert.fire({
-                // position: 'top-end',
+              let booking = status.data
+              sweetalert.fire({
                 type: 'success',
-                title: 'Your work has been saved',
+                title : `คุณ ${booking.applicant} ได้ทำการจองป้าย ${booking.sign.name}`,
+                text: `ในวันที่ ${moment(booking.first_date).format('YYYY-MM-DD')} ถึง ${moment(booking.last_date).format('YYYY-MM-DD')}`,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 5000
               }).then(() => {
                 window.location.href = '/'
             })
           }).catch(err => {
             sweetalert.fire({
                 type: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href>Why do I have this issue?</a>'
+                title: `${err.response.data}`,
               })
           })
-        }
     }
     checkForm() {
         if(this.state.applicant !== "" && this.state.organization !== "" && this.state.signname !== ""){
             if(this.state.firstdate <= this.state.lastdate){
                 return true
             }
-                window.alert("คุณเลือกวันที่ผิด")
+                sweetalert.fire({
+                type: 'error',
+                title: `คุณเลือกวันที่ไม่ถูกต้อง`,
+              })
                 return false
         }
-            window.alert("คุณกรอกข้อมูลไม่ครบ")
+            sweetalert.fire({
+            type: 'error',
+            title: `คุณกรอกข้อมูลไม่ครบ`,
+          })
             return false
         
     }
@@ -110,7 +131,7 @@ class Booking extends React.Component {
                             onChange={(e) => this.handleChange(e, "lastdate")}
                         />
                     </div>
-                    <button type="button" class="btn btn-success" onClick={() => this.handleBooking()}>ทำการจอง</button>
+                    <button type="button" class="btn btn-success" onClick={this.handleBooking}>ทำการจอง</button>
                 </form>
                 <div>
                     <Link to="/">

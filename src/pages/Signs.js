@@ -6,7 +6,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 const CardSign = styled.div`
-    height: 150px;
+    height: 300px;
 `
 
 class Home extends React.Component {
@@ -38,12 +38,12 @@ class Home extends React.Component {
                         {this.state.signs.map((sign) => {
                             return (
                                 <div className='col-md-3 col-4'>
-                                    <div className='border'>
+                                    <CardSign className='border'>
                                         <p>ชื่อ : {sign.name}</p>
                                         <p>สถานที่ : {sign.location}</p>
                                         <p>ควรจองก่อน : {sign.beforebooking} วัน</p>
                                         <p>จองได้สูงสุด : {sign.limitdate} วัน</p>
-                                    </div>
+                                    </CardSign>
                                 </div>
                             )
                         })}
