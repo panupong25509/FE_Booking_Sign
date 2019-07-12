@@ -41,8 +41,7 @@ class Home extends React.Component {
               "Content-Type": "application/x-www-form-urlencoded",
             }
           }).catch(err => {
-              console.log(err.response.status)
-            // window.location.href = `/error/${err.response.status}`;
+            window.location.href = `/error/${err.response.status}`;
         })
     }
     render() {
@@ -55,7 +54,7 @@ class Home extends React.Component {
                             return (
                                 <div className='col-md-3 col-4'>
                                     <CardSign className='border'>
-                                        <img width='100%' src='/img/test.jpg'/>
+                                        <img width='100%' src={'/img/'+sign.picture}/>
                                         <p>ชื่อ : {sign.name}</p>
                                         <p>สถานที่ : {sign.location}</p>
                                         <p>ควรจองก่อน : {sign.beforebooking} วัน</p>
@@ -72,7 +71,9 @@ class Home extends React.Component {
                     <Link to="/History">
                         <button type="button" class="btn btn-info">History</button>
                     </Link>
-                        <button type="button" class="btn btn-info" onClick={this.postArray}>History</button>
+                    <Link to="/addsign">
+                        <button type="button" class="btn btn-info">Add Sign</button>
+                    </Link>
                 </div>
                 </div>
             </div>
