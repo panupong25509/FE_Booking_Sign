@@ -10,9 +10,10 @@ class PageError extends React.Component {
         let error = 0
         if (status == 500){
             error = 500
-        }else{
-            error = 404
+        }else if (status == 400){
+            error = 400
         }
+        error = 404
         this.setState({
             status : error
         })
