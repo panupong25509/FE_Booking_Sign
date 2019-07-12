@@ -6,6 +6,7 @@ import Booking from './pages/Booking'
 import History from './pages/History'
 import Error from './pages/Error'
 import Signs from './pages/Signs'
+import Addsign from './pages/AddSign'
 
 function AppRouter() {
   return (
@@ -14,6 +15,7 @@ function AppRouter() {
         <Route exact path="/" component={Signs} />
         <Route exact path="/Booking" component={Booking} />
         <Route exact path="/History" component={History} />
+        <Route exact path="/Addsign" component={Addsign} />
         <Route exact path="/error/:status" component={Error} />
         <Route component={Error} />
       </Switch>

@@ -4,6 +4,7 @@ import axios from 'axios'
 // import {test,test2} from '../components/test'
 
 import styled from 'styled-components'
+import { async } from 'q';
 
 const CardSign = styled.div`
     height: 300px;
@@ -29,6 +30,21 @@ class Home extends React.Component {
             window.location.href = `/error/${err.response.status}`;
         })
     }
+    postArray = async () => {
+        var bodyFormData = new FormData();
+        bodyFormData.set('arr', [1,2,3,4,5]);
+        await axios({
+            method: 'post',
+            url: 'http://127.0.0.1:3000/testdate',
+            data: bodyFormData,
+            headers: { 
+              "Content-Type": "application/x-www-form-urlencoded",
+            }
+          }).catch(err => {
+              console.log(err.response.status)
+            // window.location.href = `/error/${err.response.status}`;
+        })
+    }
     render() {
         return (
             <div>
@@ -39,6 +55,7 @@ class Home extends React.Component {
                             return (
                                 <div className='col-md-3 col-4'>
                                     <CardSign className='border'>
+                                        <img width='100%' src='/img/test.jpg'/>
                                         <p>ชื่อ : {sign.name}</p>
                                         <p>สถานที่ : {sign.location}</p>
                                         <p>ควรจองก่อน : {sign.beforebooking} วัน</p>
@@ -55,6 +72,7 @@ class Home extends React.Component {
                     <Link to="/History">
                         <button type="button" class="btn btn-info">History</button>
                     </Link>
+                        <button type="button" class="btn btn-info" onClick={this.postArray}>History</button>
                 </div>
                 </div>
             </div>
