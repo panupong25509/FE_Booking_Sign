@@ -74,10 +74,11 @@ class Booking extends React.Component {
                 text: `ในวันที่ ${moment(booking.first_date).format('YYYY-MM-DD')} ถึง ${moment(booking.last_date).format('YYYY-MM-DD')}`,
                 showConfirmButton: false,
                 timer: 5000
-              }).then(() => {
+              }).then((status) => {
                 window.location.href = '/'
             })
           }).catch(err => {
+              console.log(err)
             sweetalert.fire({
                 type: 'error',
                 title: `${err.response.data}`,
