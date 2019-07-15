@@ -22,9 +22,11 @@ class Home extends React.Component {
     }
     fetchSigns = async () => {
         await axios.get('http://127.0.0.1:3000/allsign').then(signs => {
-            this.setState({
-                signs : signs.data,
-            })
+            if(signs.data.signs != null) {
+                this.setState({
+                    signs : signs.data.signs,
+                })
+            }
             console.log(signs)
         }).catch(err => {
             window.location.href = `/error/${err.response.status}`;
