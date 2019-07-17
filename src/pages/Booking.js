@@ -26,10 +26,12 @@ class Booking extends React.Component {
     }
     fetchSigns = async () => {
         await axios.get('http://127.0.0.1:3000/allsign').then(signs => {
-            this.setState({
-                signs : signs.data,
-                signname : signs.data[0].name
-            })
+            if(signs.data.signs != null) {
+                this.setState({
+                    signs : signs.data.signs,
+                    signname : signs.data.signs[0].name
+                })
+            }
         }).catch(err => {
             window.location.href = `/error/${err.response.status}`;
         })

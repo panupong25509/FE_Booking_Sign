@@ -27,7 +27,6 @@ class Home extends React.Component {
                     signs : signs.data.signs,
                 })
             }
-            console.log(signs)
         }).catch(err => {
             window.location.href = `/error/${err.response.status}`;
         })
