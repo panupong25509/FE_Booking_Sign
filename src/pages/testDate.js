@@ -4,16 +4,14 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import '../css/date-picker.css';
 
-const Days = [
-    {
-        firstdate: "2019-07-20",
-        lastdate: "2019-07-25"
-    },
-    {
-        firstdate: "2019-08-20",
-        lastdate: "2019-08-25"
-    }
+import axios from 'axios'
+import moment from 'moment'
+
+let Arr = [
+    {daysOfWeek: [0, 6]}
 ]
+
+
 export default class Example extends React.Component {
     constructor(props) {
         super(props);
@@ -26,12 +24,19 @@ export default class Example extends React.Component {
           selectedDayTo: undefined,
           isEmptyTo: true,
           isDisabledTo: false,
+          days: [],
+          disabledDaysTo: [
+            {daysOfWeek: [0, 6]}
+          ] 
         };
       }
-    
-      handleDayChangeFrom(selectedDay, modifiers, dayPickerInput) {
+      
+      componentDidMount() {
+        this.testFL()
+      }
+      handleDayChangeFrom = async (selectedDay, modifiers, dayPickerInput) => {
         const input = dayPickerInput.getInput();
-        this.setState({
+        await this.setState({
           selectedDayFrom: selectedDay,
           isEmptyFrom: !input.value.trim(),
           isDisabledFrom: modifiers.disabled === true,
@@ -45,8 +50,25 @@ export default class Example extends React.Component {
           isDisabledTo: modifiers.disabled === true,
         });
       }
-    
-      render() {
+      testFL = async () => {
+         await axios.get('http://127.0.0.1:3000/getbookingdays/13').then((days) => {
+                this.setState({
+                    days: days.data
+                })
+          })
+        await this.state.days.map((day) => {
+            let firstdate = new Date(moment(day.firstdate).format("YYYY-MM-DD"))
+            firstdate = new Date(moment(firstdate.getFullYear()+"-"+(firstdate.getMonth()+1)+"-"+(firstdate.getDate()-1)).format("YYYY-MM-DD"))
+            let lastdate = new Date(moment(day.lastdate).format("YYYY-MM-DD"))
+            lastdate = new Date(moment(lastdate.getFullYear()+"-"+(lastdate.getMonth()+1)+"-"+(lastdate.getDate()+1)).format("YYYY-MM-DD"))
+            this.state.disabledDaysTo.push({
+                after: new Date(firstdate),
+                before: new Date(lastdate),
+            })
+        })  
+        console.log(this.state.disabledDaysTo) 
+    }
+    render() {
         const { selectedDayFrom, isDisabledFrom, isEmptyFrom } = this.state;
         const { selectedDayTo, isDisabledTo, isEmptyTo } = this.state;
         return (
@@ -84,18 +106,7 @@ export default class Example extends React.Component {
               onDayChange={this.handleDayChangeTo}
               dayPickerProps={{
                 selectedDays: selectedDayTo,
-                disabledDays: [
-                  {daysOfWeek: [0, 6]},
-                  {before: selectedDayFrom !== undefined ? selectedDayFrom : new Date()},
-                  Days.map((day) => {
-                      return (
-                          {
-                            after: new Date(day.firstdate),
-                            before: new Date(day.lastdate),
-                          }
-                      )
-                  }),
-                ],
+                disabledDays: this.state.disabledDaysTo
               }}
             />
           </div>
