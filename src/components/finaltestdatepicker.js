@@ -3,14 +3,7 @@ import React from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import '../css/date-picker.css';
-
-import axios from 'axios'
 import moment from 'moment'
-
-let Arr = [
-    {daysOfWeek: [0, 6]}
-]
-
 
 export default class Example extends React.Component {
     constructor(props) {
@@ -24,16 +17,30 @@ export default class Example extends React.Component {
           selectedDayTo: undefined,
           isEmptyTo: true,
           isDisabledTo: false,
-          days: [],
-          disabledDaysTo: [
-            {daysOfWeek: [0, 6]}
-          ] 
+          start: "",
+          daystart: 0,
+          mouthstart: 0,
+          yearstart: 0,
+          end: "",
+          result: [],
+          numresult: 0,
+          day: 0,
         };
       }
-      
-      componentDidMount() {
-        this.testFL()
+
+      calDate = async () => {
+        let tempresult = []
+        if(this.state.start != "" && this.state.end != ""){
+          let current = this.state.start.clone();
+          while (current.day(7 + this.state.day).isBefore(this.state.end)) {
+            tempresult.push(current.clone());
+          }
+        }
+        this.setState({
+          result: tempresult,
+        })
       }
+
       handleDayChangeFrom = async (selectedDay, modifiers, dayPickerInput) => {
         const input = dayPickerInput.getInput();
         await this.setState({
@@ -41,34 +48,52 @@ export default class Example extends React.Component {
           isEmptyFrom: !input.value.trim(),
           isDisabledFrom: modifiers.disabled === true,
         });
+        this.setFormatStart()
+        this.setStart(this.state.daystart, this.state.mouthstart, this.state.yearstart)
+        this.calDate()
       }
-      handleDayChangeTo(selectedDay, modifiers, dayPickerInput) {
+
+      setFormatStart  = async () => {
+        await this.setState({
+          daystart: new Date(this.state.selectedDayFrom).getDate(),
+          mouthstart: new Date(this.state.selectedDayFrom).getMonth(),
+          yearstart: new Date(this.state.selectedDayFrom).getFullYear(),
+        })
+      }
+
+      setStart = async (daystart, mouthstart, yearstart) => {
+        await this.setState({
+          start: moment(`${yearstart}-${mouthstart+1}-${daystart}`)
+        })
+      }
+
+      handleDayChangeTo = async (selectedDay, modifiers, dayPickerInput) => {
         const input = dayPickerInput.getInput();
-        this.setState({
+        await this.setState({
           selectedDayTo: selectedDay,
           isEmptyTo: !input.value.trim(),
           isDisabledTo: modifiers.disabled === true,
         });
+        this.setFormatEnd()
+        this.setEnd(this.state.dayend, this.state.mouthend, this.state.yearend)
+        this.calDate()
       }
-      testFL = async () => {
-         await axios.get('http://127.0.0.1:3000/getbookingdays/13').then((days) => {
-                this.setState({
-                    days: days.data
-                })
-          })
-        await this.state.days.map((day) => {
-            let firstdate = new Date(moment(day.firstdate).format("YYYY-MM-DD"))
-            firstdate = new Date(moment(firstdate.getFullYear()+"-"+(firstdate.getMonth()+1)+"-"+(firstdate.getDate()-1)).format("YYYY-MM-DD"))
-            let lastdate = new Date(moment(day.lastdate).format("YYYY-MM-DD"))
-            lastdate = new Date(moment(lastdate.getFullYear()+"-"+(lastdate.getMonth()+1)+"-"+(lastdate.getDate()+1)).format("YYYY-MM-DD"))
-            this.state.disabledDaysTo.push({
-                after: new Date(firstdate),
-                before: new Date(lastdate),
-            })
-        })  
-        console.log(this.state.disabledDaysTo) 
-    }
-    render() {
+
+      setFormatEnd  = async () => {
+        await this.setState({
+          dayend: new Date(this.state.selectedDayTo).getDate(),
+          mouthend: new Date(this.state.selectedDayTo).getMonth(),
+          yearend: new Date(this.state.selectedDayTo).getFullYear(),
+        })
+      }
+
+      setEnd = async (dayend, mouthend, yearend) => {
+        await this.setState({
+          end: moment(`${yearend}-${mouthend+1}-${dayend}`)
+        })
+      }
+
+      render() {
         const { selectedDayFrom, isDisabledFrom, isEmptyFrom } = this.state;
         const { selectedDayTo, isDisabledTo, isEmptyTo } = this.state;
         return (
@@ -87,7 +112,7 @@ export default class Example extends React.Component {
               dayPickerProps={{
                 selectedDays: selectedDayFrom,
                 disabledDays: [
-                    {before: new Date()},
+                  {before: new Date()},
                   {after: selectedDayTo},
                   {daysOfWeek: [0, 6]}
                 ],
@@ -106,9 +131,21 @@ export default class Example extends React.Component {
               onDayChange={this.handleDayChangeTo}
               dayPickerProps={{
                 selectedDays: selectedDayTo,
-                disabledDays: this.state.disabledDaysTo
+                disabledDays: [
+                  {daysOfWeek: [0, 6]},
+                  {before: selectedDayFrom !== undefined ? selectedDayFrom : new Date()},
+                  Days.map((day) => {
+                      return (
+                          {
+                            after: new Date(day.firstdate),
+                            before: new Date(day.lastdate),
+                          } 
+                      )
+                  }),
+                ],
               }}
             />
+            รวม {this.state.result.length * 2} วันทำการ
           </div>
         );
       }
