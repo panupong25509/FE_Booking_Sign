@@ -1,10 +1,12 @@
 import React from 'react'
 import axios from 'axios';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { Link } from "react-router-dom";
 import sweetalert from 'sweetalert2'
+import Pickdate from '../components/finaltestdatepicker'
+import DatePicker from "react-datepicker";
+
 
 class Booking extends React.Component {
     constructor(props) {
@@ -54,7 +56,10 @@ class Booking extends React.Component {
                 confirmButtonText: 'ใช่',
                 cancelButtonText: 'ไม่ใช่'
               }).then((result) => {
+                console.log(bodyFormData)
+
                 if (result.value) {
+                    // console.log(bodyFormData)
                     this.postBooking(bodyFormData)
                 }
               })
@@ -105,6 +110,19 @@ class Booking extends React.Component {
             return false
         
     }
+    
+    setdayto = async (dayto) => {
+      await this.setState({
+        lastdate : dayto._d
+      })
+    }
+
+    setdayfrom = async (dayfrom) => {
+      await this.setState({
+        firstdate : dayfrom._d
+      })
+    }
+
     render() {
         return (
             <div>
@@ -124,15 +142,7 @@ class Booking extends React.Component {
                             }))}
                         </select>
                         <label>วันที่ต้องการเช่า  </label>
-                        <DatePicker
-                            selected={this.state.firstdate}
-                            onChange={(e) => this.handleChange(e, "firstdate")}
-                        />
-                        <span> To </span>
-                        <DatePicker
-                            selected={this.state.lastdate}
-                            onChange={(e) => this.handleChange(e, "lastdate")}
-                        />
+                        <Pickdate dayto={this.setdayto} dayfrom={this.setdayfrom} selectedDayFrom={this.state.firstdate} selectedDayTo={this.state.lastdate}/>
                     </div>
                     <button type="button" class="btn btn-success" onClick={this.handleBooking}>ทำการจอง</button>
                 </form>
