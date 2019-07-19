@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 class Home extends React.Component {
     constructor(props) {
@@ -20,7 +21,6 @@ class Home extends React.Component {
         this.setState({file:event.target.files[0]})
     }
     handleAddSign=()=> {
-        console.log(this.state.file.type)
         var bodyFormData = new FormData();
         bodyFormData.set('signname', this.state.signname);
         bodyFormData.append('location', this.state.location);
@@ -34,12 +34,26 @@ class Home extends React.Component {
             headers: { 
                 'content-type': 'multipart/form-data'
             }
-          }).then(res => {
-              console.log(res)
-          }).catch(err => {
-              console.log(err.response)
           })
+        if (this.state.signname === "" || this.state.location === "" || this.state.beforebooking === 0 || this.state.limitdate === 0 || this.state.file === null) {
+            Swal.fire({
+                type: 'error',
+                title: 'สร้างป้ายไม่สำเร็จ',
+                text: 'กรุณากรอกข้อมูลให้ครบทุกช่อง',
+            })
+        }else{
+            Swal.fire({
+                type: 'success',
+                title: 'เสร็จสิ้น',
+                text: 'สร้างป้ายเสร็จเรียบร้อย',
+                confirmButtonText: 'กลับไปหน้าแรก'
+            }).then(function() {
+                window.location.href = "/";
+            });
+            
+        }
     }
+    
     render() {
         return (
             <div>
@@ -47,7 +61,7 @@ class Home extends React.Component {
                 <form>
                     <div class="form-group">
                         <label>ชื่อป้าย</label>
-                        <input type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname")}/>
+                        <input type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
                     </div>
                     <div class="form-group">
                         <label>สถานที่</label>
