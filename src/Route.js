@@ -8,18 +8,21 @@ import Error from './pages/Error'
 import Signs from './pages/Signs'
 import Addsign from './pages/AddSign'
 import TestDate from './pages/testDate'
+import Test from './pages/test'
+import Header from './components/Header'
 
 function AppRouter() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Signs} />
+        {/* <Route exact path="/" component={Signs} />
+        <Route exact path="/test" component={Test} />
         <Route exact path="/Booking" component={Booking} />
-        <Route exact path="/History" component={History} />
+        <Route exact path="/History" comp onent={History} />
         <Route exact path="/Addsign" component={Addsign} />
         <Route exact path="/TestDate" component={TestDate} />
-        <Route exact path="/error/:status" component={Error} />
-        <Route component={Error} />
+        <Route exact path="/error/:status" component={Error} /> */}
+        <Route exact path="/" component={() => <Header component={Error}/>} />
       </Switch>
     </Router>
   );

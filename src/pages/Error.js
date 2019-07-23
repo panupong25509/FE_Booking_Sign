@@ -5,17 +5,17 @@ class PageError extends React.Component {
         status : 404
     }
     componentDidMount(){
-        const { status } = this.props.match.params
-        let error = 0
-        if (status === 500){
-            error = 500
-        }else if (status == 400){
-            error = 400
-        }
-        error = 404
-        this.setState({
-            status : error
-        })
+        // const { status } = this.props.match.params
+        // let error = 0
+        // if (status === 500){
+        //     error = 500
+        // }else if (status == 400){
+        //     error = 400
+        // }
+        // error = 404
+        // this.setState({
+        //     status : error
+        // })
     }
 
     render() {
