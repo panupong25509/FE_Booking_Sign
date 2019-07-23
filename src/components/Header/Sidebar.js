@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import "../assets/sidebar.css";
+import "../../assets/sidebar.css";
 const Wrapper = styled.div`
   padding-left: 250px;
   -webkit-transition: all 0.5s ease;
@@ -41,7 +41,7 @@ class Sidebar extends React.Component {
     this.state = {};
   }
   render() {
-    const Component = this.props.component
+    const Component = this.props.component;
     return (
       <div id="wrapper" className={this.props.ShowSidebar}>
         <div id="sidebar-wrapper" className="shadow">
@@ -49,11 +49,12 @@ class Sidebar extends React.Component {
             <li className="sidebar-brand">
               <a> Start Bootstrap </a>
             </li>
+            <li className="sidebar-brand">
+              <Link to="/history">History</Link>
+            </li>
           </ul>
         </div>
-        <div>
-          <Component/>
-        </div>
+        <Component />
       </div>
     );
   }
