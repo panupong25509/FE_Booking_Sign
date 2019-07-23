@@ -9,7 +9,7 @@ import Signs from './pages/Signs'
 import Addsign from './pages/AddSign'
 import TestDate from './pages/testDate'
 import Test from './pages/test'
-import Header from './components/Header'
+import Header from './components/Header/Header'
 
 function AppRouter() {
   return (
@@ -24,6 +24,7 @@ function AppRouter() {
         <Route exact path="/error/:status" component={Error} /> */}
         <Route exact path="/" component={() => <Header component={Error}/>} />
         <Route exact path="/booking" component={() => <Header component={Booking}/>} />
+        <Route exact path="/history" component={() => <Header component={History}/>} />
       </Switch>
     </Router>
   );
