@@ -5,8 +5,32 @@ import moment from 'moment'
 import { Link } from "react-router-dom";
 import sweetalert from 'sweetalert2'
 import Pickdate from '../components/finaltestdatepicker'
-import DatePicker from "react-datepicker";
 
+const Mockup = {
+    signs: [
+        {
+            name: "Lib1",
+            location: "หน้าหอสมุด",
+            limitdate: 7,
+            beforedate: 3,
+            Picture: "Lib1-1234567890"
+        },
+        {
+            name: "Lib2",
+            location: "หลังหอสมุด",
+            limitdate: 3,
+            beforedate: 1,
+            Picture: "Lib2-2222222222"
+        },
+        {
+            name: "SIT1",
+            location: "หน้าคณะ sit",
+            limitdate: 14,
+            beforedate: 3,
+            Picture: "SIT1-3333333333"
+        }
+    ]
+}
 
 class Booking extends React.Component {
     constructor(props) {
@@ -35,7 +59,10 @@ class Booking extends React.Component {
                 })
             }
         }).catch(err => {
-            window.location.href = `/error/${err.response.status}`;
+            this.setState({
+                signs: Mockup.signs
+            })
+            // window.location.href = `/error/${err.response.status}`;
         })
     }
     handleBooking = () => {

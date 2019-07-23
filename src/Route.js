@@ -23,6 +23,7 @@ function AppRouter() {
         <Route exact path="/TestDate" component={TestDate} />
         <Route exact path="/error/:status" component={Error} /> */}
         <Route exact path="/" component={() => <Header component={Error}/>} />
+        <Route exact path="/booking" component={() => <Header component={Booking}/>} />
       </Switch>
     </Router>
   );
