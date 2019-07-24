@@ -56,31 +56,31 @@ class Home extends React.Component {
     
     render() {
         return (
-            <div className="container mx-3">
+            <div>
                 <HeadText name="Add Sign" />
-                <div>
+                <div className="container mt-2">
                     <div class="form-group">
-                        <label>ชื่อป้าย</label>
+                        <label className="m-2">ชื่อป้าย</label>
                         <input type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
                     </div>
                     <div class="form-group">
-                        <label>สถานที่</label>
+                        <label className="mx-2">สถานที่</label>
                         <input type="text" class="form-control" value={this.state.location} onChange={(e) => this.handleChange(e.target.value, "location")}/>
                     </div>
                     <div class="form-group">
-                        <label>ต้องจองก่อนกี่วัน</label>
+                        <label className="mx-2">ต้องจองก่อนกี่วัน</label>
                         <input type="number" class="form-control" value={this.state.beforebooking} onChange={(e) => this.handleChange(e.target.value, "beforebooking")}/>
                     </div>
                     <div class="form-group">
-                        <label>จองได้มากสุดกี่วัน</label>
+                        <label className="mx-2">จองได้มากสุดกี่วัน</label>
                         <input type="number" class="form-control" value={this.state.limitdate} onChange={(e) => this.handleChange(e.target.value, "limitdate")}/>
                     </div>
                     <div class="form-group">
-                        <label>อัพรูปป้าย</label>
+                        <label className="mx-2">อัพรูปป้าย</label>
                         <input type="file" accept=".jpg" onChange={this.handleChangeFile} />
                     </div>
                 </div>
-                <div>
+                <div className="mx-3">
                     <button type="button" class="btn btn-outline-success mr-3" onClick={this.handleAddSign}>Add</button>
                     
                     <Link to="/">

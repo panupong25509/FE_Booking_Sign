@@ -179,59 +179,61 @@ class Booking extends React.Component {
 
   render() {
     return (
-      <div className="container container-fluid">
+      <div>
         <HeadText name="Booking" />
-        <div className="form-group py-2 px-3 m-0 pb-4">
-          <label className="text-secondary m-2">ชื่อผู้ขอเช่า</label>
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.applicant}
-            onChange={e => this.handleChange(e.target.value, "applicant")}
-          />
-          <label className="text-secondary m-2">ชื่อองค์กรผู้ขอเช่า</label>
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.organization}
-            onChange={e => this.handleChange(e.target.value, "organization")}
-          />
-          <label className="text-secondary m-2">ป้ายที่ต้องการเช่า</label>
-          <select
-            className="form-control text-black-50"
-            onChange={e => this.handleChange(e.target.value, "signname")}
-          >
-            {this.state.signs.map(value => {
-              return (
-                <option value={value.name}>
-                  {value.name} {value.location}
-                </option>
-              );
-            })}
-          </select>
-          <label className="text-secondary m-2">วันที่ต้องการเช่า </label>
-          <Pickdate
-            dayto={this.setdayto}
-            dayfrom={this.setdayfrom}
-            selectedDayFrom={this.state.firstdate}
-            selectedDayTo={this.state.lastdate}
-          />
-        </div>
-        {/* </form> */}
-        <div className="mx-3">
-          <button
-            type="button"
-            className="btn btn-outline-success mr-3"
-            onClick={this.handleBooking}
-          >
-            ทำการจอง
-          </button>
-          <Link to="/">
-            <button type="button" className="btn btn-outline-danger">
-              กลับ
+        <div className="container  mt-2">
+            <div className="form-group px-3 m-0 pb-4">
+            <label className="text-secondary m-2">ชื่อผู้ขอเช่า</label>
+            <input
+                type="text"
+                className="form-control"
+                value={this.state.applicant}
+                onChange={e => this.handleChange(e.target.value, "applicant")}
+            />
+            <label className="text-secondary m-2">ชื่อองค์กรผู้ขอเช่า</label>
+            <input
+                type="text"
+                className="form-control"
+                value={this.state.organization}
+                onChange={e => this.handleChange(e.target.value, "organization")}
+            />
+            <label className="text-secondary m-2">ป้ายที่ต้องการเช่า</label>
+            <select
+                className="form-control text-black-50"
+                onChange={e => this.handleChange(e.target.value, "signname")}
+            >
+                {this.state.signs.map(value => {
+                return (
+                    <option value={value.name}>
+                    {value.name} {value.location}
+                    </option>
+                );
+                })}
+            </select>
+            <label className="text-secondary m-2">วันที่ต้องการเช่า </label>
+            <Pickdate
+                dayto={this.setdayto}
+                dayfrom={this.setdayfrom}
+                selectedDayFrom={this.state.firstdate}
+                selectedDayTo={this.state.lastdate}
+            />
+            </div>
+            {/* </form> */}
+            <div className="mx-3">
+            <button
+                type="button"
+                className="btn btn-outline-success mr-3"
+                onClick={this.handleBooking}
+            >
+                ทำการจอง
             </button>
-          </Link>
-        </div>
+            <Link to="/">
+                <button type="button" className="btn btn-outline-danger">
+                กลับ
+                </button>
+            </Link>
+            </div>
+        </div>    
       </div>
     );
   }
