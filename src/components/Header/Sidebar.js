@@ -9,7 +9,7 @@ const Bar = styled.div`
   height: 100%;
   overflow-y: auto;
   background-color: #3a5e74;
-  transition: 1s;
+  transition: 0.8s;
 `;
 
 class Sidebar extends React.Component {
