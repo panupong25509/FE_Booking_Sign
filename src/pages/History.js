@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
 import HeaderPage from "../components/HeaderPage";
 import Helmet from "react-helmet";
 import styled from "styled-components";
-import "../css/date-picker.css";
 
 const MockupData = {
   bookings: [
@@ -43,7 +41,7 @@ const MockupData = {
 };
 const Table = styled.table`
   border-collapse: separate;
-  border-spacing: 0 5px;
+  border-spacing: 0 15px;
 `;
 const Box = styled.tr`
   border-right: hidden;
@@ -71,10 +69,10 @@ class History extends React.Component {
   render() {
     console.log(MockupData, this.state.history);
     return (
-      <div>
+      <div className="container-fluid">
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <HeaderPage name="History" />
-        <div className="pt-3">
+        <div>
           <Table>
             <thead>
               <tr>
@@ -107,7 +105,7 @@ class History extends React.Component {
               {this.state.history.map(booking => {
                 return (
                   <Box className="shadow-sm bg-white rounded">
-                    <td className="pl-3 pr-3 geeks">{booking.booking_code}</td>
+                    <td className="pl-3 pr-3">{booking.booking_code}</td>
                     <td className="pl-3 pr-3">{booking.sign.location}</td>
                     <td className="pl-3 pr-3">
                       {booking.firstdate}
