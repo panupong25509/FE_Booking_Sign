@@ -67,7 +67,6 @@ class History extends React.Component {
       });
   };
   render() {
-    console.log(MockupData, this.state.history);
     return (
       <div className="container-fluid">
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />

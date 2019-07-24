@@ -38,7 +38,6 @@ class Header extends React.Component {
   };
 
   render() {
-    console.log(this.state.dimensions);
     return (
       <div>
         <Navbar handleSidebar={this.handleSidebar} />
