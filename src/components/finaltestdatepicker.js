@@ -5,6 +5,7 @@ import 'react-day-picker/lib/style.css';
 import '../css/date-picker.css';
 import moment from 'moment'
 import axios from 'axios'
+import Helmet from "react-helmet";
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -121,6 +122,7 @@ export default class Example extends React.Component {
   render() {
     return (
       <div>
+        <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <DayPickerInput
           value={this.state.selectedDayFrom}
           onDayChange={this.handleDayChangeFrom}
@@ -129,7 +131,7 @@ export default class Example extends React.Component {
               disabledDays: this.state.disabledDaysFrom
           }}
         />
-        <span className="text-secondary"> To </span>
+        <span> To </span>
         <DayPickerInput
           value={this.state.selectedDayTo}
           onDayChange={this.handleDayChangeTo}
@@ -139,7 +141,7 @@ export default class Example extends React.Component {
           }}
         />
         {/* <button onClick={this.onConfirmClick}>Confirm</button> */}
-        <span className="ml-2 text-secondary">{this.state.result.length * 2} วันที่ไม่ทำการ</span>
+        <span className="ml-2">{this.state.result.length * 2} วันที่ไม่ทำการ</span>
       </div>
     );
   }

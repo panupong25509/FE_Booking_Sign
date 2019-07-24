@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import HeadText from '../components/HeaderPage'
+import Helmet from "react-helmet";
 
 class Home extends React.Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Home extends React.Component {
         return (
             <div>
                 <HeadText name="Add Sign" />
+                <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
                 <div className="container mt-2">
                     <div class="form-group">
                         <label className="m-2">ชื่อป้าย</label>
@@ -82,7 +84,6 @@ class Home extends React.Component {
                 </div>
                 <div className="mx-3">
                     <button type="button" class="btn btn-outline-success mr-3" onClick={this.handleAddSign}>Add</button>
-                    
                     <Link to="/">
                         <button type="button" class="btn btn-outline-danger">กลับ</button>
                     </Link>
