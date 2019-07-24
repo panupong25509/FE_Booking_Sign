@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios'
-// import {test,test2} from '../components/test'
-
+import HeadText from '../components/HeaderPage'
 import styled from 'styled-components'
 import { async } from 'q';
 
@@ -47,7 +46,8 @@ class Home extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="container">
+                <HeadText name="Add Sign"/>
                 <div><h1 className='text-center'>ป้ายทั้งหมด</h1></div>
                 <div className='container'>
                     <div className='row'>

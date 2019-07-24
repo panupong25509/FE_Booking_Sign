@@ -5,6 +5,7 @@ import moment from 'moment'
 import { Link } from "react-router-dom";
 import sweetalert from 'sweetalert2'
 import Pickdate from '../components/finaltestdatepicker'
+import HeadText from '../components/HeaderPage'
 
 const Mockup = {
     signs: [
@@ -153,7 +154,7 @@ class Booking extends React.Component {
     render() {
         return (
             <div className="container container-fluid">
-                {/* <form> */}
+                <HeadText name="Booking" />
                 <div className="form-group py-2 px-3 m-0 pb-4">
                     <label className="text-secondary m-2">ชื่อผู้ขอเช่า</label>
                     <input type="text" className="form-control" value={this.state.applicant} onChange={(e) => this.handleChange(e.target.value, "applicant")}/>

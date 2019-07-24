@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Router, Route, Switch } from "react-router-dom";
 
 //pages
+// import Booking from "./pages/Booking";
+import History from "./History";
 import Booking from "./Booking";
 // import History from "./pages/History";
 import Error from "./Error";
@@ -66,6 +68,8 @@ class Index extends React.Component {
           <Route exact path="/TestDate" component={TestDate} />
         <Route exact path="/error/:status" component={Error} /> */}
                 <Route exact path="/" component={Error} />
+                <Route exact path="/History" component={History} />
+
                 {/* <Route
                 exact
                 path="/booking"

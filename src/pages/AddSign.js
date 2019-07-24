@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import HeadText from '../components/HeaderPage'
 
 class Home extends React.Component {
     constructor(props) {
@@ -50,14 +51,13 @@ class Home extends React.Component {
             }).then(function() {
                 window.location.href = "/";
             });
-            
         }
     }
     
     render() {
         return (
-            <div>
-                <div>Add Sign</div>
+            <div className="container">
+                <HeadText name="Add Sign"/>
                 <form>
                     <div class="form-group">
                         <label>ชื่อป้าย</label>
