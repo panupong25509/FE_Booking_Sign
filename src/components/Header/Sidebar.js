@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Bar = styled.div`
-  z-index: 1000;
+  z-index: 99;
   position: fixed;
   margin-left: ${props => props.position}vw;
   height: 100%;
