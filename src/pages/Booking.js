@@ -84,10 +84,7 @@ class Booking extends React.Component {
                 confirmButtonText: 'ใช่',
                 cancelButtonText: 'ไม่ใช่'
               }).then((result) => {
-                console.log(bodyFormData)
-
                 if (result.value) {
-                    // console.log(bodyFormData)
                     this.postBooking(bodyFormData)
                 }
               })
@@ -113,7 +110,6 @@ class Booking extends React.Component {
                 window.location.href = '/'
             })
           }).catch(err => {
-              console.log(err)
             sweetalert.fire({
                 type: 'error',
                 title: `${err.response.data}`,
@@ -154,8 +150,8 @@ class Booking extends React.Component {
     render() {
         return (
             <div className="container container-fluid">
-                <HeadText name="Booking" />
-                <div className="form-group py-2 px-3 m-0 pb-4">
+                <HeadText name="Booking"/>
+                <div className="form-group px-3 m-0 pb-4">
                     <label className="text-secondary m-2">ชื่อผู้ขอเช่า</label>
                     <input type="text" className="form-control" value={this.state.applicant} onChange={(e) => this.handleChange(e.target.value, "applicant")}/>
                     <label className="text-secondary m-2">ชื่อองค์กรผู้ขอเช่า</label>
