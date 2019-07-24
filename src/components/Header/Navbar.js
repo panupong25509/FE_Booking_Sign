@@ -21,7 +21,6 @@ class Navbar extends React.Component {
     this.props.handleSidebar("");
   };
   render() {
-    console.log(this.props.height)
     return (
         <Navs className={"navbar navbar-default navbar-fixed-top "+this.props.width} height={this.props.height}>
             <Icon
