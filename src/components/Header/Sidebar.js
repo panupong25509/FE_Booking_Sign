@@ -26,8 +26,11 @@ class Sidebar extends React.Component {
           <li className="">
             <a> Start Bootstrap </a>
           </li>
-          <li className="">
+          <li>
             <Link to="/history">History</Link>
+          </li>
+          <li>
+            <Link to="/booking">Booking</Link>
           </li>
         </ul>
       </Bar>

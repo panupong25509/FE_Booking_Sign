@@ -10,7 +10,7 @@ class Header extends React.Component {
   render() {
     return (
       <nav class="navbar">
-        <span class="navbar-brand mb-0 h1">{this.props.name}</span>
+        <h1 class="navbar-brand mb-0">{this.props.name}</h1>
       </nav>
     );
   }
