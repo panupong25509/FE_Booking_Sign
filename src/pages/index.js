@@ -34,7 +34,7 @@ class Index extends React.Component {
   updateWindowDimensions = () => {
     if (window.innerWidth > 724) {
       this.setState({
-        statusSidebar: true
+        StatusSidebar: true
       });
     }
   };
