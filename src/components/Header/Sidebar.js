@@ -8,7 +8,7 @@ const Bar = styled.div`
   margin-left: ${props => props.position}vw;
   height: 100%;
   overflow-y: auto;
-  background-color: red;
+  background-color: #3a5e74;
   transition: 1s;
 `;
 
