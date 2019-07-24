@@ -59,7 +59,7 @@ class History extends React.Component {
       <div>
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <HeadText name="History" />
-        <div className="container-fluid p-5">
+        <div className="container p-5">
           <Table>
             <thead>
               <tr>
