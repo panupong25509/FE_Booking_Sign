@@ -23,9 +23,6 @@ class Sidebar extends React.Component {
         position={this.props.open === true ? 0 : -100}
       >
         <ul className="text-dark p-5">
-          <li className="">
-            <a> Start Bootstrap </a>
-          </li>
           <li>
             <Link to="/history">History</Link>
           </li>

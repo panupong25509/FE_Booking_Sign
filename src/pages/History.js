@@ -56,31 +56,31 @@ class History extends React.Component {
   };
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <HeadText name="History" />
-        <div>
+        <div className="container-fluid p-5">
           <Table>
             <thead>
               <tr>
-                <th className="pl-3 pr-3" style={{ width: "40%" }} scope="col">
+                <th className="px-3" style={{ width: "40%" }} scope="col">
                   APPLICANT & ORGANIZATION
                 </th>
-                <th className="pl-3 pr-3" style={{ width: "25%" }} scope="col">
+                <th className="px-3" style={{ width: "25%" }} scope="col">
                   LOCATION
                 </th>
-                <th className="pl-3 pr-3" style={{ width: "20%" }} scope="col">
+                <th className="px-3" style={{ width: "20%" }} scope="col">
                   DATE
                 </th>
                 <th
-                  className="pl-3 pr-3 text-center"
+                  className="px-3 text-center"
                   style={{ width: "10%" }}
                   scope="col"
                 >
                   STATUS
                 </th>
                 <th
-                  className="pl-3 pr-3 text-center"
+                  className="px-3 text-center"
                   style={{ width: "5%" }}
                   scope="col"
                 >
@@ -92,14 +92,16 @@ class History extends React.Component {
               {this.state.history.map(booking => {
                 return (
                   <Box className="shadow-sm bg-white rounded">
-                    <td className="pl-3 pr-3">{booking.booking_code}</td>
-                    <td className="pl-3 pr-3">{booking.sign.location}</td>
-                    <td className="pl-3 pr-3">
+                    <td className="px-3">
+                      <div>{booking.applicant}<br/>{booking.organization}</div>
+                    </td>
+                    <td className="px-3">{booking.sign.location}</td>
+                    <td className="px-3">
                       {moment(booking.first_date).format("YYYY-MM-DD")}
                       <br /> to {moment(booking.last_date).format("YYYY-MM-DD")}
                     </td>
-                    <td className="p-3 text-center">pending</td>
-                    <td className="p-3 text-center">
+                    <td className="px-3 text-center">pending</td>
+                    <td className="px -3 text-center">
                       <i className="fa fa-info" />
                     </td>
                   </Box>
