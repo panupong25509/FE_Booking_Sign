@@ -56,9 +56,9 @@ class Home extends React.Component {
     
     render() {
         return (
-            <div className="container">
-                <HeadText name="Add Sign"/>
-                <form>
+            <div className="container mx-3">
+                <HeadText name="Add Sign" />
+                <div>
                     <div class="form-group">
                         <label>ชื่อป้าย</label>
                         <input type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
@@ -79,11 +79,12 @@ class Home extends React.Component {
                         <label>อัพรูปป้าย</label>
                         <input type="file" accept=".jpg" onChange={this.handleChangeFile} />
                     </div>
-                </form>
+                </div>
                 <div>
-                    <button type="button" class="btn btn-warning" onClick={this.handleAddSign}>Add</button>
+                    <button type="button" class="btn btn-outline-success mr-3" onClick={this.handleAddSign}>Add</button>
+                    
                     <Link to="/">
-                        <button type="button" class="btn btn-warning">กลับ</button>
+                        <button type="button" class="btn btn-outline-danger">กลับ</button>
                     </Link>
                 </div>
             </div>
