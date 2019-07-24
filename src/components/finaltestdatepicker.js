@@ -129,7 +129,7 @@ export default class Example extends React.Component {
               disabledDays: this.state.disabledDaysFrom
           }}
         />
-        <span> To </span>
+        <span className="text-secondary"> To </span>
         <DayPickerInput
           value={this.state.selectedDayTo}
           onDayChange={this.handleDayChangeTo}
@@ -139,7 +139,7 @@ export default class Example extends React.Component {
           }}
         />
         {/* <button onClick={this.onConfirmClick}>Confirm</button> */}
-        รวม {this.state.result.length * 2} ไม่วันทำการ
+        <span className="ml-2 text-secondary">{this.state.result.length * 2} วันที่ไม่ทำการ</span>
       </div>
     );
   }
