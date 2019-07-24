@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios'
-import HeadText from '../components/HeaderPage'
 import styled from 'styled-components'
+import Helmet from "react-helmet";
 import { async } from 'q';
 
 const CardSign = styled.div`
@@ -46,31 +46,31 @@ class Home extends React.Component {
     }
     render() {
         return (
-            <div className="container">
-                <HeadText name="Add Sign"/>
-                <div><h1 className='text-center'>ป้ายทั้งหมด</h1></div>
+            <div className="container" >
+                <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
+                <div><h1 className='text-center py-4'>ป้ายทั้งหมด</h1></div>
                 <div className='container'>
                     <div className='row'>
                         {this.state.signs.map((sign) => {
                             return (
-                                <div className='col-md-3 col-4'>
-                                    <CardSign className='border'>
-                                        <img width='100%' src={'/img/'+sign.picture}/>
-                                        <p>ชื่อ : {sign.name}</p>
-                                        <p>สถานที่ : {sign.location}</p>
-                                        <p>ควรจองก่อน : {sign.beforebooking} วัน</p>
-                                        <p>จองได้สูงสุด : {sign.limitdate} วัน</p>
-                                    </CardSign>
+                                <div className='col-sm-3 col-6'>
+                                    <div className='border'>
+                                        <img className="img-fluid" src={'/img/'+sign.picture}/>
+                                        <span>ชื่อ : {sign.name}</span><br/>
+                                        <span>สถานที่ : {sign.location}</span><br/>
+                                        <span>จองก่อน : {sign.beforebooking} วัน</span><br/>
+                                        <span>จองได้มาก : {sign.limitdate} วัน</span>
+                                    </div>
                                 </div>
                             )
                         })}
                     </div>
-                <div>
+                <div className="my-3 float-right">
                     <Link to="/Booking">
-                        <button type="button" class="btn btn-warning">Booking</button>
+                        <button type="button" class="mr-3 btn btn-info">Booking</button>
                     </Link>
-                    <Link to="/History">
-                        <button type="button" class="btn btn-info">History</button>
+                    <Link to="/history">
+                        <button type="button" class="mr-3 btn btn-info">History</button>
                     </Link>
                     <Link to="/addsign">
                         <button type="button" class="btn btn-info">Add Sign</button>

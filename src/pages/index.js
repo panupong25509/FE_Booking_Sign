@@ -15,7 +15,8 @@ class Index extends React.Component {
     super(props);
     this.state = {
       StatusSidebar: true, //open sidebar ex.
-      SidebarWidth: "col-7 col-sm-3", //width of sidbar ex.
+      SidebarWidth: "col-7 col-sm-2", //width of sidbar ex.
+      PageWidth: "col-12 col-sm-10", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
       NavHeight: 60, //height of navbar ex.
     };
@@ -50,14 +51,14 @@ class Index extends React.Component {
         <Navbar handleSidebar={this.handleSidebar} width={this.state.NavWidth} height={this.state.NavHeight} />
         <div className="col-12" style={{paddingTop:this.state.NavHeight}}>
           <div className="row">
-            <div className="col-12 col-sm-3 p-0">
+            <div className={this.state.SidebarWidth+" p-0"}>
               <Sidebar open={this.state.StatusSidebar} size={this.state.SidebarWidth} />
             </div>
-            <div className="col-12 col-sm-9 p-0">
+            <div className={this.state.PageWidth + " p-0"}>
               <Switch>
                 <Route exact path="/" component={Signs} />
                 <Route exact path="/Booking" component={Booking} />
-                <Route exact path="/History" comp onent={History} />
+                <Route exact path="/History" component={History} />
                 <Route exact path="/Addsign" component={Addsign} />
                 <Route exact path="/error/:status" component={Error} />
                 <Route component={Error} />
