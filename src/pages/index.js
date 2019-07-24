@@ -9,6 +9,12 @@ import Signs from "./Signs";
 import Addsign from "./AddSign";
 import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
+import styled from 'styled-components'
+
+const Font = styled.div`
+  font-family: 'Kanit', sans-serif;
+`
+
 
 class Index extends React.Component {
   constructor(props) {
@@ -48,24 +54,26 @@ class Index extends React.Component {
   render() {
     return (
       <div>
-        <Navbar handleSidebar={this.handleSidebar} width={this.state.NavWidth} height={this.state.NavHeight} />
-        <div className="col-12" style={{paddingTop:this.state.NavHeight}}>
-          <div className="row">
-            <div className={this.state.SidebarWidth+" p-0"}>
-              <Sidebar open={this.state.StatusSidebar} size={this.state.SidebarWidth} />
-            </div>
-            <div className={this.state.PageWidth + " p-0"}>
-              <Switch>
-                <Route exact path="/" component={Signs} />
-                <Route exact path="/Booking" component={Booking} />
-                <Route exact path="/History" component={History} />
-                <Route exact path="/Addsign" component={Addsign} />
-                <Route exact path="/error/:status" component={Error} />
-                <Route component={Error} />
-              </Switch>
+        <Font>
+          <Navbar handleSidebar={this.handleSidebar} width={this.state.NavWidth} height={this.state.NavHeight} />
+          <div className="col-12" style={{paddingTop:this.state.NavHeight}}>
+            <div className="row">
+              <div className={this.state.SidebarWidth+" p-0"}>
+                <Sidebar open={this.state.StatusSidebar} size={this.state.SidebarWidth} />
+              </div>
+              <div className={this.state.PageWidth + " p-0"}>
+                <Switch>
+                  <Route exact path="/" component={Signs} />
+                  <Route exact path="/Booking" component={Booking} />
+                  <Route exact path="/History" component={History} />
+                  <Route exact path="/Addsign" component={Addsign} />
+                  <Route exact path="/error/:status" component={Error} />
+                  <Route component={Error} />
+                </Switch>
+              </div>
             </div>
           </div>
-        </div>
+        </Font>
       </div>
     );
   }
