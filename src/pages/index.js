@@ -9,12 +9,11 @@ import Signs from "./Signs";
 import Addsign from "./AddSign";
 import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Font = styled.div`
-  font-family: 'Kanit', sans-serif;
-`
-
+  font-family: "Kanit", sans-serif;
+`;
 
 class Index extends React.Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class Index extends React.Component {
       SidebarWidth: "col-7 col-sm-2", //width of sidbar ex.
       PageWidth: "col-12 col-sm-10", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
-      NavHeight: 60, //height of navbar ex.
+      NavHeight: 60 //height of navbar ex.
     };
   }
 
@@ -34,11 +33,13 @@ class Index extends React.Component {
   }
 
   updateWindowDimensions = () => {
+    let statusSidebar = false;
     if (window.innerWidth > 724) {
-      this.setState({
-        StatusSidebar: true
-      });
+      statusSidebar = true;
     }
+    this.setState({
+      StatusSidebar: statusSidebar
+    });
   };
 
   handleSidebar = async () => {
@@ -55,11 +56,18 @@ class Index extends React.Component {
     return (
       <div>
         <Font>
-          <Navbar handleSidebar={this.handleSidebar} width={this.state.NavWidth} height={this.state.NavHeight} />
-          <div className="col-12" style={{paddingTop:this.state.NavHeight}}>
+          <Navbar
+            handleSidebar={this.handleSidebar}
+            width={this.state.NavWidth}
+            height={this.state.NavHeight}
+          />
+          <div className="col-12" style={{ paddingTop: this.state.NavHeight }}>
             <div className="row">
-              <div className={this.state.SidebarWidth+" p-0"}>
-                <Sidebar open={this.state.StatusSidebar} size={this.state.SidebarWidth} />
+              <div className={this.state.SidebarWidth + " p-0"}>
+                <Sidebar
+                  open={this.state.StatusSidebar}
+                  size={this.state.SidebarWidth}
+                />
               </div>
               <div className={this.state.PageWidth + " p-0"}>
                 <Switch>
