@@ -66,11 +66,11 @@ class Home extends React.Component {
                         })}
                     </div>
                 <div className="my-3 float-right">
-                    <Link to="/Booking">
-                        <button type="button" class="mr-3 btn btn-info">Booking</button>
+                    <Link to="/Booking" className="mr-3">
+                        <button type="button" class="btn btn-info">Booking</button>
                     </Link>
-                    <Link to="/history">
-                        <button type="button" class="mr-3 btn btn-info">History</button>
+                    <Link to="/history"  className="mr-3">
+                        <button type="button" class="btn btn-info">History</button>
                     </Link>
                     <Link to="/addsign">
                         <button type="button" class="btn btn-info">Add Sign</button>
