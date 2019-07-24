@@ -59,7 +59,7 @@ class History extends React.Component {
       <div>
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <HeadText name="History" />
-        <div className="container p-5">
+        <div className="container px-4 mt-2">
           <Table>
             <thead>
               <tr>
@@ -109,6 +109,11 @@ class History extends React.Component {
               })}
             </tbody>
           </Table>
+          <div className="float-right">
+            <Link to="/">
+              <button type="button" class="btn btn-outline-danger">กลับ</button>
+            </Link>
+          </div>
         </div>
         <div />
       </div>
