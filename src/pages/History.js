@@ -2,26 +2,52 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import HeaderPage from "../components/HeaderPage";
+import Helmet from "react-helmet";
+import styled from "styled-components";
+import "../css/date-picker.css";
 
 const MockupData = {
   bookings: [
-      {
-          id:1,
-          booking_code: "LIB1CODE29-06-201930-06-2019",
-          applicant: "P",
-          organization: "IT",
-          firstdate: "29-06-2019",
-          lastdate: "30-06-2019",
-          sign : {
-              name:"LIB1",
-              location:"หน้าหอสมุด",
-              limitdate: 3,
-              beforedate: 4,
-              picture: "LIB1.png"
-          }
+    {
+      id: 1,
+      booking_code: "LIB1CODE29-06-201930-06-2019",
+      applicant: "P",
+      organization: "IT",
+      firstdate: "29-06-2019",
+      lastdate: "30-06-2019",
+      sign: {
+        name: "LIB1",
+        location: "หน้าหอสมุด",
+        limitdate: 3,
+        beforedate: 4,
+        picture: "LIB1.png"
       }
+    },
+    {
+      id: 1,
+      booking_code: "LIB1CODE29-06-201930-06-2019",
+      applicant: "P",
+      organization: "IT",
+      firstdate: "29-06-2019",
+      lastdate: "30-06-2019",
+      sign: {
+        name: "LIB1",
+        location: "หน้าหอสมุด",
+        limitdate: 3,
+        beforedate: 4,
+        picture: "LIB1.png"
+      }
+    }
   ]
 };
+const Table = styled.table`
+  border-collapse: separate;
+  border-spacing: 0 5px;
+`;
+const Box = styled.tr`
+  border-right: hidden;
+`;
 class History extends React.Component {
   constructor(props) {
     super(props);
@@ -39,50 +65,67 @@ class History extends React.Component {
         this.setState({ history: history.data.bookings });
       })
       .catch(err => {
-        this.setState({ history: MockupData.bookings})
+        this.setState({ history: MockupData.bookings });
       });
   };
   render() {
-      console.log(MockupData, this.state.history)
+    console.log(MockupData, this.state.history);
     return (
       <div>
-        <div>Booking Sign</div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Booking Code</th>
-              <th scope="col">Sign name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Applicant</th>
-              <th scope="col">Organization</th>
-              <th scope="col">First Date</th>
-              <th scope="col">Last Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.history.map(booking => {
-              return (
-                <tr>
-                  <td>{booking.booking_code}</td>
-                  <td>{booking.sign.name}</td>
-                  <td>{booking.sign.location}</td>
-                  <td>{booking.applicant}</td>
-                  <td>{booking.organization}</td>
-                  <td>{moment(booking.first_date).format("YYYY-MM-DD")}</td>
-                  <td>{moment(booking.last_date).format("YYYY-MM-DD")}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div>
-          <Link to="/">
-            <button type="button" class="btn btn-warning">
-              กลับ
-            </button>
-          </Link>
+        <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
+        <HeaderPage name="History" />
+        <div className="pt-3">
+          <Table>
+            <thead>
+              <tr>
+                <th className="pl-3 pr-3" style={{ width: "40%" }} scope="col">
+                  APPLICANT & ORGANIZATION
+                </th>
+                <th className="pl-3 pr-3" style={{ width: "25%" }} scope="col">
+                  LOCATION
+                </th>
+                <th className="pl-3 pr-3" style={{ width: "20%" }} scope="col">
+                  DATE
+                </th>
+                <th
+                  className="pl-3 pr-3 text-center"
+                  style={{ width: "10%" }}
+                  scope="col"
+                >
+                  STATUS
+                </th>
+                <th
+                  className="pl-3 pr-3 text-center"
+                  style={{ width: "5%" }}
+                  scope="col"
+                >
+                  DETAIL
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.history.map(booking => {
+                return (
+                  <Box className="shadow-sm bg-white rounded">
+                    <td className="pl-3 pr-3 geeks">{booking.booking_code}</td>
+                    <td className="pl-3 pr-3">{booking.sign.location}</td>
+                    <td className="pl-3 pr-3">
+                      {booking.firstdate}
+                      <br /> to {booking.lastdate}
+                    </td>
+                    <td className="p-3 text-center">pending</td>
+                    <td className="p-3 text-center">
+                      <i className="fa fa-info" />
+                    </td>
+                  </Box>
+                );
+              })}
+            </tbody>
+          </Table>
         </div>
+        <div />
       </div>
+      //   </Helmet>
     );
   }
 }
