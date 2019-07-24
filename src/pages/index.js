@@ -57,7 +57,7 @@ class Index extends React.Component {
               <Switch>
                 <Route exact path="/" component={Signs} />
                 <Route exact path="/Booking" component={Booking} />
-                <Route exact path="/History" comp onent={History} />
+                <Route exact path="/History" component={History} />
                 <Route exact path="/Addsign" component={Addsign} />
                 <Route exact path="/error/:status" component={Error} />
                 <Route component={Error} />
