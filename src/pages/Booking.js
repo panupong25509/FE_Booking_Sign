@@ -123,12 +123,7 @@ class Booking extends React.Component {
         sweetalert
           .fire({
             type: "success",
-            title: `คุณ ${booking.applicant} ได้ทำการจองป้าย ${
-              booking.sign.name
-            }`,
-            text: `ในวันที่ ${moment(booking.first_date).format(
-              "YYYY-MM-DD"
-            )} ถึง ${moment(booking.last_date).format("YYYY-MM-DD")}`,
+            title: "ทำการจองสำเร็จแล้ว",
             showConfirmButton: false,
             timer: 5000
           })
@@ -140,7 +135,7 @@ class Booking extends React.Component {
         console.log(err);
         sweetalert.fire({
           type: "error",
-          title: `${err.response.data}`
+          title: `${err.response.data.message}`
         });
       });
   };
