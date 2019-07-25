@@ -1,147 +1,127 @@
-import React from 'react';
+import React from "react";
+import axios from "axios";
+import moment from "moment";
 
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
-import '../css/date-picker.css';
-import moment from 'moment'
-import axios from 'axios'
-import Helmet from "react-helmet";
+import "react-day-picker/lib/style.css";
+import "../assets/datepicker.css";
+import DayPicker, { DateUtils } from "react-day-picker";
 
 export default class Example extends React.Component {
   constructor(props) {
     super(props);
-    this.handleDayChangeFrom = this.handleDayChangeFrom.bind(this);
-    this.handleDayChangeTo = this.handleDayChangeTo.bind(this);
-    this.state = {
-      selectedDayFrom: undefined,
-      selectedDayTo: undefined,
-      isEmptyTo: true,
-      isDisabledTo: false,
-      start: "",
-      end: "",
-      result: [],
-      days: [],
-      disabledDaysFrom: [
-        {before : new Date()},
-        {daysOfWeek: [0, 6]}
-      ] ,
-      disabledDaysTo: [
-        {before : new Date()},
-        {daysOfWeek: [0, 6]}
-      ] 
+    this.state = this.getInitialState();
+    this.state = { bookingDates: [] };
+  }
+  getInitialState() {
+    return {
+      from: null,
+      to: null,
+      enteredTo: null // Keep track of the last day for mouseEnter.
     };
   }
+  isSelectingFirstDay = (from, to, day) => {
+    const isBeforeFirstDay = from && DateUtils.isDayBefore(day, from);
+    const isRangeSelected = from && to;
+    return !from || isBeforeFirstDay || isRangeSelected;
+  };
+  handleDayClick = async day => {
+    const { from, to } = this.state;
+    if (from && to && day >= from && day <= to) {
+      this.handleResetClick();
+      return;
+    }
+    if (this.isSelectingFirstDay(from, to, day)) {
+      await this.setState({
+        from: day,
+        to: null,
+        enteredTo: null
+      });
+    } else {
+      await this.setState({
+        to: day,
+        enteredTo: day
+      });
+    }
+    this.props.date({
+      firstdate: this.state.from,
+      lastdate: this.state.to
+    });
+  };
+  handleDayMouseEnter = day => {
+    const { from, to } = this.state;
+    if (!this.isSelectingFirstDay(from, to, day)) {
+      this.setState({
+        enteredTo: day
+      });
+    }
+  };
+  handleResetClick = () => {
+    this.setState(this.getInitialState());
+  };
 
   componentDidMount() {
-    this.fetchBookingDays()
-    this.state.disabledDaysFrom.push({
-      after: this.state.selectedDayTo !== undefined ? this.state.selectedDayTo : undefined
-    })
+    this.fetchBookingDates();
   }
 
-  fetchBookingDays = async () => {
-    await axios.get('http://127.0.0.1:3000/getbookingdays/14').then((days) => {
-      this.setState({
-        days: days.data
-      })
-    })
-    await this.state.days.map((day) => {
-      let firstdate = new Date(moment(day.firstdate).format("YYYY-MM-DD"))
-      firstdate = new Date(moment(firstdate.getFullYear()+"-"+(firstdate.getMonth()+1)+"-"+(firstdate.getDate()-1)).format("YYYY-MM-DD"))
-      let lastdate = new Date(moment(day.lastdate).format("YYYY-MM-DD"))
-      lastdate = new Date(moment(lastdate.getFullYear()+"-"+(lastdate.getMonth()+1)+"-"+(lastdate.getDate()+1)).format("YYYY-MM-DD"))
-      this.state.disabledDaysTo.push({
-        after: new Date(firstdate),
-        before: new Date(lastdate),
-      })
-      this.state.disabledDaysFrom.push({
-        after: new Date(firstdate),
-        before: new Date(lastdate),
-      })
-    }) 
-  }
-
-  calDate = async () => {
-    let tempresult = []
-    if(this.state.start !== "" && this.state.end !== ""){
-    let current = this.state.start.clone();
-      while (current.day(7).isBefore(this.state.end)) {
-          tempresult.push(current.clone());
-      }
-    }
-    this.setState({
-        result: tempresult,
-    })
-  }
-  
-  setFormatDate = async (start) => {
-    if(start !== null) {
-      let date = new Date(this.state.selectedDayFrom)
-      await this.setState({
-        start: moment(`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`)
-      })
-    }
-    let date = new Date(this.state.selectedDayTo)
-    await this.setState({
-      end: moment(`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`)
-    })
-  }
-
-  handleDayChangeFrom = async (selectedDay, modifiers, dayPickerInput) => {
-    const input = dayPickerInput.getInput();
-    await this.setState({
-        selectedDayFrom: selectedDay,
-        isEmptyFrom: !input.value.trim(),
-        isDisabledFrom: modifiers.disabled === true,
+  fetchBookingDates = async () => {
+    await axios.get("http://127.0.0.1:3000/getbookingdays/1").then(dates => {
+      this.addBookingDates(dates.data);
     });
-    this.state.disabledDaysTo.push({
-        before: this.state.selectedDayFrom!== undefined ? this.state.selectedDayFrom : new Date()
-    })
-    this.setFormatDate("start")
-    this.calDate()
-    const dayfrom = this.state.start
-    this.props.dayfrom(dayfrom)
-  }
-
-  handleDayChangeTo = async (selectedDay, modifiers, dayPickerInput) => {
-    const input = dayPickerInput.getInput();
-    await this.setState({
-      selectedDayTo: selectedDay,
-      isEmptyTo: !input.value.trim(),
-      isDisabledTo: modifiers.disabled === true,
+  };
+  addBookingDates = async dates => {
+    let bookingDates = [];
+    await dates.map(date => {
+      let firstdate = new Date(moment(date.firstdate).format("YYYY-MM-DD"));
+      let lastdate = new Date(moment(date.lastdate).format("YYYY-MM-DD"));
+      bookingDates.push(
+        { after: firstdate, before: lastdate },
+        firstdate,
+        lastdate
+      );
+      this.setState({ bookingDates: bookingDates });
     });
-    this.state.disabledDaysFrom.push({
-      after: this.state.selectedDayTo !== undefined ? this.state.selectedDayTo : undefined
-    })
-    this.setFormatDate(null)
-    this.calDate()
-    const dayto = this.state.end
-    this.props.dayto(dayto)
-  }
-
+  };
   render() {
+    const { from, to, enteredTo } = this.state;
+    const modifiers = {
+      start: from,
+      end: enteredTo,
+      birthday: this.state.bookingDates
+    };
+    const modifiersStyles = {
+      birthday: {
+        color: "white",
+        backgroundColor: "red"
+      }
+    };
+    const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }];
+    const selectedDays = [from, { from, to: enteredTo }];
     return (
       <div>
-        <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
-        <DayPickerInput
-          value={this.state.selectedDayFrom}
-          onDayChange={this.handleDayChangeFrom}
-          dayPickerProps={{
-              selectedDays: this.state.selectedDayFrom,
-              disabledDays: this.state.disabledDaysFrom
-          }}
+        <DayPicker
+          className="Range"
+          numberOfMonths={2}
+          fromMonth={from}
+          selectedDays={selectedDays}
+          disabledDays={disabledDays}
+          modifiers={modifiers}
+          modifiersStyles={modifiersStyles}
+          onDayClick={this.handleDayClick}
+          onDayMouseEnter={this.handleDayMouseEnter}
         />
-        <span> To </span>
-        <DayPickerInput
-          value={this.state.selectedDayTo}
-          onDayChange={this.handleDayChangeTo}
-          dayPickerProps={{
-            selectedDays: this.state.selectedDayTo,
-            disabledDays: this.state.disabledDaysTo
-          }}
-        />
-        {/* <button onClick={this.onConfirmClick}>Confirm</button> */}
-        <span className="ml-2">{this.state.result.length * 2} วันที่ไม่ทำการ</span>
+        <div>
+          {!from && !to && "Please select the first day."}
+          {from && !to && "Please select the last day."}
+          {from &&
+            to &&
+            `Selected from ${from.toLocaleDateString()} to
+                ${to.toLocaleDateString()}`}{" "}
+          {from && to && (
+            <button className="link" onClick={this.handleResetClick}>
+              Reset
+            </button>
+          )}
+        </div>
       </div>
     );
   }
