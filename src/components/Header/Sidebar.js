@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import '../../css/date-picker.css'
 
 const Bar = styled.div`
   z-index: 99;
@@ -8,9 +9,23 @@ const Bar = styled.div`
   margin-left: ${props => props.position}vw;
   height: 100%;
   overflow-y: auto;
-  background-color: #3a5e74;
+  background-color:#435687;
   transition: 0.8s;
 `;
+
+const Test = styled.div `
+  position: relative;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 15px 30px;
+  color : white;
+  text-decoration:none;
+  &:hover {
+    padding: 15px 45px;
+    background-color:#384872;
+  }
+`
+
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -22,14 +37,18 @@ class Sidebar extends React.Component {
         className={this.props.size}
         position={this.props.open === true ? 0 : -100}
       >
-        <ul className="text-dark p-5">
-          <li>
-            <Link to="/history">History</Link>
-          </li>
-          <li>
-            <Link to="/booking">Booking</Link>
-          </li>
-        </ul>
+        <div>
+          <Link to="/history">
+            <Test>
+              History
+            </Test>
+          </Link>
+          <Link to="/booking">
+            <Test>
+              Booking
+            </Test>
+          </Link>
+        </div>
       </Bar>
     );
   }

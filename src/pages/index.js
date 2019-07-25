@@ -21,8 +21,8 @@ class Index extends React.Component {
     super(props);
     this.state = {
       StatusSidebar: true, //open sidebar ex.
-      SidebarWidth: "col-7 col-sm-2", //width of sidbar ex.
-      PageWidth: "col-12 col-sm-10", //width of Page ex.
+      SidebarWidth: "col-7 col-md-2 col-sm-3 p-0", //width of sidbar ex.
+      PageWidth: "col-12 col-md-10 col-sm-9", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
       NavHeight: 60 //height of navbar ex.
     };
@@ -35,7 +35,7 @@ class Index extends React.Component {
 
   updateWindowDimensions = () => {
     let statusSidebar = false;
-    if (window.innerWidth > 724) {
+    if (window.innerWidth > 575) {
       statusSidebar = true;
     }
     this.setState({
