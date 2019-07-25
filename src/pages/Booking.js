@@ -8,50 +8,32 @@ import Pickdate from "../components/Datepicker";
 import HeadText from "../components/HeaderPage";
 import Helmet from "react-helmet";
 
-const Mockup = {
-  signs: [
-    {
-      name: "Lib1",
-      location: "หน้าหอสมุด",
-      limitdate: 7,
-      beforedate: 3,
-      Picture: "Lib1-1234567890"
-    },
-    {
-      name: "Lib2",
-      location: "หลังหอสมุด",
-      limitdate: 3,
-      beforedate: 1,
-      Picture: "Lib2-2222222222"
-    },
-    {
-      name: "SIT1",
-      location: "หน้าคณะ sit",
-      limitdate: 14,
-      beforedate: 3,
-      Picture: "SIT1-3333333333"
-    }
-  ]
-};
-
 class Booking extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       applicant: "",
       organization: "",
-      signname: "",
       firstdate: new Date(),
       lastdate: new Date(),
-      signs: []
+      signs: [],
+      sign: {},
+      description: "",
     };
   }
   componentDidMount() {
     this.fetchSigns();
   }
   handleChange = (event, state) => {
-    this.setState({ [state]: event });
+    this.setState(
+      { [state]: event }
+    );
   };
+  handelSetSign = (event) => {
+    this.setState({
+      sign : JSON.parse(event)
+    })
+  }
   fetchSigns = async () => {
     await axios
       .get("http://127.0.0.1:3000/allsign")
@@ -59,28 +41,29 @@ class Booking extends React.Component {
         if (signs.data.signs != null) {
           this.setState({
             signs: signs.data.signs,
-            signname: signs.data.signs[0].name
+            sign: signs.data.signs[0]
           });
         }
       })
       .catch(err => {
-        this.setState({
-          signs: Mockup.signs
-        });
-        // window.location.href = `/error/${err.response.status}`;
+        // this.setState({
+          // signs: Mockup.signs
+        // });
+        window.location.href = `/error/${err.response.status}`;
       });
   };
   handleBooking = () => {
     var bodyFormData = new FormData();
-    bodyFormData.set("applicant", this.state.applicant);
+    bodyFormData.set("applicant_id", this.state.applicant);
     bodyFormData.append("organization", this.state.organization);
-    bodyFormData.append("signname", this.state.signname);
+    bodyFormData.append("sign_id", this.state.sign.id);
+    bodyFormData.append("description", this.state.description);
     bodyFormData.append(
-      "firstdate",
+      "first_date",
       moment(this.state.firstdate).format("YYYY-MM-DD")
     );
     bodyFormData.append(
-      "lastdate",
+      "last_date",
       moment(this.state.lastdate).format("YYYY-MM-DD")
     );
     if (this.checkForm()) {
@@ -194,19 +177,46 @@ class Booking extends React.Component {
                 value={this.state.organization}
                 onChange={e => this.handleChange(e.target.value, "organization")}
             />
-            <label className="m-2">ป้ายที่ต้องการเช่า</label>
-            <select
-                className="form-control text-black-50"
-                onChange={e => this.handleChange(e.target.value, "signname")}
-            >
-                {this.state.signs.map(value => {
-                return (
-                    <option value={value.name}>
-                    {value.name} {value.location}
-                    </option>
-                );
-                })}
-            </select>
+            <label className="m-2">เหตุผลที่ขอเช่า</label>
+            <textarea
+              className="form-control"
+              value={this.state.organization}
+              onChange={e => this.handleChange(e.target.value, "description")}>
+            </textarea>
+            <div>
+              <label className="m-2">ป้ายที่ต้องการเช่า</label>
+
+                <select
+                    className="form-control"
+                    onChange={e => this.handelSetSign(e.target.value)}
+                >
+                  {this.state.signs.map(value => {
+                      return (
+                          <option value={JSON.stringify(value)}>
+                            {value.name} {value.location}
+                          </option>
+                    );
+                    })}
+                </select>
+                <div className="row m-2">
+                  <div class="card mb-3">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img src={'img/'+this.state.sign.picture} class="p-3 card-img"/>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <span>ชื่อ : {this.state.sign.name}</span><br/>
+                          <span>สถานที่ : {this.state.sign.location}</span><br/>
+                          <span>จองก่อน : {this.state.sign.beforebooking} วัน</span><br/>
+                          <span>จองได้มาก : {this.state.sign.limitdate} วัน</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
             <label className="m-2">วันที่ต้องการเช่า </label>
             <Pickdate
                 dayto={this.setdayto}
@@ -215,20 +225,19 @@ class Booking extends React.Component {
                 selectedDayTo={this.state.lastdate}
             />
             </div>
-            {/* </form> */}
-            <div className="mx-3">
-            <button
-                type="button"
-                className="btn btn-outline-success mr-3"
-                onClick={this.handleBooking}
-            >
-                ทำการจอง
-            </button>
-            <Link to="/">
-                <button type="button" className="btn btn-outline-danger">
-                กลับ
-                </button>
-            </Link>
+            <div className="mx-3 mb-5">
+              <button
+                  type="button"
+                  className="btn btn-outline-success mr-3"
+                  onClick={this.handleBooking}
+              >
+                  ทำการจอง
+              </button>
+              <Link to="/">
+                  <button type="button" className="btn btn-outline-danger">
+                  กลับ
+                  </button>
+              </Link>
             </div>
         </div>    
       </div>
