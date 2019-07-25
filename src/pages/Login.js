@@ -1,6 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
+import passwordHash from 'password-hash'
 import Headtext from '../components/HeaderPage'
 
 
@@ -18,6 +19,14 @@ class Login extends React.Component {
       { [state]: event }
     );
   };
+
+  Login = () => {
+    console.log(this.state.Username)
+    let hash = passwordHash.generate(this.state.Password)
+    console.log(hash)
+    console.log(passwordHash.verify(this.state.Password, hash))
+    console.log(passwordHash.verify('panupong', hash))
+  }
 
   render() {
     return (
@@ -45,7 +54,7 @@ class Login extends React.Component {
             <button
                 type="button"
                 className="btn btn-outline-success mr-3"
-                // onClick={}
+                onClick={this.Login}
             >
                 ลงชื่อเข้าใช้
             </button>
