@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import sweetalert from "sweetalert2";
-import Pickdate from "../components/finaltestdatepicker";
+import Pickdate from "../components/Datepicker";
 import HeadText from "../components/HeaderPage";
 import Helmet from "react-helmet";
 
