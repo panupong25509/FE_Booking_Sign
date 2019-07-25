@@ -10,6 +10,7 @@ import Addsign from "./AddSign";
 import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
 import styled from "styled-components";
+import Login from './Login'
 
 const Font = styled.div`
   font-family: "Kanit", sans-serif;
@@ -72,9 +73,10 @@ class Index extends React.Component {
               <div className={this.state.PageWidth + " p-0"}>
                 <Switch>
                   <Route exact path="/" component={Signs} />
-                  <Route exact path="/Booking" component={Booking} />
-                  <Route exact path="/History" component={History} />
-                  <Route exact path="/Addsign" component={Addsign} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/booking" component={Booking} />
+                  <Route exact path="/history" component={History} />
+                  <Route exact path="/addsign" component={Addsign} />
                   <Route exact path="/error/:status" component={Error} />
                   <Route component={Error} />
                 </Switch>
