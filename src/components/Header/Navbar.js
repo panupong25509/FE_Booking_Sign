@@ -22,14 +22,20 @@ class Navbar extends React.Component {
   };
   render() {
     return (
-        <Navs className={"navbar navbar-default navbar-fixed-top "+this.props.width} height={this.props.height}>
-            <Icon
-              className="fa fa-bars d-sm-none d-block"
-              onClick={this.handleSidebar}
-            />
-            <Logo src="/img/kmutt.png" />
-            <Icon className="fa fa-user d-sm-none d-block" />
-        </Navs>
+      <Navs
+        className={"navbar navbar-default navbar-fixed-top " + this.props.width}
+        height={this.props.height}
+      >
+        <Link className=" d-sm-none d-block text-white ">
+          <Icon className="fa fa-bars" onClick={this.handleSidebar} />
+        </Link>
+        <Link to="/">
+          <Logo src="/img/kmutt.png" />
+        </Link>
+        <Link to="/login">
+          <Icon className="fa fa-user text-white mr-2" />
+        </Link>
+      </Navs>
     );
   }
 }
