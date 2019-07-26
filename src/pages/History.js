@@ -5,6 +5,7 @@ import HeadText from "../components/HeaderPage";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import moment from "moment";
+import cookie from "react-cookies";
 
 const MockupData = {
   bookings: [
@@ -43,16 +44,28 @@ class History extends React.Component {
     this.fetchHistory();
   }
   fetchHistory = async () => {
-    await axios
-      .get(process.env.REACT_APP_BE_PATH + "/allbooking")
-      .then(history => {
-        this.setState({ history: history.data.bookings });
-      })
-      .catch(err => {
-        if (err.response.status !== null) {
-          window.location.href = `/error/${err.response.status}`;
+    if (cookie.load("user") === undefined) {
+      this.props.history.push("/login");
+    } else {
+      var bodyFormData = new FormData();
+      bodyFormData.set("applicant_id", cookie.load("user").id);
+      await axios({
+        method: "post",
+        url: process.env.REACT_APP_BE_PATH + "/booking",
+        data: bodyFormData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-      });
+      })
+        .then(history => {
+          this.setState({ history: history.data.bookings });
+        })
+        .catch(err => {
+          if (err.response.status !== undefined) {
+            window.location.href = `/error/${err.response.status}`;
+          }
+        });
+    }
   };
   render() {
     return (
@@ -93,7 +106,13 @@ class History extends React.Component {
                 return (
                   <Box className="shadow-sm bg-white rounded">
                     <td className="px-3">
-                      <div>{booking.applicant}<br/>{booking.organization}</div>
+                      <div>
+                        {booking.applicant.fname +
+                          " " +
+                          booking.applicant.lname}
+                        <br />
+                        {booking.applicant.organization}
+                      </div>
                     </td>
                     <td className="px-3">{booking.sign.location}</td>
                     <td className="px-3">
@@ -111,7 +130,9 @@ class History extends React.Component {
           </Table>
           <div className="float-right">
             <Link to="/">
-              <button type="button" class="btn btn-outline-danger">กลับ</button>
+              <button type="button" class="btn btn-outline-danger">
+                กลับ
+              </button>
             </Link>
           </div>
         </div>

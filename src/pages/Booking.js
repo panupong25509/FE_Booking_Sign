@@ -70,7 +70,7 @@ class Booking extends React.Component {
         window.location.href = "/error";
       });
   };
-  handleBooking = (e) => {
+  handleBooking = e => {
     var bodyFormData = new FormData();
     bodyFormData.set("applicant_id", this.state.applicant_id);
     bodyFormData.append("sign_id", this.state.sign.id);
@@ -168,61 +168,62 @@ class Booking extends React.Component {
       <div>
         <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
         <HeadText name="Booking" />
-        <div className="container  mt-2">
-          <div className="form-group px-3 m-0 pb-4">
-            <label className="m-2">ชื่อผู้ขอเช่า</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.applicant}
-            />
-            <label className="m-2">ชื่อองค์กรผู้ขอเช่า</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.organization}
-            />
-            <label className="m-2">เหตุผลที่ขอเช่า</label>
-            <textarea
-              className="form-control"
-              value={this.state.description}
-              onChange={e => this.handleChange(e.target.value, "description")}
-            />
-            <div>
-              <label className="m-2">ป้ายที่ต้องการเช่า</label>
-
-              <select
+        <div className="container mt-2">
+          <form onSubmit={this.handleBooking}>
+            <div className="form-group px-3 m-0 pb-4">
+              <label className="m-2">ชื่อผู้ขอเช่า</label>
+              <input type="text" className="form-control" value={"Panupong"} />
+              <label className="m-2">ชื่อองค์กรผู้ขอเช่า</label>
+              <input
+                type="text"
                 className="form-control"
-                onChange={e => this.handelSetSign(e.target.value)}
-              >
-                {this.state.signs.map(value => {
-                  return (
-                    <option value={JSON.stringify(value)}>
-                      {value.name} {value.location}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="row mt-2 col-sm-8 col-12 m-0">
-                <div class="card mb-3">
-                  <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <img
-                        src={"img/" + this.state.sign.picture}
-                        class="p-3 card-img"
-                      />
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <span>ชื่อ : {this.state.sign.name}</span>
-                        <br />
-                        <span>สถานที่ : {this.state.sign.location}</span>
-                        <br />
-                        <span>
-                          จองก่อน : {this.state.sign.beforebooking} วัน
-                        </span>
-                        <br />
-                        <span>จองได้มาก : {this.state.sign.limitdate} วัน</span>
+                value={"School of Information Technology"}
+              />
+              <label className="m-2">เหตุผลที่ขอเช่า</label>
+              <textarea
+                className="form-control"
+                value={this.state.description}
+                onChange={e => this.handleChange(e.target.value, "description")}
+                required
+              />
+              <div>
+                <label className="m-2">ป้ายที่ต้องการเช่า</label>
+
+                <select
+                  className="form-control"
+                  onChange={e => this.handelSetSign(e.target.value)}
+                >
+                  {this.state.signs.map(value => {
+                    return (
+                      <option value={JSON.stringify(value)}>
+                        {value.name} {value.location}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="row mt-2 col-sm-8 col-12 m-0">
+                  <div class="card mb-3">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img
+                          src={"img/" + this.state.sign.picture}
+                          class="p-3 card-img"
+                        />
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <span>ชื่อ : {this.state.sign.name}</span>
+                          <br />
+                          <span>สถานที่ : {this.state.sign.location}</span>
+                          <br />
+                          <span>
+                            จองก่อน : {this.state.sign.beforebooking} วัน
+                          </span>
+                          <br />
+                          <span>
+                            จองได้มาก : {this.state.sign.limitdate} วัน
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -230,35 +231,28 @@ class Booking extends React.Component {
               </div>
 
               <label className="m-2">วันที่ต้องการเช่า </label>
-              <DatePicker date={this.setDate} ref={this.datepicker} sign={this.state.sign.id} />
+              <DatePicker
+                date={this.setDate}
+                ref={this.datepicker}
+                sign={this.state.sign.id}
+              />
             </div>
 
-<<<<<<< HEAD
-            <label className="m-2">วันที่ต้องการเช่า </label>
-            <DatePicker
-              date={this.setDate}
-              ref={this.datepicker}
-              sign={this.state.sign.id}
-            />
-          </div>
-=======
->>>>>>> 6d1e45ab3233f1b83e6e44c44bd586eb7817fb0c
-          <div className="mx-3 mb-5">
-            <button
-              type="submit"
-              className="btn btn-outline-success mr-3"
-              // onClick={this.handleBooking}
-            >
-              ทำการจอง
-            </button>
-            <Link to="/">
-              <button type="button" className="btn btn-outline-danger">
-                กลับ
+            <div className="mx-3 mb-5">
+              <button
+                type="submit"
+                className="btn btn-outline-success mr-3"
+                // onClick={this.handleBooking}
+              >
+                ทำการจอง
               </button>
-            </Link>
+              <Link to="/">
+                <button type="button" className="btn btn-outline-danger">
+                  กลับ
+                </button>
+              </Link>
             </div>
           </form>
-            
         </div>
       </div>
     );
