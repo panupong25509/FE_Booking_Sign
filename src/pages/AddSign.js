@@ -20,9 +20,9 @@ class Home extends React.Component {
         this.setState({[state]: event})
     }
     handleChangeFile = (event) => {
-        this.setState({file:event.target.files[0]})
+        this.setState({ file: event.target.files[0] })
     }
-    handleAddSign=()=> {
+    handleAddSign = (e) => {
         var bodyFormData = new FormData();
         bodyFormData.set('signname', this.state.signname);
         bodyFormData.append('location', this.state.location);
@@ -53,6 +53,7 @@ class Home extends React.Component {
                 window.location.href = "/";
             });
         }
+        e.preventDefault()
     }
     
     render() {
@@ -60,34 +61,36 @@ class Home extends React.Component {
             <div>
                 <HeadText name="Add Sign" />
                 <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
-                <div className="container mt-2">
-                    <div class="form-group">
-                        <label className="m-2">ชื่อป้าย</label>
-                        <input type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
+                <form onSubmit={this.handleAddSign}>
+                    <div className="container mt-2">
+                        <div class="form-group">
+                            <label className="m-2">ชื่อป้าย</label>
+                            <input required type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
+                        </div>
+                        <div class="form-group">
+                            <label className="mx-2">สถานที่</label>
+                            <input required type="text" class="form-control" value={this.state.location} onChange={(e) => this.handleChange(e.target.value, "location")}/>
+                        </div>
+                        <div class="form-group">
+                            <label className="mx-2">ต้องจองก่อนกี่วัน</label>
+                            <input required type="number" class="form-control" value={this.state.beforebooking} onChange={(e) => this.handleChange(e.target.value, "beforebooking")}/>
+                        </div>
+                        <div class="form-group">
+                            <label className="mx-2">จองได้มากสุดกี่วัน</label>
+                            <input required type="number" class="form-control" value={this.state.limitdate} onChange={(e) => this.handleChange(e.target.value, "limitdate")}/>
+                        </div>
+                        <div class="form-group">
+                            <label className="mx-2">อัพรูปป้าย</label>
+                            <input required type="file" accept=".jpg" onChange={this.handleChangeFile} />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label className="mx-2">สถานที่</label>
-                        <input type="text" class="form-control" value={this.state.location} onChange={(e) => this.handleChange(e.target.value, "location")}/>
+                    <div className="mx-3">
+                        <button type="submit" class="btn btn-outline-success mr-3">Add</button>
+                        <Link to="/">
+                            <button type="button" class="btn btn-outline-danger">กลับ</button>
+                        </Link>
                     </div>
-                    <div class="form-group">
-                        <label className="mx-2">ต้องจองก่อนกี่วัน</label>
-                        <input type="number" class="form-control" value={this.state.beforebooking} onChange={(e) => this.handleChange(e.target.value, "beforebooking")}/>
-                    </div>
-                    <div class="form-group">
-                        <label className="mx-2">จองได้มากสุดกี่วัน</label>
-                        <input type="number" class="form-control" value={this.state.limitdate} onChange={(e) => this.handleChange(e.target.value, "limitdate")}/>
-                    </div>
-                    <div class="form-group">
-                        <label className="mx-2">อัพรูปป้าย</label>
-                        <input type="file" accept=".jpg" onChange={this.handleChangeFile} />
-                    </div>
-                </div>
-                <div className="mx-3">
-                    <button type="button" class="btn btn-outline-success mr-3" onClick={this.handleAddSign}>Add</button>
-                    <Link to="/">
-                        <button type="button" class="btn btn-outline-danger">กลับ</button>
-                    </Link>
-                </div>
+                </form>
             </div>
         )
     }
