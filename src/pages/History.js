@@ -29,6 +29,7 @@ const MockupData = {
 const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 15px;
+  font-size: 0.8rem;
 `;
 const Box = styled.tr`
   border-right: hidden;
@@ -78,25 +79,25 @@ class History extends React.Component {
           <Table>
             <thead>
               <tr>
-                <th className="px-3" style={{ width: "40%" }} scope="col">
+                <th className="px-3" style={{ width: "33%" }} scope="col">
                   APPLICANT & ORGANIZATION
                 </th>
-                <th className="px-3" style={{ width: "25%" }} scope="col">
+                <th className="px-3" style={{ width: "16%" }} scope="col">
                   LOCATION
                 </th>
-                <th className="px-3" style={{ width: "20%" }} scope="col">
+                <th className="px-3" style={{ width: "29%" }} scope="col">
                   DATE
                 </th>
                 <th
                   className="px-3 text-center"
-                  style={{ width: "10%" }}
+                  style={{ width: "8%" }}
                   scope="col"
                 >
                   STATUS
                 </th>
                 <th
                   className="px-3 text-center"
-                  style={{ width: "5%" }}
+                  style={{ width: "4%" }}
                   scope="col"
                 >
                   DETAIL
@@ -118,8 +119,8 @@ class History extends React.Component {
                     </td>
                     <td className="px-3">{booking.sign.location}</td>
                     <td className="px-3">
-                      {moment(booking.first_date).format("YYYY-MM-DD")}
-                      <br /> to {moment(booking.last_date).format("YYYY-MM-DD")}
+                      {moment(booking.first_date).format("DD/MM/YY")}
+                       -{moment(booking.last_date).format("DD/MM/YY")}
                     </td>
                     <td className="px-3 text-center">pending</td>
                     <td className="px -3 text-center">
