@@ -30,7 +30,6 @@ class Booking extends React.Component {
       this.props.history.push("/login");
     } else {
       let user = cookie.load("user");
-      console.log(user);
       this.setState({
         applicant_id: user.id,
         applicant: user.fname + " " + user.lname,
@@ -150,9 +149,6 @@ class Booking extends React.Component {
   };
 
   checkForm() {
-    console.log(this.state.firstdate);
-    console.log(this.state.lastdate);
-    console.log(this.state.description);
     if (
       this.state.firstdate === null ||
       this.state.lastdate === null ||
@@ -172,12 +168,12 @@ class Booking extends React.Component {
           <form onSubmit={this.handleBooking}>
             <div className="form-group px-3 m-0 pb-4">
               <label className="m-2">ชื่อผู้ขอเช่า</label>
-              <input type="text" className="form-control" value={"Panupong"} />
+              <input type="text" className="form-control" value={this.state.applicant} />
               <label className="m-2">ชื่อองค์กรผู้ขอเช่า</label>
               <input
                 type="text"
                 className="form-control"
-                value={"School of Information Technology"}
+                value={this.state.organization}
               />
               <label className="m-2">เหตุผลที่ขอเช่า</label>
               <textarea
@@ -242,7 +238,6 @@ class Booking extends React.Component {
               <button
                 type="submit"
                 className="btn btn-outline-success mr-3"
-                // onClick={this.handleBooking}
               >
                 ทำการจอง
               </button>

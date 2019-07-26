@@ -60,12 +60,12 @@ export default class Example extends React.Component {
   };
 
   fetchBookingDates = async (signid) => {
-    console.log(signid)
     await axios.get(`http://127.0.0.1:3000/getbookingdays/${signid}`).then(dates => {
       this.addBookingDates(dates.data);
+      console.log(dates.data)
     });
   };
-
+  
   addBookingDates = async dates => {
     let bookingDates = [];
     await dates.map(date => {
@@ -76,8 +76,8 @@ export default class Example extends React.Component {
         firstdate,
         lastdate
       );
-      this.setState({ bookingDates: bookingDates });
     });
+    this.setState({ bookingDates: bookingDates });
   };
 
   handleFetchSignId = (signid) => {

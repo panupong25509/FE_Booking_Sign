@@ -41,31 +41,33 @@ class History extends React.Component {
     };
   }
   componentWillMount() {
-    this.fetchHistory();
-  }
-  fetchHistory = async () => {
     if (cookie.load("user") === undefined) {
       this.props.history.push("/login");
     } else {
-      var bodyFormData = new FormData();
-      bodyFormData.set("applicant_id", cookie.load("user").id);
-      await axios({
-        method: "post",
-        url: process.env.REACT_APP_BE_PATH + "/booking",
-        data: bodyFormData,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+      this.fetchHistory();
+    }
+  }
+  fetchHistory = async () => {
+    var bodyFormData = new FormData();
+    bodyFormData.set("applicant_id", cookie.load("user").id);
+    await axios({
+      method: "post",
+      url: process.env.REACT_APP_BE_PATH + "/booking",
+      data: bodyFormData,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(history => {
+        if (history.data.bookings !== null) {
+          this.setState({ history: history.data.bookings });
         }
       })
-        .then(history => {
-          this.setState({ history: history.data.bookings });
-        })
-        .catch(err => {
-          if (err.response.status !== undefined) {
-            window.location.href = `/error/${err.response.status}`;
-          }
-        });
-    }
+      .catch(err => {
+        if (err.response.status !== undefined) {
+          window.location.href = `/error/${err.response.status}`;
+        }
+      });
   };
   render() {
     return (
