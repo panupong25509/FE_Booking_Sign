@@ -54,13 +54,15 @@ class Login extends React.Component {
       return (
         <div>
           <Headtext name="Logout" />
-          <button
-            type="button"
-            className="btn btn-outline-danger"
-            onClick={this.Logut}
-          >
-            Logout
-          </button>
+          <div>
+            <button
+              type="button"
+              className="btn btn-outline-danger m-3"
+              onClick={this.Logut}
+              >
+              Logout
+            </button>
+          </div>
         </div>
       );
     }
