@@ -11,6 +11,7 @@ import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
 import styled from "styled-components";
 import Login from './Login'
+import Register from './Register'
 
 const Font = styled.div`
   font-family: "Kanit", sans-serif;
@@ -77,6 +78,7 @@ class Index extends React.Component {
                   <Route exact path="/booking" component={Booking} />
                   <Route exact path="/history" component={History} />
                   <Route exact path="/addsign" component={Addsign} />
+                  <Route exact path="/register" component={Register} />
                   <Route exact path="/error/:status" component={Error} />
                   <Route component={Error} />
                 </Switch>
