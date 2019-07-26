@@ -62,7 +62,6 @@ export default class Example extends React.Component {
   fetchBookingDates = async (signid) => {
     await axios.get(`http://127.0.0.1:3000/getbookingdays/${signid}`).then(dates => {
       this.addBookingDates(dates.data);
-      console.log(dates.data)
     });
   };
   
@@ -97,12 +96,12 @@ export default class Example extends React.Component {
         backgroundColor: "red"
       }
     };
-    const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }];
+    const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }, { before: new Date() }];
     const selectedDays = [from, { from, to: enteredTo }];
     return (
-      <div>
+      <div className="container">
         <DayPicker
-          className="Range"
+          className="Range bg-white border "
           numberOfMonths={2}
           fromMonth={from}
           selectedDays={selectedDays}
@@ -112,7 +111,7 @@ export default class Example extends React.Component {
           onDayClick={this.handleDayClick}
           onDayMouseEnter={this.handleDayMouseEnter}
         />
-        <div>
+        <div className = "mt-2">
           {!from && !to && "Please select the first day."}
           {from && !to && "Please select the last day."}
           {from &&
