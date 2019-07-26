@@ -24,7 +24,10 @@ export default class Example extends React.Component {
     const isRangeSelected = from && to;
     return !from || isBeforeFirstDay || isRangeSelected;
   };
-  handleDayClick = async day => {
+  handleDayClick = async (day, modifiers = {}) => {
+    if (modifiers.disabled) {
+      return;
+    }
     const { from, to } = this.state;
     if (from && to && day >= from && day <= to) {
       this.handleResetClick();
