@@ -1,9 +1,9 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
-import passwordHash from 'password-hash'
-import Headtext from '../components/HeaderPage'
-
+import axios from "axios";
+import cookie from "react-cookies";
+import Headtext from "../components/HeaderPage";
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,24 +11,59 @@ class Login extends React.Component {
     this.state = {
       Username: "",
       Password: "",
+      Login: null
     };
   }
 
   handleChange = (event, state) => {
-    this.setState(
-      { [state]: event }
-    );
+    this.setState({ [state]: event });
   };
 
-  Login = () => {
-    console.log(this.state.Username)
-    let hash = passwordHash.generate(this.state.Password)
-    console.log(hash)
-    console.log(passwordHash.verify(this.state.Password, hash))
-    console.log(passwordHash.verify('panupong', hash))
-  }
+  Login = async () => {
+    var bodyFormData = new FormData();
+    bodyFormData.set("username", this.state.Username);
+    bodyFormData.append("password", this.state.Password);
+    console.log(this.state.Username);
+    console.log(this.state.Password);
+    await axios({
+      method: "post",
+      url: process.env.REACT_APP_BE_PATH + "/login",
+      data: bodyFormData,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then(user => {
+      // console.log(user.data);
+      cookie.save("user", user.data);
+      this.setState({
+        Login: true
+      });
+      // console.log(cookie.load("user"));
+    });
+  };
+
+  Logut = () => {
+    cookie.remove("user");
+    this.setState({
+      Login: false
+    });
+  };
 
   render() {
+    if (cookie.load("user") !== undefined) {
+      return (
+        <div>
+          <Headtext name="Logout" />
+          <button
+            type="button"
+            className="btn btn-outline-danger"
+            onClick={this.Logut}
+          >
+            Logout
+          </button>
+        </div>
+      );
+    }
     return (
       <div>
         <Headtext name="Login" />
@@ -52,22 +87,22 @@ class Login extends React.Component {
           </div>
           <div className="mt-4 mb-5">
             <button
-                type="button"
-                className="btn btn-outline-success mr-3"
-                onClick={this.Login}
+              type="button"
+              className="btn btn-outline-success mr-3"
+              onClick={this.Login}
             >
-                ลงชื่อเข้าใช้
+              ลงชื่อเข้าใช้
             </button>
             <Link to="/">
-                <button type="button" className="btn btn-outline-danger">
+              <button type="button" className="btn btn-outline-danger">
                 กลับ
-                </button>
+              </button>
             </Link>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Login
+export default Login;

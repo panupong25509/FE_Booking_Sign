@@ -1,4 +1,4 @@
-import React,{useRef} from "react";
+import React from "react";
 import axios from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import Helmet from "react-helmet";
 
 import HeadText from "../components/HeaderPage";
 import DatePicker from "../components/Datepicker";
+import cookie from "react-cookies";
 
 class Booking extends React.Component {
   constructor(props) {
@@ -14,6 +15,8 @@ class Booking extends React.Component {
     this.datepicker = React.createRef();
     this.state = {
       applicant_id: "",
+      applicant: "",
+      organization: "",
       firstdate: null,
       lastdate: null,
       description: "",
@@ -23,31 +26,42 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSigns();
+    if (cookie.load("user") === undefined) {
+      this.props.history.push("/login");
+    } else {
+      let user = cookie.load("user");
+      console.log(user);
+      this.setState({
+        applicant_id: user.id,
+        applicant: user.fname + " " + user.lname,
+        organization: user.organization
+      });
+      this.fetchSigns();
+    }
   }
-  
+
   handleChange = async (event, state) => {
     await this.setState({ [state]: event });
   };
-  
+
   handelSetSign = async event => {
     await this.setState({
       sign: JSON.parse(event)
     });
-    this.datepicker.current.handleFetchSignId(this.state.sign.id)
+    this.datepicker.current.handleFetchSignId(this.state.sign.id);
   };
-  
+
   fetchSigns = async () => {
     await axios
-    .get(process.env.REACT_APP_BE_PATH + "/allsign")
-    .then(signs => {
-      if (signs.data.signs != null) {
-        this.setState({
-          signs: signs.data.signs,
-          sign: signs.data.signs[0]
+      .get(process.env.REACT_APP_BE_PATH + "/allsign")
+      .then(signs => {
+        if (signs.data.signs != null) {
+          this.setState({
+            signs: signs.data.signs,
+            sign: signs.data.signs[0]
           });
         }
-      this.datepicker.current.handleFetchSignId(this.state.sign.id)
+        this.datepicker.current.handleFetchSignId(this.state.sign.id);
       })
       .catch(err => {
         if (err.response.state !== null) {
@@ -75,9 +89,9 @@ class Booking extends React.Component {
           title: `คุณ Panupong ยืนยันจะจองป้ายตามนี้ใช่ไหม?`,
           text: `ป้าย ${this.state.sign.name} วันที่ ${moment(
             this.state.firstdate
-          ).format("YYYY-MM-DD")} ถึง ${moment(
-            this.state.lastdate
-          ).format("YYYY-MM-DD")}`,
+          ).format("YYYY-MM-DD")} ถึง ${moment(this.state.lastdate).format(
+            "YYYY-MM-DD"
+          )}`,
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -129,8 +143,8 @@ class Booking extends React.Component {
 
   setDate = async date => {
     await this.setState({
-        firstdate: date.firstdate,
-        lastdate: date.lastdate
+      firstdate: date.firstdate,
+      lastdate: date.lastdate
     });
   };
 
@@ -156,12 +170,16 @@ class Booking extends React.Component {
         <div className="container  mt-2">
           <div className="form-group px-3 m-0 pb-4">
             <label className="m-2">ชื่อผู้ขอเช่า</label>
-            <input type="text" className="form-control" value={"Panupong"} />
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.applicant}
+            />
             <label className="m-2">ชื่อองค์กรผู้ขอเช่า</label>
             <input
               type="text"
               className="form-control"
-              value={"School of Information Technology"}
+              value={this.state.organization}
             />
             <label className="m-2">เหตุผลที่ขอเช่า</label>
             <textarea
@@ -175,7 +193,6 @@ class Booking extends React.Component {
               <select
                 className="form-control"
                 onChange={e => this.handelSetSign(e.target.value)}
-
               >
                 {this.state.signs.map(value => {
                   return (
@@ -213,7 +230,11 @@ class Booking extends React.Component {
             </div>
 
             <label className="m-2">วันที่ต้องการเช่า </label>
-            <DatePicker date={this.setDate} ref={this.datepicker} sign={this.state.sign.id}/>
+            <DatePicker
+              date={this.setDate}
+              ref={this.datepicker}
+              sign={this.state.sign.id}
+            />
           </div>
           <div className="mx-3 mb-5">
             <button
