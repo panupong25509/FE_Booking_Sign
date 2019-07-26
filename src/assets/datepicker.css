@@ -6,3 +6,6 @@
 .Range .DayPicker-Day {
   border-radius: 0 !important;
 }
+.bg-white {
+  background-color: #fff;
+}
