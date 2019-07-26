@@ -197,16 +197,16 @@ class Booking extends React.Component {
                     );
                   })}
                 </select>
-                <div className="row mt-2 col-sm-8 col-12 m-0">
+                <div className="row mt-3 col-12 m-0">
                   <div class="card mb-3">
                     <div class="row no-gutters">
-                      <div class="col-md-4">
+                      <div class="col-4">
                         <img
                           src={"img/" + this.state.sign.picture}
-                          class="p-3 card-img"
+                          class="img-fluid card-img"
                         />
                       </div>
-                      <div class="col-md-8">
+                      <div class="col-8">
                         <div class="card-body">
                           <span>ชื่อ : {this.state.sign.name}</span>
                           <br />
