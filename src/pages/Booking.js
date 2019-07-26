@@ -70,7 +70,7 @@ class Booking extends React.Component {
         window.location.href = "/error";
       });
   };
-  handleBooking = () => {
+  handleBooking = (e) => {
     var bodyFormData = new FormData();
     bodyFormData.set("applicant_id", this.state.applicant_id);
     bodyFormData.append("sign_id", this.state.sign.id);
@@ -110,6 +110,7 @@ class Booking extends React.Component {
         title: "กรอกข้อมูลไม่ครบ"
       });
     }
+    e.preventDefault();
   };
   postBooking = bodyFormData => {
     axios({
@@ -227,8 +228,12 @@ class Booking extends React.Component {
                   </div>
                 </div>
               </div>
+
+              <label className="m-2">วันที่ต้องการเช่า </label>
+              <DatePicker date={this.setDate} ref={this.datepicker} sign={this.state.sign.id} />
             </div>
 
+<<<<<<< HEAD
             <label className="m-2">วันที่ต้องการเช่า </label>
             <DatePicker
               date={this.setDate}
@@ -236,11 +241,13 @@ class Booking extends React.Component {
               sign={this.state.sign.id}
             />
           </div>
+=======
+>>>>>>> 6d1e45ab3233f1b83e6e44c44bd586eb7817fb0c
           <div className="mx-3 mb-5">
             <button
-              type="button"
+              type="submit"
               className="btn btn-outline-success mr-3"
-              onClick={this.handleBooking}
+              // onClick={this.handleBooking}
             >
               ทำการจอง
             </button>
@@ -249,7 +256,9 @@ class Booking extends React.Component {
                 กลับ
               </button>
             </Link>
-          </div>
+            </div>
+          </form>
+            
         </div>
       </div>
     );
