@@ -16,7 +16,7 @@ export default class Example extends React.Component {
     return {
       from: null,
       to: null,
-      enteredTo: null // Keep track of the last day for mouseEnter.
+      enteredTo: null, // Keep track of the last day for mouseEnter.
     };
   }
   isSelectingFirstDay = (from, to, day) => {
@@ -44,7 +44,7 @@ export default class Example extends React.Component {
     }
     this.props.date({
       firstdate: this.state.from,
-      lastdate: this.state.to
+      lastdate: this.state.to,
     });
   };
   handleDayMouseEnter = day => {
@@ -59,15 +59,13 @@ export default class Example extends React.Component {
     this.setState(this.getInitialState());
   };
 
-  componentDidMount() {
-    this.fetchBookingDates();
-  }
-
-  fetchBookingDates = async () => {
-    await axios.get("http://127.0.0.1:3000/getbookingdays/1").then(dates => {
+  fetchBookingDates = async (signid) => {
+    console.log(signid)
+    await axios.get(`http://127.0.0.1:3000/getbookingdays/${signid}`).then(dates => {
       this.addBookingDates(dates.data);
     });
   };
+
   addBookingDates = async dates => {
     let bookingDates = [];
     await dates.map(date => {
@@ -81,6 +79,11 @@ export default class Example extends React.Component {
       this.setState({ bookingDates: bookingDates });
     });
   };
+
+  handleFetchSignId = (signid) => {
+    this.fetchBookingDates(signid)
+  }
+
   render() {
     const { from, to, enteredTo } = this.state;
     const modifiers = {
