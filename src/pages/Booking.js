@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef} from "react";
 import axios from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -7,9 +7,11 @@ import Helmet from "react-helmet";
 
 import HeadText from "../components/HeaderPage";
 import DatePicker from "../components/Datepicker";
+
 class Booking extends React.Component {
   constructor(props) {
     super(props);
+    this.datepicker = React.createRef();
     this.state = {
       applicant_id: "",
       firstdate: null,
@@ -19,27 +21,33 @@ class Booking extends React.Component {
       sign: {}
     };
   }
+
   componentDidMount() {
     this.fetchSigns();
   }
+  
   handleChange = async (event, state) => {
     await this.setState({ [state]: event });
   };
-  handelSetSign = event => {
-    this.setState({
+  
+  handelSetSign = async event => {
+    await this.setState({
       sign: JSON.parse(event)
     });
+    this.datepicker.current.handleFetchSignId(this.state.sign.id)
   };
+  
   fetchSigns = async () => {
     await axios
-      .get(process.env.REACT_APP_BE_PATH + "/allsign")
-      .then(signs => {
-        if (signs.data.signs != null) {
-          this.setState({
-            signs: signs.data.signs,
-            sign: signs.data.signs[0]
+    .get(process.env.REACT_APP_BE_PATH + "/allsign")
+    .then(signs => {
+      if (signs.data.signs != null) {
+        this.setState({
+          signs: signs.data.signs,
+          sign: signs.data.signs[0]
           });
         }
+      this.datepicker.current.handleFetchSignId(this.state.sign.id)
       })
       .catch(err => {
         if (err.response.state !== null) {
@@ -167,6 +175,7 @@ class Booking extends React.Component {
               <select
                 className="form-control"
                 onChange={e => this.handelSetSign(e.target.value)}
+
               >
                 {this.state.signs.map(value => {
                   return (
@@ -176,7 +185,7 @@ class Booking extends React.Component {
                   );
                 })}
               </select>
-              <div className="row m-2">
+              <div className="row mt-2 col-sm-8 col-12 m-0">
                 <div class="card mb-3">
                   <div class="row no-gutters">
                     <div class="col-md-4">
@@ -204,7 +213,7 @@ class Booking extends React.Component {
             </div>
 
             <label className="m-2">วันที่ต้องการเช่า </label>
-            <DatePicker date={this.setDate} />
+            <DatePicker date={this.setDate} ref={this.datepicker} sign={this.state.sign.id}/>
           </div>
           <div className="mx-3 mb-5">
             <button
