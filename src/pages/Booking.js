@@ -200,13 +200,13 @@ class Booking extends React.Component {
                 <div className="row mt-3 col-12 m-0">
                   <div class="card mb-3">
                     <div class="row no-gutters">
-                      <div class="col-4">
+                      <div class="col-12 col-sm-4">
                         <img
                           src={"img/" + this.state.sign.picture}
-                          class="img-fluid card-img"
+                          class="align-middle card-img"
                         />
                       </div>
-                      <div class="col-8">
+                      <div class="col-12 col-sm-8">
                         <div class="card-body">
                           <span>ชื่อ : {this.state.sign.name}</span>
                           <br />

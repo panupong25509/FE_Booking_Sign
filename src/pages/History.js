@@ -1,39 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
+import '../assets/history.css'
+
 import axios from "axios";
-import HeadText from "../components/HeaderPage";
-import Helmet from "react-helmet";
-import styled from "styled-components";
 import moment from "moment";
 import cookie from "react-cookies";
 
-const MockupData = {
-  bookings: [
-    {
-      id: 1,
-      booking_code: "LIB1CODE29-06-201930-06-2019",
-      applicant: "P",
-      organization: "IT",
-      firstdate: "29-06-2019",
-      lastdate: "30-06-2019",
-      sign: {
-        name: "LIB1",
-        location: "หน้าหอสมุด",
-        limitdate: 3,
-        beforedate: 4,
-        picture: "LIB1.png"
-      }
-    }
-  ]
-};
-const Table = styled.table`
-  border-collapse: separate;
-  border-spacing: 0 15px;
-  font-size: 0.8rem;
-`;
-const Box = styled.tr`
-  border-right: hidden;
-`;
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Input,
+  Table,
+} from 'reactstrap';
+
 class History extends React.Component {
   constructor(props) {
     super(props);
@@ -70,77 +53,68 @@ class History extends React.Component {
         }
       });
   };
+
   render() {
     return (
-      <div>
-        <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
-        <HeadText name="History" />
-        <div className="container px-4 mt-2">
-          <Table>
-            <thead>
-              <tr>
-                <th className="px-3" style={{ width: "33%" }} scope="col">
-                  APPLICANT & ORGANIZATION
-                </th>
-                <th className="px-3" style={{ width: "16%" }} scope="col">
-                  LOCATION
-                </th>
-                <th className="px-3" style={{ width: "29%" }} scope="col">
-                  DATE
-                </th>
-                <th
-                  className="px-3 text-center"
-                  style={{ width: "8%" }}
-                  scope="col"
-                >
-                  STATUS
-                </th>
-                <th
-                  className="px-3 text-center"
-                  style={{ width: "4%" }}
-                  scope="col"
-                >
-                  DETAIL
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.history.map(booking => {
-                return (
-                  <Box className="shadow-sm bg-white rounded">
-                    <td className="px-3">
-                      <div>
-                        {booking.applicant.fname +
-                          " " +
-                          booking.applicant.lname}
-                        <br />
-                        {booking.applicant.organization}
-                      </div>
-                    </td>
-                    <td className="px-3">{booking.sign.location}</td>
-                    <td className="px-3">
-                      {moment(booking.first_date).format("DD/MM/YY")}
-                       -{moment(booking.last_date).format("DD/MM/YY")}
-                    </td>
-                    <td className="px-3 text-center">pending</td>
-                    <td className="px -3 text-center">
-                      <i className="fa fa-info" />
-                    </td>
-                  </Box>
-                );
-              })}
-            </tbody>
-          </Table>
-          <div className="float-right">
-            <Link to="/">
-              <button type="button" class="btn btn-outline-danger">
-                กลับ
-              </button>
-            </Link>
-          </div>
+      <div className="page-content container-fluid"> 
+      <Row>
+        <Col lg="12">
+          <Card>
+            <CardBody>
+              <div className="d-md-flex align-items-center">
+                <div>
+                  <CardTitle>Projects of the Month</CardTitle>
+                  <CardSubtitle>Overview of Latest Month</CardSubtitle>
+                </div>
+                <div className="ml-auto d-flex no-block align-items-center">
+                  <div className="dl">
+                    <Input type="select" className="custom-select">
+                      <option value="0">Monthly</option>
+                      <option value="1">Daily</option>
+                      <option value="2">Weekly</option>
+                      <option value="3">Yearly</option>
+                    </Input>
+                  </div>
+                </div>
+              </div>
+              <Table className="no-wrap v-middle" responsive>
+                <thead>
+                  <tr className="border-0">
+                    <th className="border-0">Name</th>
+                    <th className="border-0">Organization Name</th>
+                    <th className="border-0">Place</th>
+                    <th className="border-0">Booking date</th>
+                    <th className="border-0">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.history.map(booking => {
+                    return (
+                      <tr>
+                        <td>
+                          <h5 className="mb-0 font-16 font-medium">
+                            {booking.applicant.fname +
+                              " " +
+                              booking.applicant.lname}
+                          </h5>
+                        </td>
+                        <td>{booking.applicant.organization}</td>
+                        <td>{booking.sign.location}</td>
+                        <td>
+                          {moment(booking.first_date).format("DD/MM/YY")}
+                          -{moment(booking.last_date).format("DD/MM/YY")}
+                        </td>
+                        <td>pending</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        </Col>
+        </Row>
         </div>
-        <div />
-      </div>
     );
   }
 }
