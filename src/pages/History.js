@@ -1,10 +1,10 @@
 import React from "react";
-
 import '../assets/history.css'
-
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
+import { Link } from "react-router-dom";
+
 
 import {CheckAuth} from '../Authentication'
 
@@ -70,12 +70,11 @@ class History extends React.Component {
                 </div>
                 <div className="ml-auto d-flex no-block align-items-center">
                   <div className="dl">
-                    <Input type="select" className="custom-select">
-                      <option value="0">Monthly</option>
-                      <option value="1">Daily</option>
-                      <option value="2">Weekly</option>
-                      <option value="3">Yearly</option>
-                    </Input>
+                    <Link to="/booking">
+                      <button type="button" className="btn btn-success">
+                        จอง
+                      </button>
+                    </Link>  
                   </div>
                 </div>
               </div>
