@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
         position={this.props.open === true ? 0 : -100}
       >
         <div>
-          <Link to="/history">
+          <Link to="/">
             <Test>
               History
             </Test>

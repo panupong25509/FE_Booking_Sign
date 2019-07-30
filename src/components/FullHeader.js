@@ -1,10 +1,8 @@
 import React from "react";
-import cookie from "react-cookies";
 
-import Navbar from "../components/Header/Navbar";
-import Sidebar from "../components/Header/Sidebar";
-import { CheckAuth } from '../Authentication'
-
+import Navbar from "./Header/Navbar";
+import Sidebar from "./Header/Sidebar";
+import { CheckAuth } from "../Authentication";
 
 class FullHeader extends React.Component {
   constructor(props) {
@@ -46,6 +44,7 @@ class FullHeader extends React.Component {
   render() {
     const LoginPage = this.props.LoginPage;
     const Route = this.props.Route;
+
     if (CheckAuth()) {
       return (
         <div>
@@ -70,7 +69,7 @@ class FullHeader extends React.Component {
         </div>
       );
     }
-    return <LoginPage />;
+  return <LoginPage />;
   }
 }
 

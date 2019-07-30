@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import cookie from "react-cookies";
 
 const Navs = styled.nav`
   z-index: 100;
@@ -20,6 +21,11 @@ class Navbar extends React.Component {
   handleSidebar = async () => {
     this.props.handleSidebar("");
   };
+
+  Logout = async () => {
+    await cookie.remove('user')
+    window.location.href = '/login'
+  }
   render() {
     return (
       <Navs
@@ -32,9 +38,14 @@ class Navbar extends React.Component {
         <Link to="/">
           <Logo src="/img/kmutt.png" />
         </Link>
-        <Link to="/login">
-          <Icon className="fa fa-user text-white mr-2" />
-        </Link>
+        <div>
+          <Link to="/login">
+            <Icon className="fa fa-user text-white mr-2" />
+          </Link>
+          <Link onClick={this.Logout}>
+            <Icon className="fa fa-lock text-white mr-2" />
+          </Link>
+        </div>
       </Navs>
     );
   }

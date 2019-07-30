@@ -6,6 +6,8 @@ import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
 
+import {CheckAuth} from '../Authentication'
+
 import {
   Row,
   Col,
@@ -25,11 +27,10 @@ class History extends React.Component {
     };
   }
   componentWillMount() {
-    if (cookie.load("user") === undefined) {
-      this.props.history.push("/login");
-    } else {
-      this.fetchHistory();
+    if (!CheckAuth) {
+      window.location.href = '/login'
     }
+    this.fetchHistory()
   }
   fetchHistory = async () => {
     var bodyFormData = new FormData();
@@ -43,15 +44,15 @@ class History extends React.Component {
       }
     })
       .then(history => {
+        console.log(history.data)
         if (history.data.bookings !== null) {
           this.setState({ history: history.data.bookings });
         }
       })
       .catch(err => {
-        this.props.history.push('/error')
-        // if (err.response.status !== undefined) {
-        //   window.location.href = `/error/${err.response.status}`;
-        // }
+        if (err.response.status !== undefined) {
+          window.location.href = `/error/${err.response.status}`;
+        }
       });
   };
 

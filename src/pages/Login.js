@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import cookie from "react-cookies";
 
 import "../assets/auth.css";
 
-import { CheckAuth } from '../Authentication'
+import { CheckAuth } from "../Authentication";
 
 import {
   InputGroup,
@@ -42,9 +41,9 @@ class Login extends React.Component {
   componentDidMount() {
     this.CheckLogin()
   }
-  CheckLogin = async () => {
-    if(CheckAuth()){
-      this.props.history.push('/')
+  CheckLogin = () => {
+    if(CheckAuth()) {
+      window.location.href = '/'
     }
   }
   handleChange = (name, value) => {
@@ -73,7 +72,8 @@ class Login extends React.Component {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     }).then(async user => {
-      cookie.save("user", user.data);
+      await cookie.save("user", user.data);
+      console.log(cookie.load('user'))
       this.CheckLogin()
     });
   };

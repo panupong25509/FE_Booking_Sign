@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 
-import FullHeader from "./pages/FullHeader";
+import FullHeader from "./components/FullHeader";
 
 //Pages
 import Login from "./pages/Login";
