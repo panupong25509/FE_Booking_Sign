@@ -5,7 +5,7 @@ import styled from "styled-components";
 import FullHeader from "./pages/FullHeader";
 
 //Pages
-import Login from "./pages/Auth";
+import Login from "./pages/Login";
 
 import Booking from "./pages/Booking";
 import History from "./pages/History";
@@ -20,6 +20,7 @@ const Pages = () => {
     <Switch>
       <Route exact path="/" component={History} />
       <Route exact path="/booking" component={Booking} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/error/:status" component={Error} />
       <Route component={Error} />
     </Switch>

@@ -1,30 +1,70 @@
 import React from "react";
-import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import cookie from "react-cookies";
-import Headtext from "../components/HeaderPage";
+
+import "../assets/auth.css";
+
+import { CheckAuth } from '../Authentication'
+
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+  CustomInput,
+  FormGroup,
+  Form,
+  Row,
+  Col,
+  Button
+} from "reactstrap";
+
+const logo = "/img/kmutt-original.png";
+const background = "/img/login-register.jpg";
+const sidebarBackground = {
+  backgroundImage: "url(" + background + ")",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center center",
+  backgroundSize: "auto 150%"
+};
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      FormLogin: "d-block",
+      FormForgetPassword: "d-none",
       Username: "",
-      Password: "",
-      Login: null
+      Password: ""
     };
   }
-
-  handleChange = (event, state) => {
-    this.setState({ [state]: event });
+  componentDidMount() {
+    this.CheckLogin()
+  }
+  CheckLogin = async () => {
+    if(CheckAuth()){
+      this.props.history.push('/')
+    }
+  }
+  handleChange = (name, value) => {
+    this.setState({
+      [name]: value
+    });
+  };
+  handleClick = () => {
+    this.setState({
+      FormLogin: "d-none",
+      FormForgetPassword: "d-block",
+      Username: ""
+    });
   };
 
-  Login = async () => {
+  Login = async e => {
+    e.preventDefault();
     var bodyFormData = new FormData();
     bodyFormData.set("username", this.state.Username);
     bodyFormData.append("password", this.state.Password);
-    console.log(this.state.Username);
-    console.log(this.state.Password);
     await axios({
       method: "post",
       url: process.env.REACT_APP_BE_PATH + "/login",
@@ -32,74 +72,134 @@ class Login extends React.Component {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
-    }).then(user => {
-      // console.log(user.data);
+    }).then(async user => {
       cookie.save("user", user.data);
-      this.setState({
-        Login: true
-      });
-      // console.log(cookie.load("user"));
+      this.CheckLogin()
     });
   };
-
-  Logut = () => {
-    cookie.remove("user");
-    this.setState({
-      Login: false
-    });
+  Reset = e => {
+    e.preventDefault();
+    console.log(this.state.Username, this.state.Password);
   };
-
   render() {
-    if (cookie.load("user") !== undefined) {
-      return (
-        <div>
-          <Headtext name="Logout" />
-          <div>
-            <button
-              type="button"
-              className="btn btn-outline-danger m-3"
-              onClick={this.Logut}
-              >
-              Logout
-            </button>
-          </div>
-        </div>
-      );
-    }
     return (
-      <div>
-        <Headtext name="Login" />
-        <div className="container mt-2">
-          <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
-          <div>
-            <label className="m-2">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.Username}
-              onChange={e => this.handleChange(e.target.value, "Username")}
-            />
-            <label className="m-2">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              value={this.state.Password}
-              onChange={e => this.handleChange(e.target.value, "Password")}
-            />
-          </div>
-          <div className="mt-4 mb-5">
-            <button
-              type="button"
-              className="btn btn-outline-success mr-3"
-              onClick={this.Login}
-            >
-              ลงชื่อเข้าใช้
-            </button>
-            <Link to="/">
-              <button type="button" className="btn btn-outline-danger">
-                กลับ
-              </button>
-            </Link>
+      <div className="">
+        {/*--------------------------------------------------------------------------------*/}
+        {/*Login Cards*/}
+        {/*--------------------------------------------------------------------------------*/}
+        <div
+          className="auth-wrapper d-flex no-block justify-content-center align-items-center"
+          style={sidebarBackground}
+        >
+          <div className="auth-box on-sidebar">
+            <div className="logo col-12">
+              <div className="col-4 mx-auto">
+                <img className="img-fluid" src={logo} alt="logo" />
+              </div>
+            </div>
+            <div>
+              <Row className={" " + this.state.FormLogin}>
+                <div className="col-12 text-center">
+                  <h5 className="font-medium mb-3">Sign In</h5>
+                </div>
+                <Col xs="12">
+                  <Form className="mt-3" id="loginform" onSubmit={this.Login}>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="fa fa-user" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        value={this.state.Username}
+                        onChange={e =>
+                          this.handleChange("Username", e.target.value)
+                        }
+                        type="text"
+                        placeholder="Username"
+                        required
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="fa fa-lock" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        value={this.state.Password}
+                        onChange={e =>
+                          this.handleChange("Password", e.target.value)
+                        }
+                        type="password"
+                        placeholder="Password"
+                        required
+                      />
+                    </InputGroup>
+                    <div className="d-flex no-block align-items-center mb-3">
+                      <CustomInput
+                        type="checkbox"
+                        id="exampleCustomCheckbox"
+                        label="Remember Me"
+                      />
+                      <div className="ml-auto">
+                        <a
+                          onClick={this.handleClick}
+                          className="forgot text-dark float-right"
+                        >
+                          <i className="fa fa-lock mr-1" /> Forgot pwd?
+                        </a>
+                      </div>
+                    </div>
+                    <Row className="mb-3">
+                      <Col xs="12">
+                        <Button
+                          className="btn btn-login"
+                          size="lg"
+                          type="submit"
+                          block
+                        >
+                          Log In
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Form>
+                </Col>
+              </Row>
+            </div>
+            <div>
+              <Row className={"mt-3 " + this.state.FormForgetPassword}>
+                <div className="col-12 text-center">
+                  <h5 className="font-medium mb-3">Recover Password</h5>
+                  <span>
+                    Enter your Email and instructions will be sent to you!
+                  </span>
+                </div>
+                <Col xs="12">
+                  <Form onSubmit={this.Reset}>
+                    <FormGroup>
+                      <Input
+                        value={this.state.Username}
+                        onChange={e =>
+                          this.handleChange("Username", e.target.value)
+                        }
+                        type="text"
+                        bsSize="lg"
+                        placeholder="Username"
+                        required
+                      />
+                    </FormGroup>
+                    <Row className="mt-3">
+                      <Col xs="12">
+                        <Button color="danger" size="lg" type="submit" block>
+                          Reset
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Form>
+                </Col>
+              </Row>
+            </div>
           </div>
         </div>
       </div>

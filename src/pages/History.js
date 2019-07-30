@@ -48,9 +48,10 @@ class History extends React.Component {
         }
       })
       .catch(err => {
-        if (err.response.status !== undefined) {
-          window.location.href = `/error/${err.response.status}`;
-        }
+        this.props.history.push('/error')
+        // if (err.response.status !== undefined) {
+        //   window.location.href = `/error/${err.response.status}`;
+        // }
       });
   };
 

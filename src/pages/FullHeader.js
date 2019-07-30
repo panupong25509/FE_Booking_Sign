@@ -3,6 +3,8 @@ import cookie from "react-cookies";
 
 import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
+import { CheckAuth } from '../Authentication'
+
 
 class FullHeader extends React.Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class FullHeader extends React.Component {
   render() {
     const LoginPage = this.props.LoginPage;
     const Route = this.props.Route;
-    if (cookie.load("user") !== undefined) {
+    if (CheckAuth()) {
       return (
         <div>
           <Navbar
