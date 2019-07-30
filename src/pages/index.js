@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Router, Route, Switch } from "react-router-dom";
+import cookie from "react-cookies";
 
 //pages
 import History from "./History";
@@ -10,8 +11,8 @@ import Addsign from "./AddSign";
 import Navbar from "../components/Header/Navbar";
 import Sidebar from "../components/Header/Sidebar";
 import styled from "styled-components";
-import Login from './Login'
-import Register from './Register'
+import Login from "./Auth";
+import Register from "./Register";
 
 const Font = styled.div`
   font-family: "Kanit", sans-serif;
@@ -55,39 +56,44 @@ class Index extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <Font>
-          <Navbar
-            handleSidebar={this.handleSidebar}
-            width={this.state.NavWidth}
-            height={this.state.NavHeight}
-          />
-          <div className="col-12" style={{ paddingTop: this.state.NavHeight }}>
-            <div className="row">
-              <div className={this.state.SidebarWidth + " p-0"}>
-                <Sidebar
-                  open={this.state.StatusSidebar}
-                  size={this.state.SidebarWidth}
-                />
-              </div>
-              <div className={this.state.PageWidth + " p-0"}>
-                <Switch>
-                  <Route exact path="/" component={Signs} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/booking" component={Booking} />
-                  <Route exact path="/history" component={History} />
-                  <Route exact path="/addsign" component={Addsign} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/error/:status" component={Error} />
-                  <Route component={Error} />
-                </Switch>
+    if (cookie.load("user") !== undefined) {
+      return (
+        <div>
+          <Font>
+            <Navbar
+              handleSidebar={this.handleSidebar}
+              width={this.state.NavWidth}
+              height={this.state.NavHeight}
+            />
+            <div
+              className="col-12"
+              style={{ paddingTop: this.state.NavHeight }}
+            >
+              <div className="row">
+                <div className={this.state.SidebarWidth + " p-0"}>
+                  <Sidebar
+                    open={this.state.StatusSidebar}
+                    size={this.state.SidebarWidth}
+                  />
+                </div>
+                <div className={this.state.PageWidth + " p-0"}>
+                  <Switch>
+                    <Route exact path="/" component={Signs} />
+                    <Route exact path="/booking" component={Booking} />
+                    <Route exact path="/history" component={History} />
+                    <Route exact path="/addsign" component={Addsign} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/error/:status" component={Error} />
+                    <Route component={Error} />
+                  </Switch>
+                </div>
               </div>
             </div>
-          </div>
-        </Font>
-      </div>
-    );
+          </Font>
+        </div>
+      );
+    }
+    return <Login />;
   }
 }
 

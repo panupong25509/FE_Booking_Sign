@@ -1,0 +1,50 @@
+.auth-wrapper {
+  min-height: 100vh;
+  position: relative;
+}
+.auth-wrapper .auth-box {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  width: 90%;
+  margin: 10% 0;
+}
+.auth-wrapper .auth-box .logo {
+  text-align: center;
+}
+.auth-wrapper .auth-box.on-sidebar {
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  margin: 0px;
+  position: absolute;
+}
+.auth-wrapper .auth-sidebar {
+  position: fixed;
+  height: 100%;
+  right: 0px;
+  overflow: auto;
+  margin: 0px;
+  top: 0px;
+}
+.auth-wrapper .btn-login {
+  background-color: #f47837;
+  border: none;
+}
+
+.error {
+  color: #dc3545;
+}
+
+@media (max-width: 767.98px) {
+  .auth-wrapper .auth-sidebar {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+    margin: 40px 0 60px;
+  }
+  .auth-wrapper .demo-text {
+    margin-top: 30px;
+  }
+}
