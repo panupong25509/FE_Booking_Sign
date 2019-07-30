@@ -4,10 +4,20 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import sweetalert from "sweetalert2";
 import Helmet from "react-helmet";
-
-import HeadText from "../components/HeaderPage";
 import DatePicker from "../components/Datepicker";
 import cookie from "react-cookies";
+import '../assets/booking.css'
+
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Input,
+  Table,
+} from 'reactstrap';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -161,30 +171,18 @@ class Booking extends React.Component {
 
   render() {
     return (
-      <div>
-        <Helmet bodyAttributes={{ style: "background-color: #F8F9FA" }} />
-        <HeadText name="Booking" />
-        <div className="container mt-2">
-          <form onSubmit={this.handleBooking}>
-            <div className="form-group px-3 m-0 pb-4">
-              <label className="m-2">ชื่อผู้ขอเช่า</label>
-              <input type="text" className="form-control" value={this.state.applicant} />
-              <label className="m-2">ชื่อองค์กรผู้ขอเช่า</label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.organization}
-              />
-              <label className="m-2">เหตุผลที่ขอเช่า</label>
-              <textarea
-                className="form-control"
-                value={this.state.description}
-                onChange={e => this.handleChange(e.target.value, "description")}
-                required
-              />
-              <div>
-                <label className="m-2">ป้ายที่ต้องการเช่า</label>
+      <Col className="page-content container-fluid" lg="12">
+        <Card className="container p-0">
+        <CardBody>
 
+          <form onSubmit={this.handleBooking}>
+            <div className="form-group">
+              <label >ชื่อผู้ขอเช่า : {this.state.applicant}</label>
+              <br/>
+              <label >ชื่อองค์กรผู้ขอเช่า : {this.state.organization}</label>
+              <br/>
+              <div>
+                <label >ป้ายที่ต้องการเช่า</label>
                 <select
                   className="form-control"
                   onChange={e => this.handelSetSign(e.target.value)}
@@ -197,42 +195,55 @@ class Booking extends React.Component {
                     );
                   })}
                 </select>
-                <div className="row mt-3 col-12 m-0">
-                  <div class="card mb-3">
-                    <div class="row no-gutters">
-                      <div class="col-12 col-sm-4">
-                        <img
-                          src={"img/" + this.state.sign.picture}
-                          class="align-middle card-img"
-                        />
-                      </div>
-                      <div class="col-12 col-sm-8">
-                        <div class="card-body">
-                          <span>ชื่อ : {this.state.sign.name}</span>
-                          <br />
-                          <span>สถานที่ : {this.state.sign.location}</span>
-                          <br />
-                          <span>
-                            จองก่อน : {this.state.sign.beforebooking} วัน
-                          </span>
-                          <br />
-                          <span>
-                            จองได้มาก : {this.state.sign.limitdate} วัน
-                          </span>
+                  <div className="p-0 mt-3 col-12">
+                    <div class="card mb-3">
+                      <div class="row no-gutters">
+                        <div class="col-12 col-sm-4">
+                          <img
+                            src={"img/" + this.state.sign.picture}
+                            class="align-middle card-img"
+                          />
+                        </div>
+                        <div class="col-12 col-sm-8">
+                          <div class="card-body">
+                            <span>ชื่อ : {this.state.sign.name}</span>
+                            <br />
+                            <span>สถานที่ : {this.state.sign.location}</span>
+                            <br />
+                            <span>
+                              จองก่อน : {this.state.sign.beforebooking} วัน
+                            </span>
+                            <br />
+                            <span>
+                              จองได้มาก : {this.state.sign.limitdate} วัน
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+              </div>
+              
+              <div className="justify-content-md-center">
+                <label >วันที่ต้องการเช่า </label>
+                <DatePicker
+                  date={this.setDate}
+                  ref={this.datepicker}
+                  sign={this.state.sign.id}
+                  className="p-0"
+                />
               </div>
 
-              <label className="m-2">วันที่ต้องการเช่า </label>
-              <DatePicker
-                date={this.setDate}
-                ref={this.datepicker}
-                sign={this.state.sign.id}
+              
+              <label >เหตุผลที่ขอเช่า</label>
+              <textarea
+                className="form-control"
+                value={this.state.description}
+                onChange={e => this.handleChange(e.target.value, "description")}
+                required
               />
             </div>
+            
 
             <div className="mx-3 mb-5">
               <button
@@ -247,9 +258,10 @@ class Booking extends React.Component {
                 </button>
               </Link>
             </div>
-          </form>
-        </div>
-      </div>
+            </form>
+          </CardBody>
+        </Card>
+      </Col>
     );
   }
 }
