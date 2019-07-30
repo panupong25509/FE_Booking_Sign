@@ -136,7 +136,7 @@ class Booking extends React.Component {
             type: "success",
             title: "ทำการจองสำเร็จแล้ว",
             showConfirmButton: false,
-            timer: 5000
+            timer: 1000
           })
           .then(status => {
             window.location.href = "/";
