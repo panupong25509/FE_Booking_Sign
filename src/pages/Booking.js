@@ -173,91 +173,101 @@ class Booking extends React.Component {
     return (
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
-        <CardBody>
-
-          <form onSubmit={this.handleBooking}>
-            <div className="form-group">
-              <label >ชื่อผู้ขอเช่า : {this.state.applicant}</label>
-              <br/>
-              <label >ชื่อองค์กรผู้ขอเช่า : {this.state.organization}</label>
-              <br/>
-              <div>
-                <label >ป้ายที่ต้องการเช่า</label>
-                <select
-                  className="form-control"
-                  onChange={e => this.handelSetSign(e.target.value)}
-                >
-                  {this.state.signs.map(value => {
-                    return (
-                      <option value={JSON.stringify(value)}>
-                        {value.name} {value.location}
-                      </option>
-                    );
-                  })}
-                </select>
-                  <div className="p-0 mt-3 col-12">
+          <CardBody>
+            <form onSubmit={this.handleBooking}>
+              <div className="mx-auto col-12 col-lg-10">
+                <div className="form-group row">
+                  <label className="col-3">Name  </label>
+                  <div className="col-9">
+                    {this.state.applicant}
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-3">Organization Name  </label>
+                  <div className="col-9">
+                  {this.state.organization}
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-3">Sign  </label>
+                  <div className="col-9">
+                  <select
+                    className="form-control"
+                    onChange={e => this.handelSetSign(e.target.value)}
+                  >
+                    {this.state.signs.map(value => {
+                      return (
+                        <option value={JSON.stringify(value)}>
+                          {value.name} {value.location}
+                        </option>
+                      );
+                    })}
+                    </select>
                     <div class="card mb-3">
-                      <div class="row no-gutters">
-                        <div class="col-12 col-sm-4">
-                          <img
-                            src={"img/" + this.state.sign.picture}
-                            class="align-middle card-img"
-                          />
-                        </div>
-                        <div class="col-12 col-sm-8">
-                          <div class="card-body">
-                            <span>ชื่อ : {this.state.sign.name}</span>
-                            <br />
-                            <span>สถานที่ : {this.state.sign.location}</span>
-                            <br />
-                            <span>
-                              จองก่อน : {this.state.sign.beforebooking} วัน
-                            </span>
-                            <br />
-                            <span>
-                              จองได้มาก : {this.state.sign.limitdate} วัน
-                            </span>
+                        <div class="row no-gutters">
+                          <div class="col-12">
+                            <img
+                              src={"img/" + this.state.sign.picture}
+                              class="align-middle card-img"
+                            />
+                          </div>
+                          <div class="col-12">
+                            <div class="card-body">
+                              <span>Name : {this.state.sign.name}</span>
+                              <br />
+                              <span>Place : {this.state.sign.location}</span>
+                              <br />
+                              <span>
+                                Date Before Booking : {this.state.sign.beforebooking} days
+                              </span>
+                              <br />
+                              <span>
+                                Limit for Booking Date : {this.state.sign.limitdate} days
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
                   </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-3">Booking Date </label>
+                  <div className="col-9">
+                  <DatePicker
+                    date={this.setDate}
+                    ref={this.datepicker}
+                    sign={this.state.sign.id}
+                  />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-3">Reason </label>
+                  <div className="col-9">
+                  <textarea
+                    className="form-control"
+                    value={this.state.description}
+                    onChange={e => this.handleChange(e.target.value, "description")}
+                    required
+                  />
+                  </div>
+                </div>
+                <div className="row ml-auto">
+                  <button
+                    type="submit"
+                    className="btn btn-outline-success mr-3"
+                  >
+                    Submit
+                  </button>
+                  <Link to="/">
+                    <button type="button" className="btn btn-outline-danger">
+                      Back
+                    </button>
+                  </Link>
+                </div>
               </div>
               
-              <div className="justify-content-md-center">
-                <label >วันที่ต้องการเช่า </label>
-                <DatePicker
-                  date={this.setDate}
-                  ref={this.datepicker}
-                  sign={this.state.sign.id}
-                  className="p-0"
-                />
-              </div>
-
               
-              <label >เหตุผลที่ขอเช่า</label>
-              <textarea
-                className="form-control"
-                value={this.state.description}
-                onChange={e => this.handleChange(e.target.value, "description")}
-                required
-              />
-            </div>
-            
 
-            <div className="mx-3 mb-5">
-              <button
-                type="submit"
-                className="btn btn-outline-success mr-3"
-              >
-                ทำการจอง
-              </button>
-              <Link to="/">
-                <button type="button" className="btn btn-outline-danger">
-                  กลับ
-                </button>
-              </Link>
-            </div>
             </form>
           </CardBody>
         </Card>
