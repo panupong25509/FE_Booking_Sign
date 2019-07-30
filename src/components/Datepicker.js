@@ -102,7 +102,7 @@ export default class Example extends React.Component {
     const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }, { before: new Date() }];
     const selectedDays = [from, { from, to: enteredTo }];
     return (
-      <div className="container">
+      <div className="container p-0 ">
         <DayPicker
           className="Range bg-white border "
           numberOfMonths={2}

@@ -20,7 +20,6 @@ const Test = styled.div `
   color : white;
   text-decoration:none;
   &:hover {
-    padding: 15px 45px;
     background-color:#384872;
   }
 `
