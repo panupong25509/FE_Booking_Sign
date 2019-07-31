@@ -56,7 +56,7 @@ class History extends React.Component {
         <Row>
           <Col lg="12">
             <Card>
-              <CardBody>
+              <CardBody className="shadow">
                 <div className="d-md-flex align-items-center">
                   <div>
                     <CardTitle>Dashboard</CardTitle>

@@ -171,7 +171,7 @@ class Booking extends React.Component {
     return (
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
-          <CardBody>
+          <CardBody className="shadow">
           <CardTitle>Booking</CardTitle>
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
