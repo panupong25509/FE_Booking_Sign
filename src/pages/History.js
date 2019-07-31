@@ -29,7 +29,7 @@ class History extends React.Component {
     this.fetchHistory();
   }
   fetchHistory = async () => {
-    const AuthStr = "Bearer ".concat(cookie.load("user"));
+    const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
         Authorization: AuthStr

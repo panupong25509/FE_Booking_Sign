@@ -40,7 +40,8 @@ class Login extends React.Component {
       FormForgetPassword: "d-none",
       Username: "",
       Password: "",
-      redirect: false
+      redirect: false,
+      error: ""
     };
   }
   componentDidMount() {
@@ -81,11 +82,15 @@ class Login extends React.Component {
       }
     }).then(async jwt => {
       await cookie.save("jwt", jwt.data);
-      this.setState({
+      await this.setState({
         redirect: true
       });
-      Redirect();
-    });
+      this.Redirect();
+    }).catch(async () => {
+      await this.setState({
+        error: "Username or Password incorrect"
+      })
+    })
   };
   Reset = e => {
     e.preventDefault();
@@ -146,6 +151,7 @@ class Login extends React.Component {
                         required
                       />
                     </InputGroup>
+                    <p className='text-danger'>{this.state.error}</p>
                     <div className="d-flex no-block align-items-center mb-3">
                       <CustomInput
                         type="checkbox"
