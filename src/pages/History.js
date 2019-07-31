@@ -15,7 +15,6 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Input,
   Table,
 } from 'reactstrap';
 
@@ -65,14 +64,14 @@ class History extends React.Component {
             <CardBody>
               <div className="d-md-flex align-items-center">
                 <div>
-                  <CardTitle>Projects of the Month</CardTitle>
-                  <CardSubtitle>Overview of Latest Month</CardSubtitle>
+                  <CardTitle>Dashboard</CardTitle>
+                  <CardSubtitle>History of your booking</CardSubtitle>
                 </div>
                 <div className="ml-auto d-flex no-block align-items-center">
                   <div className="dl">
                     <Link to="/booking">
                       <button type="button" className="btn btn-success">
-                        จอง
+                        Booking
                       </button>
                     </Link>  
                   </div>
