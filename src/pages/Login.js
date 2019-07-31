@@ -52,7 +52,7 @@ class Login extends React.Component {
         redirect: true
       });
     }
-    this.props.history.push("/");
+    if (this.state.redirect) this.props.history.push("/");
   };
   handleChange = (name, value) => {
     this.setState({
