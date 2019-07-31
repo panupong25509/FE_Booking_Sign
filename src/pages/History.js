@@ -4,7 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
 import { Link } from "react-router-dom";
-import withAuth from '../hocs/withAuth'
+import withAuth from "../hocs/withAuth";
 import { CheckAuth } from "../Authentication";
 
 import {
@@ -14,11 +14,8 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Input,
   Table
 } from "reactstrap";
-
-// let cors = require("cors");
 
 class History extends React.Component {
   constructor(props) {
@@ -34,7 +31,7 @@ class History extends React.Component {
     const AuthStr = "Bearer ".concat(cookie.load("user"));
     const headers = {
       headers: {
-        Authorization: AuthStr,
+        Authorization: AuthStr
       }
     };
     await axios
@@ -61,52 +58,52 @@ class History extends React.Component {
               <CardBody>
                 <div className="d-md-flex align-items-center">
                   <div>
-                    <CardTitle>Projects of the Month</CardTitle>
-                    <CardSubtitle>Overview of Latest Month</CardSubtitle>
+                    <CardTitle>Dashboard</CardTitle>
+                    <CardSubtitle>History of your booking</CardSubtitle>
                   </div>
                   <div className="ml-auto d-flex no-block align-items-center">
                     <div className="dl">
                       <Link to="/booking">
                         <button type="button" className="btn btn-success">
-                          จอง
+                          Booking
                         </button>
                       </Link>
                     </div>
                   </div>
+                  <Table className="no-wrap v-middle" responsive>
+                    <thead>
+                      <tr className="border-0">
+                        <th className="border-0">Name</th>
+                        <th className="border-0">Organization Name</th>
+                        <th className="border-0">Place</th>
+                        <th className="border-0">Booking date</th>
+                        <th className="border-0">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.history.map(booking => {
+                        return (
+                          <tr>
+                            <td>
+                              <h5 className="mb-0 font-16 font-medium">
+                                {booking.applicant.fname +
+                                  " " +
+                                  booking.applicant.lname}
+                              </h5>
+                            </td>
+                            <td>{booking.applicant.organization}</td>
+                            <td>{booking.sign.location}</td>
+                            <td>
+                              {moment(booking.first_date).format("DD/MM/YY")}-
+                              {moment(booking.last_date).format("DD/MM/YY")}
+                            </td>
+                            <td>pending</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
                 </div>
-                <Table className="no-wrap v-middle" responsive>
-                  <thead>
-                    <tr className="border-0">
-                      <th className="border-0">Name</th>
-                      <th className="border-0">Organization Name</th>
-                      <th className="border-0">Place</th>
-                      <th className="border-0">Booking date</th>
-                      <th className="border-0">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.history.map(booking => {
-                      return (
-                        <tr>
-                          <td>
-                            <h5 className="mb-0 font-16 font-medium">
-                              {booking.applicant.fname +
-                                " " +
-                                booking.applicant.lname}
-                            </h5>
-                          </td>
-                          <td>{booking.applicant.organization}</td>
-                          <td>{booking.sign.location}</td>
-                          <td>
-                            {moment(booking.first_date).format("DD/MM/YY")}-
-                            {moment(booking.last_date).format("DD/MM/YY")}
-                          </td>
-                          <td>pending</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
               </CardBody>
             </Card>
           </Col>

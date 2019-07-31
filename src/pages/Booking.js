@@ -9,14 +9,10 @@ import cookie from "react-cookies";
 import '../assets/booking.css'
 
 import {
-  Row,
   Col,
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
-  Input,
-  Table,
 } from 'reactstrap';
 
 class Booking extends React.Component {
@@ -174,6 +170,7 @@ class Booking extends React.Component {
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
           <CardBody>
+          <CardTitle>Booking</CardTitle>
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
