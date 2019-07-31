@@ -5,15 +5,10 @@ import { Link } from "react-router-dom";
 import sweetalert from "sweetalert2";
 import DatePicker from "../components/Datepicker";
 import cookie from "react-cookies";
-import '../assets/booking.css'
-import WithAuth from '../hocs/withAuth'
+import "../assets/booking.css";
+import WithAuth from "../hocs/withAuth";
 
-import {
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-} from 'reactstrap';
+import { Col, Card, CardBody, CardTitle } from "reactstrap";
 
 class Booking extends React.Component {
   constructor(props) {
@@ -32,18 +27,14 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
-    this.props.page('booking')
-    if (cookie.load("user") === undefined) {
-      this.props.history.push("/login");
-    } else {
-      let user = cookie.load("user");
-      this.setState({
-        applicant_id: user.id,
-        applicant: user.fname + " " + user.lname,
-        organization: user.organization
-      });
-      this.fetchSigns();
-    }
+    this.props.page("booking");
+    let user = cookie.load("user");
+    this.setState({
+      applicant_id: user.id,
+      applicant: user.fname + " " + user.lname,
+      organization: user.organization
+    });
+    this.fetchSigns();
   }
 
   handleChange = async (event, state) => {
@@ -166,88 +157,87 @@ class Booking extends React.Component {
     return true;
   }
 
-
   render() {
     return (
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
           <CardBody>
-          <CardTitle>Booking</CardTitle>
+            <CardTitle>Booking</CardTitle>
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
-                  <label className="col-3">Name  </label>
-                  <div className="col-9">
-                    {this.state.applicant}
-                  </div>
+                  <label className="col-3">Name </label>
+                  <div className="col-9">{this.state.applicant}</div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Organization Name  </label>
-                  <div className="col-9">
-                  {this.state.organization}
-                  </div>
+                  <label className="col-3">Organization Name </label>
+                  <div className="col-9">{this.state.organization}</div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Sign  </label>
+                  <label className="col-3">Sign </label>
                   <div className="col-9">
-                  <select
-                    className="form-control"
-                    onChange={e => this.handelSetSign(e.target.value)}
-                  >
-                    {this.state.signs.map(value => {
-                      return (
-                        <option value={JSON.stringify(value)}>
-                          {value.name} {value.location}
-                        </option>
-                      );
-                    })}
+                    <select
+                      className="form-control"
+                      onChange={e => this.handelSetSign(e.target.value)}
+                    >
+                      {this.state.signs.map(value => {
+                        return (
+                          <option value={JSON.stringify(value)}>
+                            {value.name} {value.location}
+                          </option>
+                        );
+                      })}
                     </select>
                     <div class="card mb-3">
-                        <div class="row no-gutters">
-                          <div class="col-12">
-                            <img
-                              src={"img/" + this.state.sign.picture}
-                              class="align-middle card-img"
-                            />
-                          </div>
-                          <div class="col-12">
-                            <div class="card-body">
-                              <span>Name : {this.state.sign.name}</span>
-                              <br />
-                              <span>Place : {this.state.sign.location}</span>
-                              <br />
-                              <span>
-                                Date Before Booking : {this.state.sign.beforebooking} days
-                              </span>
-                              <br />
-                              <span>
-                                Limit for Booking Date : {this.state.sign.limitdate} days
-                              </span>
-                            </div>
+                      <div class="row no-gutters">
+                        <div class="col-12">
+                          <img
+                            src={"img/" + this.state.sign.picture}
+                            class="align-middle card-img"
+                          />
+                        </div>
+                        <div class="col-12">
+                          <div class="card-body">
+                            <span>Name : {this.state.sign.name}</span>
+                            <br />
+                            <span>Place : {this.state.sign.location}</span>
+                            <br />
+                            <span>
+                              Date Before Booking :{" "}
+                              {this.state.sign.beforebooking} days
+                            </span>
+                            <br />
+                            <span>
+                              Limit for Booking Date :{" "}
+                              {this.state.sign.limitdate} days
+                            </span>
                           </div>
                         </div>
                       </div>
+                    </div>
                   </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Booking Date </label>
                   <div className="col-9">
-                  <DatePicker
-                    date={this.setDate}
-                    ref={this.datepicker}
-                    sign={this.state.sign.id}
-                  />
+                    <DatePicker
+                      date={this.setDate}
+                      ref={this.datepicker}
+                      sign={this.state.sign.id}
+                    />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Reason </label>
                   <div className="col-9">
-                  <textarea
-                    className="form-control"
-                    value={this.state.description}
-                    onChange={e => this.handleChange(e.target.value, "description")}
-                    required
-                  />
+                    <textarea
+                      className="form-control"
+                      value={this.state.description}
+                      onChange={e =>
+                        this.handleChange(e.target.value, "description")
+                      }
+                      required
+                    />
                   </div>
                 </div>
                 <div className="row ml-auto">
