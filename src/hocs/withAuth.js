@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom'
 const withAuth = (WrappedComponent) => {
   return class ComponentWithAuth extends Component {
     render() {
-      if (cookie.load('user') === undefined) return <Redirect to='/login' />
+      if (cookie.load('jwt') === undefined) return <Redirect to='/login' />
       return <WrappedComponent {...this.props} />
     }
   }
