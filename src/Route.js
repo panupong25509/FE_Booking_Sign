@@ -39,7 +39,8 @@ function AppRouter() {
               />
             );
           })}
-          <Route render={() => <Redirect to='/dashboard'/>} />
+          <Route exact path="/" render={() => <Redirect to='/dashboard'/>} />
+          <Route render={() => <Redirect to='/error/404'/>} />
         </Switch>
       </Font>
     </BrowserRouter>
