@@ -15,9 +15,7 @@ class Booking extends React.Component {
     super(props);
     this.datepicker = React.createRef();
     this.state = {
-      applicant_id: "",
-      applicant: "",
-      organization: "",
+      applicant: {},
       firstdate: null,
       lastdate: null,
       description: "",
@@ -28,12 +26,7 @@ class Booking extends React.Component {
 
   componentDidMount() {
     this.props.page("booking");
-    let user = cookie.load("user");
-    this.setState({
-      applicant_id: user.id,
-      applicant: user.fname + " " + user.lname,
-      organization: user.organization
-    });
+    this.fetchUser();
     this.fetchSigns();
   }
 
@@ -47,7 +40,22 @@ class Booking extends React.Component {
     });
     this.datepicker.current.handleFetchSignId(this.state.sign.id);
   };
-
+  fetchUser = async () => {
+    let header = {
+      headers: {
+        Authorization: "Bearer ".concat(cookie.load("jwt"))
+      }
+    };
+    await axios
+      .get(process.env.REACT_APP_BE_PATH + "/user", header)
+      .then(user => {
+        console.log(user.data)
+        // if(user.data.)
+        this.setState({
+          applicant: user.data
+        });
+      });
+  };
   fetchSigns = async () => {
     await axios
       .get(process.env.REACT_APP_BE_PATH + "/allsign")
@@ -69,7 +77,7 @@ class Booking extends React.Component {
   };
   handleBooking = e => {
     var bodyFormData = new FormData();
-    bodyFormData.set("applicant_id", this.state.applicant_id);
+    bodyFormData.set("applicant_id", this.state.applicant.id);
     bodyFormData.append("sign_id", this.state.sign.id);
     bodyFormData.append("description", this.state.description);
     bodyFormData.append(
@@ -167,11 +175,11 @@ class Booking extends React.Component {
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
                   <label className="col-3">Name </label>
-                  <div className="col-9">{this.state.applicant}</div>
+                  <div className="col-9">{this.state.applicant.fname} {this.state.applicant.lname}</div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Organization Name </label>
-                  <div className="col-9">{this.state.organization}</div>
+                  <div className="col-9">{this.state.applicant.organization}</div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Sign </label>
