@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 import FullHeader from "./components/FullHeader";
@@ -15,27 +15,31 @@ const Font = styled.div`
   font-family: "Kanit", sans-serif;
 `;
 
-const Pages = () => {
-  return (
-    <Switch>
-      <Route exact path="/" component={History} />
-      <Route exact path="/booking" component={Booking} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/error/:status" component={Error} />
-      <Route component={Error} />
-    </Switch>
-  );
-};
+const Pages = [
+  { path: "/login", component: Login, fullheader: false },
+  { path: "/dashboard", component: History, fullheader: true },
+  { path: "/booking", component: Booking, fullheader: true },
+  { path: "/error/:status", component: Error, fullheader: true },
+];
+function CheckFullHeaderPages(Component, fullheader) {
+  if(fullheader) return <FullHeader Page={Component}/>
+  return <Component />
+}
 function AppRouter() {
   return (
     <BrowserRouter>
       <Font>
         <Switch>
-          <Route exact path="/" component={() => <FullHeader Page={History}/>} />
-          <Route exact path="/booking" component={Booking} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/error/:status" component={Error} />
-          <Route component={Error} />
+          {Pages.map(page => {
+            return (
+              <Route
+                exact
+                path={page.path}
+                component={() => CheckFullHeaderPages(page.component, page.fullheader)}
+              />
+            );
+          })}
+          <Route render={() => <Redirect to='/dashboard'/>} />
         </Switch>
       </Font>
     </BrowserRouter>

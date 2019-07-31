@@ -45,7 +45,7 @@ class Login extends React.Component {
   }
   CheckLogin = () => {
     if(CheckAuth()) {
-      window.location.href = '/'
+      window.location.href = '/dashboard'
     }
   }
   handleChange = (name, value) => {
