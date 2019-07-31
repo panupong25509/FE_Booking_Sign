@@ -5,7 +5,7 @@ import moment from "moment";
 import cookie from "react-cookies";
 import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
-import { CheckAuth } from "../Authentication";
+// import { CheckAuth } from "../Authentication";
 
 import {
   Row,
@@ -25,6 +25,7 @@ class History extends React.Component {
     };
   }
   componentWillMount() {
+    this.props.page('history')
     this.fetchHistory();
   }
   fetchHistory = async () => {
@@ -70,6 +71,7 @@ class History extends React.Component {
                       </Link>
                     </div>
                   </div>
+                </div>
                   <Table className="no-wrap v-middle" responsive>
                     <thead>
                       <tr className="border-0">
@@ -103,7 +105,6 @@ class History extends React.Component {
                       })}
                     </tbody>
                   </Table>
-                </div>
               </CardBody>
             </Card>
           </Col>

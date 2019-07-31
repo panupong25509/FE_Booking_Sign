@@ -22,12 +22,20 @@ const Test = styled.div `
   &:hover {
     background-color:#384872;
   }
+  &:active {
+    background-color:#384872;
+  }
 `
+
+const Pages = [{ page: "history" , path: "/dashboard"} ,{ page:"booking" , path: "/booking"}]
 
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
+    
   }
   render() {
     return (
@@ -36,16 +44,15 @@ class Sidebar extends React.Component {
         position={this.props.open === true ? 0 : -100}
       >
         <div>
-          <Link to="/">
-            <Test>
-              History
-            </Test>
-          </Link>
-          <Link to="/booking">
-            <Test>
-              Booking
-            </Test>
-          </Link>
+          {Pages.map((page) => {
+            return (
+              <Link to={page.path}>
+                <Test className="media active" style={this.props.active === page.page ? { backgroundColor: "black" } : {}}>
+                  {page.page}
+                </Test>
+              </Link>
+            )
+          })}
         </div>
       </Bar>
     );

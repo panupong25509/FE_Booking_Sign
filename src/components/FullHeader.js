@@ -12,7 +12,8 @@ class FullHeader extends React.Component {
       SidebarWidth: "col-5 col-md-2 col-sm-3 p-0", //width of sidbar ex.
       PageWidth: "col-12 col-md-10 col-sm-9", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
-      NavHeight: 60 //height of navbar ex.
+      NavHeight: 60, //height of navbar ex.
+      Page: "",
     };
   }
 
@@ -41,6 +42,12 @@ class FullHeader extends React.Component {
     });
   };
 
+  SetPage = async (page) => {
+    this.setState({
+      page: page
+    })
+  }
+
   render() {
     const Page = this.props.Page;
     // const Route = this.props.Route;
@@ -59,10 +66,11 @@ class FullHeader extends React.Component {
               <Sidebar
                 open={this.state.StatusSidebar}
                 size={this.state.SidebarWidth}
+                active={this.state.page}
               />
             </div>
             <div className={this.state.PageWidth + " p-0"}>
-              <Page />
+              <Page page={this.SetPage}/>
             </div>
           </div>
         </div>

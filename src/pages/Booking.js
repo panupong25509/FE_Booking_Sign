@@ -3,10 +3,10 @@ import axios from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import sweetalert from "sweetalert2";
-import Helmet from "react-helmet";
 import DatePicker from "../components/Datepicker";
 import cookie from "react-cookies";
 import '../assets/booking.css'
+import WithAuth from '../hocs/withAuth'
 
 import {
   Col,
@@ -32,6 +32,7 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
+    this.props.page('booking')
     if (cookie.load("user") === undefined) {
       this.props.history.push("/login");
     } else {
@@ -165,6 +166,7 @@ class Booking extends React.Component {
     return true;
   }
 
+
   render() {
     return (
       <Col className="page-content container-fluid" lg="12">
@@ -262,9 +264,6 @@ class Booking extends React.Component {
                   </Link>
                 </div>
               </div>
-              
-              
-
             </form>
           </CardBody>
         </Card>
@@ -273,4 +272,4 @@ class Booking extends React.Component {
   }
 }
 
-export default Booking;
+export default WithAuth(Booking);
