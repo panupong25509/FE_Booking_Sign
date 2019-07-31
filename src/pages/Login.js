@@ -1,10 +1,12 @@
 import React from "react";
 import axios from "axios";
 import cookie from "react-cookies";
+import { Base64 } from "js-base64";
 
 import "../assets/auth.css";
 
 import { CheckAuth } from "../Authentication";
+// import passwordHash from 'password-hash'
 
 import {
   InputGroup,
@@ -63,7 +65,7 @@ class Login extends React.Component {
     e.preventDefault();
     var bodyFormData = new FormData();
     bodyFormData.set("username", this.state.Username);
-    bodyFormData.append("password", this.state.Password);
+    bodyFormData.append("password", Base64.encode(this.state.Password));
     await axios({
       method: "post",
       url: process.env.REACT_APP_BE_PATH + "/login",

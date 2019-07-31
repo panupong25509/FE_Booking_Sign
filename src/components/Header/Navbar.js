@@ -38,10 +38,7 @@ class Navbar extends React.Component {
         <Link to="/">
           <Logo src="/img/kmutt.png" />
         </Link>
-        <div>
-          <Link to="/login">
-            <Icon className="fa fa-user text-white mr-2" />
-          </Link>
+        <div> 
           <Link onClick={this.Logout}>
             <Icon className="fa fa-lock text-white mr-2" />
           </Link>

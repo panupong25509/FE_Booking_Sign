@@ -42,35 +42,35 @@ class FullHeader extends React.Component {
   };
 
   render() {
-    const LoginPage = this.props.LoginPage;
-    const Route = this.props.Route;
+    const Page = this.props.Page;
+    // const Route = this.props.Route;
 
-    if (CheckAuth()) {
-      return (
-        <div>
-          <Navbar
-            handleSidebar={this.handleSidebar}
-            width={this.state.NavWidth}
-            height={this.state.NavHeight}
-          />
-          <div className="col-12" style={{ paddingTop: this.state.NavHeight }}>
-            <div className="row">
-              <div className={this.state.SidebarWidth + " p-0"}>
-                <Sidebar
-                  open={this.state.StatusSidebar}
-                  size={this.state.SidebarWidth}
-                />
-              </div>
-              <div className={this.state.PageWidth + " p-0"}>
-                <Route />
-              </div>
+    // if (CheckAuth()) {
+    return (
+      <div>
+        <Navbar
+          handleSidebar={this.handleSidebar}
+          width={this.state.NavWidth}
+          height={this.state.NavHeight}
+        />
+        <div className="col-12" style={{ paddingTop: this.state.NavHeight }}>
+          <div className="row">
+            <div className={this.state.SidebarWidth + " p-0"}>
+              <Sidebar
+                open={this.state.StatusSidebar}
+                size={this.state.SidebarWidth}
+              />
+            </div>
+            <div className={this.state.PageWidth + " p-0"}>
+              <Page />
             </div>
           </div>
         </div>
-      );
-    }
-  return <LoginPage />;
+      </div>
+    );
   }
+  // return <LoginPage />;
+  // }
 }
 
 export default FullHeader;

@@ -30,7 +30,13 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Font>
-        <FullHeader LoginPage={Login} Route={Pages} />
+        <Switch>
+          <Route exact path="/" component={() => <FullHeader Page={History}/>} />
+          <Route exact path="/booking" component={Booking} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/error/:status" component={Error} />
+          <Route component={Error} />
+        </Switch>
       </Font>
     </BrowserRouter>
   );
