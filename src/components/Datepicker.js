@@ -108,7 +108,7 @@ export default class Example extends React.Component {
     ];
     const selectedDays = [from, { from, to: enteredTo }];
     return (
-      <div className="container p-0 ">
+      <div className="container p-0 col-12">
         <DayPicker
           className="Range bg-white border col-12"
           numberOfMonths={2}
@@ -125,8 +125,7 @@ export default class Example extends React.Component {
           {from && !to && "Please select the last day."}
           {from &&
             to &&
-            `Selected from ${from.toLocaleDateString()} to
-                ${to.toLocaleDateString()}`}{" "}
+            `Selected from \n${from.toLocaleDateString()} to ${to.toLocaleDateString()}`}{" "}
           {from && to && (
             <button className="link" onClick={this.handleResetClick}>
               Reset

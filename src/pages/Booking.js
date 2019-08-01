@@ -142,7 +142,7 @@ class Booking extends React.Component {
         sweetalert.fire({
           type: "error",
           title: `${err.response.data.message}`,
-          confirmButtonColor: "#28A745",
+          confirmButtonColor: "#28A745"
         });
       });
   };
@@ -174,20 +174,22 @@ class Booking extends React.Component {
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
-                  <label className="col-3">Name </label>
-                  <div className="col-9">
+                  <label className="col-3 p-0 d-none d-sm-block">Name</label>
+                  <div className="col-9 p-0">
                     {this.state.applicant.fname} {this.state.applicant.lname}
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Organization Name </label>
-                  <div className="col-9">
+                  <label className="col-3 p-0 d-none d-sm-block">
+                    Organization
+                  </label>
+                  <div className="col-9 p-0">
                     {this.state.applicant.organization}
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Sign </label>
-                  <div className="col-9">
+                  <label className="col-12 col-md-3 p-0">Sign </label>
+                  <div className="col-12 col-md-9 p-0">
                     <select
                       className="form-control"
                       onChange={e => this.handelSetSign(e.target.value)}
@@ -211,17 +213,23 @@ class Booking extends React.Component {
                         </div>
                         <div class="col-12">
                           <div class="card-body">
-                            <span>Name<span>  :  </span>{this.state.sign.name}</span>
-                            <br />
-                            <span>Place<span>  :  </span>{this.state.sign.location}</span>
+                            <span>
+                              Name<span> : </span>
+                              {this.state.sign.name}
+                            </span>
                             <br />
                             <span>
-                              Date Before Booking<span>  :  </span>
+                              Place<span> : </span>
+                              {this.state.sign.location}
+                            </span>
+                            <br />
+                            <span>
+                              Date Before Booking<span> : </span>
                               {this.state.sign.beforebooking} days
                             </span>
                             <br />
                             <span>
-                              Limit for Booking Date<span>  :  </span>
+                              Limit for Booking Date<span> : </span>
                               {this.state.sign.limitdate} days
                             </span>
                           </div>
@@ -231,8 +239,8 @@ class Booking extends React.Component {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Booking Date </label>
-                  <div className="col-9">
+                  <label className="col-12 col-md-3 p-0">Booking Date </label>
+                  <div className="col-12 col-md-9 p-0">
                     <DatePicker
                       date={this.setDate}
                       ref={this.datepicker}
@@ -241,8 +249,8 @@ class Booking extends React.Component {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label className="col-3">Reason </label>
-                  <div className="col-9">
+                  <label className="col-12 col-md-3 p-0">Reason </label>
+                  <div className="col-12 col-md-9 p-0">
                     <textarea
                       className="form-control"
                       value={this.state.description}
@@ -253,18 +261,20 @@ class Booking extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="row ml-auto">
-                  <button
-                    type="submit"
-                    className="btn btn-outline-success mr-3"
-                  >
-                    Submit
-                  </button>
-                  <Link to="/">
-                    <button type="button" className="btn btn-outline-danger">
-                      Back
+                <div className="row ">
+                  <div className="col-12 p-0 d-flex justify-content-between">
+                    <Link to="/">
+                      <button type="button" className="btn btn-outline-danger">
+                        Back
+                      </button>
+                    </Link>
+                    <button
+                      type="submit"
+                      className="btn btn-outline-success"
+                    >
+                      Submit
                     </button>
-                  </Link>
+                  </div>
                 </div>
               </div>
             </form>
