@@ -2,7 +2,7 @@ import React from "react";
 
 import Navbar from "./Header/Navbar";
 import Sidebar from "./Header/Sidebar";
-import { CheckAuth } from "../Authentication";
+import '../assets/booking.css'
 
 class FullHeader extends React.Component {
   constructor(props) {
@@ -50,9 +50,6 @@ class FullHeader extends React.Component {
 
   render() {
     const Page = this.props.Page;
-    // const Route = this.props.Route;
-
-    // if (CheckAuth()) {
     return (
       <div>
         <Navbar
@@ -62,7 +59,7 @@ class FullHeader extends React.Component {
         />
         <div className="col-12" style={{ paddingTop: this.state.NavHeight }}>
           <div className="row">
-            <div className={this.state.SidebarWidth + " p-0"}>
+            <div className={this.state.SidebarWidth + " shadow p-0"}>
               <Sidebar
                 open={this.state.StatusSidebar}
                 size={this.state.SidebarWidth}
@@ -77,8 +74,6 @@ class FullHeader extends React.Component {
       </div>
     );
   }
-  // return <LoginPage />;
-  // }
 }
 
 export default FullHeader;

@@ -8,14 +8,14 @@ const Bar = styled.div`
   margin-left: ${props => props.position}vw;
   height: 100%;
   overflow-y: auto;
-  background-color:#435687;
-  transition: 0.8s;
+  font-weight: 1000;
+  background-image: linear-gradient(#435687,#435687);
 `;
 
 const Test = styled.div `
   position: relative;
   cursor: pointer;
-  font-size: 1.5em;
+  font-size: 1em;
   padding: 15px 30px;
   color : white;
   text-decoration:none;
@@ -40,14 +40,14 @@ class Sidebar extends React.Component {
   render() {
     return (
       <Bar
-        className={this.props.size}
+        className={"shadow "+this.props.size}
         position={this.props.open === true ? 0 : -100}
       >
         <div>
           {Pages.map((page) => {
             return (
               <Link to={page.path}>
-                <Test className="media active" style={this.props.active === page.page ? { backgroundColor: "black" } : {}}>
+                <Test className="media active" style={this.props.active === page.page ? { backgroundColor: "#4c629b", borderLeft: "7px solid #ffb22d" } : {}}>
                   {page.page}
                 </Test>
               </Link>
