@@ -9,8 +9,8 @@ const Bar = styled.div`
   height: 100%;
   overflow-y: auto;
   font-weight: 1000;
-  background-image: linear-gradient(#435687, #435687);
-`;
+  background-color: #435687;
+  `;
 
 const Test = styled.div`
   position: relative;
@@ -19,11 +19,10 @@ const Test = styled.div`
   padding: 15px 30px;
   color: white;
   text-decoration: none;
+  border-left: 7px solid #435687;
   &:hover {
     background-color: #384872;
-  }
-  &:active {
-    background-color: #384872;
+    border-left: 7px solid #384872;
   }
 `;
 
@@ -56,7 +55,7 @@ class Sidebar extends React.Component {
                     this.props.active === page.page
                       ? {
                           backgroundColor: "#4c629b",
-                          borderLeft: "7px solid #ffb22d"
+                          borderLeft: "7px solid #ffb22d",
                         }
                       : {}
                   }
