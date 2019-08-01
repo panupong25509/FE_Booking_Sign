@@ -5,7 +5,6 @@ import moment from "moment";
 import cookie from "react-cookies";
 import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
-// import { CheckAuth } from "../Authentication";
 
 import {
   Row,
@@ -25,7 +24,7 @@ class History extends React.Component {
     };
   }
   componentWillMount() {
-    this.props.page('Dashboard')
+    this.props.page("Dashboard");
     this.fetchHistory();
   }
   fetchHistory = async () => {
@@ -72,39 +71,37 @@ class History extends React.Component {
                     </div>
                   </div>
                 </div>
-                  <Table className="no-wrap v-middle" responsive>
-                    <thead>
-                      <tr className="border-0">
-                        <th className="border-0">Name</th>
-                        <th className="border-0">Organization Name</th>
-                        <th className="border-0">Place</th>
-                        <th className="border-0">Booking date</th>
-                        <th className="border-0">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.history.map(booking => {
-                        return (
-                          <tr>
-                            <td>
-                              <h5 className="mb-0 font-16 font-medium">
-                                {booking.applicant.fname +
-                                  " " +
-                                  booking.applicant.lname}
-                              </h5>
-                            </td>
-                            <td>{booking.applicant.organization}</td>
-                            <td>{booking.sign.location}</td>
-                            <td>
-                              {moment(booking.first_date).format("DD/MM/YY")}-
-                              {moment(booking.last_date).format("DD/MM/YY")}
-                            </td>
-                            <td>pending</td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
+                <Table className="no-wrap v-middle" responsive>
+                  <thead>
+                    <tr className="border-0">
+                      <th className="border-0">Name</th>
+                      <th className="border-0">Organization Name</th>
+                      <th className="border-0">Place</th>
+                      <th className="border-0">Booking date</th>
+                      <th className="border-0">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.history.map(booking => {
+                      return (
+                        <tr>
+                          <td>
+                            {booking.applicant.fname +
+                              " " +
+                              booking.applicant.lname}
+                          </td>
+                          <td>{booking.applicant.organization}</td>
+                          <td>{booking.sign.location}</td>
+                          <td>
+                            {moment(booking.first_date).format("DD/MM/YY")}-
+                            {moment(booking.last_date).format("DD/MM/YY")}
+                          </td>
+                          <td>pending</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
               </CardBody>
             </Card>
           </Col>

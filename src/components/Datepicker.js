@@ -16,7 +16,7 @@ export default class Example extends React.Component {
     return {
       from: null,
       to: null,
-      enteredTo: null, // Keep track of the last day for mouseEnter.
+      enteredTo: null // Keep track of the last day for mouseEnter.
     };
   }
   isSelectingFirstDay = (from, to, day) => {
@@ -47,7 +47,7 @@ export default class Example extends React.Component {
     }
     this.props.date({
       firstdate: this.state.from,
-      lastdate: this.state.to,
+      lastdate: this.state.to
     });
   };
   handleDayMouseEnter = day => {
@@ -62,12 +62,14 @@ export default class Example extends React.Component {
     this.setState(this.getInitialState());
   };
 
-  fetchBookingDates = async (signid) => {
-    await axios.get(`http://127.0.0.1:3000/getbookingdays/${signid}`).then(dates => {
-      this.addBookingDates(dates.data);
-    });
+  fetchBookingDates = async signid => {
+    await axios
+      .get(`http://127.0.0.1:3000/getbookingdays/${signid}`)
+      .then(dates => {
+        this.addBookingDates(dates.data);
+      });
   };
-  
+
   addBookingDates = async dates => {
     let bookingDates = [];
     await dates.map(date => {
@@ -82,9 +84,9 @@ export default class Example extends React.Component {
     this.setState({ bookingDates: bookingDates });
   };
 
-  handleFetchSignId = (signid) => {
-    this.fetchBookingDates(signid)
-  }
+  handleFetchSignId = signid => {
+    this.fetchBookingDates(signid);
+  };
 
   render() {
     const { from, to, enteredTo } = this.state;
@@ -99,7 +101,11 @@ export default class Example extends React.Component {
         backgroundColor: "#DC3545"
       }
     };
-    const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }, { before: new Date() }];
+    const disabledDays = [
+      { before: this.state.from },
+      { daysOfWeek: [0, 6] },
+      { before: new Date() }
+    ];
     const selectedDays = [from, { from, to: enteredTo }];
     return (
       <div className="container p-0 ">
@@ -114,7 +120,7 @@ export default class Example extends React.Component {
           onDayClick={this.handleDayClick}
           onDayMouseEnter={this.handleDayMouseEnter}
         />
-        <div className = "mt-2">
+        <div className="mt-2">
           {!from && !to && "Please select the first day."}
           {from && !to && "Please select the last day."}
           {from &&

@@ -151,11 +151,6 @@ class Login extends React.Component {
                     </InputGroup>
                     <p className="text-danger">{this.state.error}</p>
                     <div className="d-flex no-block align-items-center mb-3">
-                      <CustomInput
-                        type="checkbox"
-                        id="exampleCustomCheckbox"
-                        label="Remember Me"
-                      />
                       <div className="ml-auto">
                         <a
                           href="#forgetpassword"

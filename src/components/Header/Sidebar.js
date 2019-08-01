@@ -35,6 +35,9 @@ const Pages = [
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      
+    }
   }
   componentDidMount() {}
   render() {

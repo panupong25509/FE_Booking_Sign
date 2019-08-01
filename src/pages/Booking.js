@@ -204,6 +204,7 @@ class Booking extends React.Component {
                       <div class="row no-gutters">
                         <div class="col-12">
                           <img
+                            alt="Sign"
                             src={"img/" + this.state.sign.picture}
                             class="align-middle card-img"
                           />
