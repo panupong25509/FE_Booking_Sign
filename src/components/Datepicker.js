@@ -110,7 +110,7 @@ export default class Example extends React.Component {
     return (
       <div className="container p-0 ">
         <DayPicker
-          className="Range bg-white border "
+          className="Range bg-white border col-12"
           numberOfMonths={2}
           fromMonth={from}
           selectedDays={selectedDays}
