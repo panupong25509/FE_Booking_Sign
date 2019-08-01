@@ -25,7 +25,7 @@ class History extends React.Component {
     };
   }
   componentWillMount() {
-    this.props.page('history')
+    this.props.page('Dashboard')
     this.fetchHistory();
   }
   fetchHistory = async () => {

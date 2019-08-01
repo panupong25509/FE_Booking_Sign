@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import cookie from 'react-cookies';
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 const withAuth = (WrappedComponent) => {
   return class ComponentWithAuth extends Component {

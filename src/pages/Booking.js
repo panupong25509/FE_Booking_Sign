@@ -25,7 +25,7 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
-    this.props.page("booking");
+    this.props.page("Booking");
     this.fetchUser();
     this.fetchSigns();
   }
@@ -169,13 +169,8 @@ class Booking extends React.Component {
     return (
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
-<<<<<<< HEAD
           <CardBody className="shadow">
           <CardTitle>Booking</CardTitle>
-=======
-          <CardBody>
-            <CardTitle>Booking</CardTitle>
->>>>>>> fa9b6c341f5fd6cf5f4d837da2907c1fb1408840
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
