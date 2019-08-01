@@ -2,13 +2,9 @@ import React from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import { Base64 } from "js-base64";
-import { Link, withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-import withAuth from "../hocs/withAuth";
 import "../assets/auth.css";
-
-import { CheckAuth } from "../Authentication";
-// import passwordHash from 'password-hash'
 
 import {
   InputGroup,
@@ -80,17 +76,19 @@ class Login extends React.Component {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
-    }).then(async jwt => {
-      await cookie.save("jwt", jwt.data);
-      await this.setState({
-        redirect: true
-      });
-      this.Redirect();
-    }).catch(async () => {
-      await this.setState({
-        error: "Username or Password incorrect"
-      })
     })
+      .then(async jwt => {
+        await cookie.save("jwt", jwt.data);
+        await this.setState({
+          redirect: true
+        });
+        this.Redirect();
+      })
+      .catch(async () => {
+        await this.setState({
+          error: "Username or Password incorrect"
+        });
+      });
   };
   Reset = e => {
     e.preventDefault();
@@ -151,7 +149,7 @@ class Login extends React.Component {
                         required
                       />
                     </InputGroup>
-                    <p className='text-danger'>{this.state.error}</p>
+                    <p className="text-danger">{this.state.error}</p>
                     <div className="d-flex no-block align-items-center mb-3">
                       <CustomInput
                         type="checkbox"
@@ -160,6 +158,7 @@ class Login extends React.Component {
                       />
                       <div className="ml-auto">
                         <a
+                          href="#forgetpassword"
                           onClick={this.handleClick}
                           className="forgot text-dark float-right"
                         >
