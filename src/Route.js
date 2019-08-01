@@ -13,12 +13,8 @@ import "./assets/font.css";
 import styled from "styled-components";
 
 const Font = styled.div`
-<<<<<<< HEAD
   font-family: 'Sukhumvit';
   font-size: 0.9em;
-=======
-  font-family: "Sukhumvit";
->>>>>>> 6072cd805a10cf3237f352ee31650553492e91e9
 `;
 
 const Pages = [
