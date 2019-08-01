@@ -28,7 +28,8 @@ const Test = styled.div`
 
 const Pages = [
   { page: "Dashboard", path: "/dashboard" },
-  { page: "Booking", path: "/booking" }
+  { page: "Booking", path: "/booking" },
+  { page: "Admin", path: "/admin" }
 ];
 
 class Sidebar extends React.Component {

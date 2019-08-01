@@ -1,16 +1,17 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import styled from "styled-components";
+
+import "./assets/font.css";
 
 import FullHeader from "./components/FullHeader";
-
 //Pages
 import Login from "./pages/Login";
 
 import Booking from "./pages/Booking";
 import Dashboard from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 import Error from "./pages/Error";
-import "./assets/font.css";
-import styled from "styled-components";
 
 const Font = styled.div`
   font-family: 'Sukhumvit';
@@ -21,6 +22,7 @@ const Pages = [
   { path: "/login", component: Login, fullheader: false },
   { path: "/dashboard", component: Dashboard, fullheader: true },
   { path: "/booking", component: Booking, fullheader: true },
+  { path: "/admin", component: Admin, fullheader: true },
   { path: "/error/:status", component: Error, fullheader: true }
 ];
 function CheckFullHeaderPages(Component, fullheader) {
