@@ -145,4 +145,4 @@ class Admin extends React.Component {
   }
 }
 
-export default withAuth(Admin);
+export default withAuth(Admin, true);

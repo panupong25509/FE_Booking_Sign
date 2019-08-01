@@ -11,7 +11,6 @@ import {
   InputGroupAddon,
   InputGroupText,
   Input,
-  CustomInput,
   FormGroup,
   Form,
   Row,
