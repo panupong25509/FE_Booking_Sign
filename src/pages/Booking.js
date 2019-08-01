@@ -200,7 +200,7 @@ class Booking extends React.Component {
                         );
                       })}
                     </select>
-                    <div class="card mb-3">
+                    <div class="card mb-3 mt-3">
                       <div class="row no-gutters">
                         <div class="col-12">
                           <img
@@ -211,17 +211,17 @@ class Booking extends React.Component {
                         </div>
                         <div class="col-12">
                           <div class="card-body">
-                            <span>Name : {this.state.sign.name}</span>
+                            <span>Name<span>  :  </span>{this.state.sign.name}</span>
                             <br />
-                            <span>Place : {this.state.sign.location}</span>
+                            <span>Place<span>  :  </span>{this.state.sign.location}</span>
                             <br />
                             <span>
-                              Date Before Booking :{" "}
+                              Date Before Booking<span>  :  </span>
                               {this.state.sign.beforebooking} days
                             </span>
                             <br />
                             <span>
-                              Limit for Booking Date :{" "}
+                              Limit for Booking Date<span>  :  </span>
                               {this.state.sign.limitdate} days
                             </span>
                           </div>

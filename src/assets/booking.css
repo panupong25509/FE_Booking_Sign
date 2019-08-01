@@ -6,3 +6,7 @@
 body {
   background-color: #ecf3f6;
 }
+
+.card-body {
+white-space: pre;
+}
