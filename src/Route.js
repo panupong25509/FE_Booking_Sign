@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import styled from "styled-components";
 
 import FullHeader from "./components/FullHeader";
 
@@ -10,9 +9,11 @@ import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import History from "./pages/History";
 import Error from "./pages/Error";
+import './assets/font.css'
+import styled  from 'styled-components';
 
 const Font = styled.div`
-  font-family: "Kanit", sans-serif;
+  font-family: 'Sukhumvit';
 `;
 
 const Pages = [
@@ -43,7 +44,7 @@ function AppRouter() {
           <Route render={() => <Redirect to='/error/404'/>} />
         </Switch>
       </Font>
-    </BrowserRouter>
+      </BrowserRouter>
   );
 }
 
