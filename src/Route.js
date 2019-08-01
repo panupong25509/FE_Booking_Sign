@@ -14,6 +14,7 @@ import styled  from 'styled-components';
 
 const Font = styled.div`
   font-family: 'Sukhumvit';
+  font-size: 0.9em;
 `;
 
 const Pages = [
