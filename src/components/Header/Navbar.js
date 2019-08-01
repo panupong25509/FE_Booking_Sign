@@ -40,7 +40,6 @@ class Navbar extends React.Component {
         </Link>
         <div>
           <Link onClick={this.Logout}>
-            {/* <Icon className="fa fa-lock text-white mr-2" /> */}
             <p className='m-0 text-white'>Logout</p>
           </Link>
         </div>

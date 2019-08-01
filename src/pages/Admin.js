@@ -25,9 +25,9 @@ class Admin extends React.Component {
   }
   componentWillMount() {
     this.props.page("Admin");
-    // this.fetchHistory();
+    this.fetchBooking();
   }
-  fetchHistory = async () => {
+  fetchBooking = async () => {
     const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
@@ -35,11 +35,11 @@ class Admin extends React.Component {
       }
     };
     await axios
-      .get(process.env.REACT_APP_BE_PATH + "/booking", headers)
-      .then(history => {
-        console.log(history.data);
-        if (history.data.bookings !== null) {
-          this.setState({ history: history.data.bookings });
+      .get(process.env.REACT_APP_BE_PATH + "/admin/booking", headers)
+      .then(bookings => {
+        // console.log(history.data);
+        if (bookings.data.bookings !== null) {
+          this.setState({ history: bookings.data.bookings });
         }
       })
       .catch(err => {
@@ -82,7 +82,7 @@ class Admin extends React.Component {
                         <th className="border-0">Status</th>
                       </tr>
                     </thead>
-                    {/* <tbody>
+                    <tbody>
                       {this.state.history.map(booking => {
                         return (
                           <tr>
@@ -97,11 +97,32 @@ class Admin extends React.Component {
                               {moment(booking.first_date).format("DD/MM/YY")}-
                               {moment(booking.last_date).format("DD/MM/YY")}
                             </td>
-                            <td>pending</td>
+                            <td>
+                              <div
+                                class="btn-group"
+                                role="group"
+                                aria-label="Basic example"
+                              >
+                                <button type="button" class="btn btn-success">
+                                  Approve
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                  Reject
+                                </button>
+                              </div>
+                              {/* <div className="col-12 p-0 d-flex justify-content-between">
+                                <button className="btn btn-success">
+                                  Approve
+                                </button>
+                                <button className="btn btn-danger">
+                                  Reject
+                                </button>
+                              </div> */}
+                            </td>
                           </tr>
                         );
                       })}
-                    </tbody> */}
+                    </tbody>
                   </Table>
                 </div>
                 <div className="d-block d-md-none">
@@ -126,9 +147,7 @@ class Admin extends React.Component {
                               <button className="btn btn-primary">
                                 Approve
                               </button>
-                              <button className="btn btn-danger">
-                                Reject
-                              </button>
+                              <button className="btn btn-danger">Reject</button>
                             </td>
                           </tr>
                         );
