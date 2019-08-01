@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import cookie from "react-cookies";
 
@@ -23,9 +23,9 @@ class Navbar extends React.Component {
   };
 
   Logout = async () => {
-    await cookie.remove('user')
-    window.location.href = '/login'
-  }
+    await cookie.remove("jwt");
+    this.props.history.push("/login");
+  };
   render() {
     return (
       <Navs
@@ -38,9 +38,10 @@ class Navbar extends React.Component {
         <Link to="/">
           <Logo src="/img/kmutt.png" />
         </Link>
-        <div> 
+        <div>
           <Link onClick={this.Logout}>
-            <Icon className="fa fa-lock text-white mr-2" />
+            {/* <Icon className="fa fa-lock text-white mr-2" /> */}
+            <p className='m-0 text-white'>Logout</p>
           </Link>
         </div>
       </Navs>
@@ -48,4 +49,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);

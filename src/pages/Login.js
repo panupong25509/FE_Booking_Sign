@@ -2,7 +2,9 @@ import React from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import { Base64 } from "js-base64";
+import { Link, withRouter, Redirect } from "react-router-dom";
 
+import withAuth from "../hocs/withAuth";
 import "../assets/auth.css";
 
 import { CheckAuth } from "../Authentication";
@@ -37,17 +39,22 @@ class Login extends React.Component {
       FormLogin: "d-block",
       FormForgetPassword: "d-none",
       Username: "",
-      Password: ""
+      Password: "",
+      redirect: false,
+      error: ""
     };
   }
   componentDidMount() {
-    this.CheckLogin()
+    this.Redirect();
   }
-  CheckLogin = () => {
-    if(CheckAuth()) {
-      window.location.href = '/dashboard'
+  Redirect = async () => {
+    if (cookie.load("jwt") !== undefined) {
+      await this.setState({
+        redirect: true
+      });
     }
-  }
+    if (this.state.redirect) this.props.history.push("/");
+  };
   handleChange = (name, value) => {
     this.setState({
       [name]: value
@@ -73,11 +80,17 @@ class Login extends React.Component {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
-    }).then(async user => {
-      await cookie.save("user", user.data);
-      console.log(cookie.load('user'))
-      this.CheckLogin()
-    });
+    }).then(async jwt => {
+      await cookie.save("jwt", jwt.data);
+      await this.setState({
+        redirect: true
+      });
+      this.Redirect();
+    }).catch(async () => {
+      await this.setState({
+        error: "Username or Password incorrect"
+      })
+    })
   };
   Reset = e => {
     e.preventDefault();
@@ -138,6 +151,7 @@ class Login extends React.Component {
                         required
                       />
                     </InputGroup>
+                    <p className='text-danger'>{this.state.error}</p>
                     <div className="d-flex no-block align-items-center mb-3">
                       <CustomInput
                         type="checkbox"
@@ -209,4 +223,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

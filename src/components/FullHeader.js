@@ -13,7 +13,7 @@ class FullHeader extends React.Component {
       PageWidth: "col-12 col-md-10 col-sm-9", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
       NavHeight: 60, //height of navbar ex.
-      Page: "",
+      Page: ""
     };
   }
 
@@ -42,11 +42,11 @@ class FullHeader extends React.Component {
     });
   };
 
-  SetPage = async (page) => {
+  SetPage = async page => {
     this.setState({
       page: page
-    })
-  }
+    });
+  };
 
   render() {
     const Page = this.props.Page;
@@ -67,7 +67,7 @@ class FullHeader extends React.Component {
               />
             </div>
             <div className={this.state.PageWidth + " p-0"}>
-              <Page page={this.SetPage}/>
+              <Page page={this.SetPage} />
             </div>
           </div>
         </div>
