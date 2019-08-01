@@ -7,7 +7,7 @@ import FullHeader from "./components/FullHeader";
 import Login from "./pages/Login";
 
 import Booking from "./pages/Booking";
-import History from "./pages/History";
+import Dashboard from "./pages/Dashboard";
 import Error from "./pages/Error";
 import "./assets/font.css";
 import styled from "styled-components";
@@ -19,7 +19,7 @@ const Font = styled.div`
 
 const Pages = [
   { path: "/login", component: Login, fullheader: false },
-  { path: "/dashboard", component: History, fullheader: true },
+  { path: "/dashboard", component: Dashboard, fullheader: true },
   { path: "/booking", component: Booking, fullheader: true },
   { path: "/error/:status", component: Error, fullheader: true }
 ];
