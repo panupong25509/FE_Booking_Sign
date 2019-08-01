@@ -2,15 +2,15 @@ import React from "react";
 
 import Navbar from "./Header/Navbar";
 import Sidebar from "./Header/Sidebar";
-import '../assets/booking.css'
+import "../assets/booking.css";
 
 class FullHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       StatusSidebar: true, //open sidebar ex.
-      SidebarWidth: "col-5 col-md-2 col-sm-3 p-0", //width of sidbar ex.
-      PageWidth: "col-12 col-md-10 col-sm-9", //width of Page ex.
+      SidebarWidth: "col-6 col-sm-4 col-md-3 col-lg-2 p-0", //width of sidbar ex.
+      PageWidth: "col-12 col-lg-10", //width of Page ex.
       NavWidth: "col-12", //width of navbar ex.
       NavHeight: 60, //height of navbar ex.
       Page: ""
@@ -24,7 +24,7 @@ class FullHeader extends React.Component {
 
   updateWindowDimensions = () => {
     let statusSidebar = false;
-    if (window.innerWidth > 575) {
+    if (window.innerWidth >= 992) {
       statusSidebar = true;
     }
     this.setState({

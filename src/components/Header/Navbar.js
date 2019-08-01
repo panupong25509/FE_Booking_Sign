@@ -32,7 +32,7 @@ class Navbar extends React.Component {
         className={"navbar navbar-default navbar-fixed-top " + this.props.width}
         height={this.props.height}
       >
-        <Link className=" d-sm-none d-block text-white ">
+        <Link className=" d-lg-none d-block text-white ">
           <Icon className="fa fa-bars" onClick={this.handleSidebar} />
         </Link>
         <Link to="/">
