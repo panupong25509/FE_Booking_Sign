@@ -96,7 +96,7 @@ export default class Example extends React.Component {
     const modifiersStyles = {
       birthday: {
         color: "white",
-        backgroundColor: "red"
+        backgroundColor: "#DC3545"
       }
     };
     const disabledDays = [{ before: this.state.from }, { daysOfWeek: [0, 6] }, { before: new Date() }];
