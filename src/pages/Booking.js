@@ -25,7 +25,7 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
-    this.props.page("booking");
+    this.props.page("Booking");
     this.fetchUser();
     this.fetchSigns();
   }
@@ -49,7 +49,7 @@ class Booking extends React.Component {
     await axios
       .get(process.env.REACT_APP_BE_PATH + "/user", header)
       .then(user => {
-        console.log(user.data)
+        console.log(user.data);
         // if(user.data.)
         this.setState({
           applicant: user.data
@@ -91,18 +91,17 @@ class Booking extends React.Component {
     if (this.checkForm()) {
       sweetalert
         .fire({
-          title: `คุณ Panupong ยืนยันจะจองป้ายตามนี้ใช่ไหม?`,
-          text: `ป้าย ${this.state.sign.name} วันที่ ${moment(
+          title: "Do you confirm to book this?",
+          text: `Sign ${this.state.sign.name} Date ${moment(
             this.state.firstdate
-          ).format("YYYY-MM-DD")} ถึง ${moment(this.state.lastdate).format(
-            "YYYY-MM-DD"
+          ).format("DD/MM/YY")} - ${moment(this.state.lastdate).format(
+            "DD/MM/YY"
           )}`,
-          type: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "ใช่",
-          cancelButtonText: "ไม่ใช่"
+          confirmButtonColor: "#28A745",
+          cancelButtonColor: "#DC3545",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No"
         })
         .then(result => {
           if (result.value) {
@@ -126,15 +125,15 @@ class Booking extends React.Component {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-      .then(status => {
+      .then(() => {
         sweetalert
           .fire({
             type: "success",
-            title: "ทำการจองสำเร็จแล้ว",
+            title: "Success",
             showConfirmButton: false,
             timer: 1000
           })
-          .then(status => {
+          .then(() => {
             window.location.href = "/";
           });
       })
@@ -142,7 +141,8 @@ class Booking extends React.Component {
         console.log(err);
         sweetalert.fire({
           type: "error",
-          title: `${err.response.data.message}`
+          title: `${err.response.data.message}`,
+          confirmButtonColor: "#28A745",
         });
       });
   };
@@ -169,22 +169,21 @@ class Booking extends React.Component {
     return (
       <Col className="page-content container-fluid" lg="12">
         <Card className="container p-0">
-<<<<<<< HEAD
           <CardBody className="shadow">
-          <CardTitle>Booking</CardTitle>
-=======
-          <CardBody>
             <CardTitle>Booking</CardTitle>
->>>>>>> fa9b6c341f5fd6cf5f4d837da2907c1fb1408840
             <form onSubmit={this.handleBooking}>
               <div className="mx-auto col-12 col-lg-10">
                 <div className="form-group row">
                   <label className="col-3">Name </label>
-                  <div className="col-9">{this.state.applicant.fname} {this.state.applicant.lname}</div>
+                  <div className="col-9">
+                    {this.state.applicant.fname} {this.state.applicant.lname}
+                  </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Organization Name </label>
-                  <div className="col-9">{this.state.applicant.organization}</div>
+                  <div className="col-9">
+                    {this.state.applicant.organization}
+                  </div>
                 </div>
                 <div className="form-group row">
                   <label className="col-3">Sign </label>
