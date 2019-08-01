@@ -1,23 +1,28 @@
 .v-middle td,
 .v-middle th {
-  vertical-align: middle; }
+  vertical-align: middle; 
+}
 
-.font-16 {
-  font-size: 16px; }
+.font-10px{
+  font-size: 10px;
+}
 
-  .font-medium {
-    font-weight: 600; }
+.font-medium {
+  font-weight: 600; 
+}
 
-    .no-wrap td,
+.no-wrap td,
 .no-wrap th {
-  white-space: nowrap; }
+  white-space: nowrap; 
+}
 
-  dl {
+dl {
   margin-top: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem; 
+}
 
-  th {
-    text-align: inherit;
+th {
+  text-align: inherit;
 }
 
 .page-content {
@@ -38,4 +43,5 @@ body {
 .card .card-title {
   position: relative;
   font-weight: 600;
+  
 }
