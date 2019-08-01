@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import jwt from "jwt-simple";
+import cookie from "react-cookies";
 
 const Bar = styled.div`
   z-index: 99;
@@ -10,7 +12,7 @@ const Bar = styled.div`
   overflow-y: auto;
   font-weight: 1000;
   background-color: #435687;
-  `;
+`;
 
 const Test = styled.div`
   position: relative;
@@ -27,19 +29,24 @@ const Test = styled.div`
 `;
 
 const Pages = [
-  { page: "Dashboard", path: "/dashboard" },
-  { page: "Booking", path: "/booking" },
-  { page: "Admin", path: "/admin" }
+  { page: "Dashboard", path: "/dashboard", Admin: false },
+  { page: "Booking", path: "/booking", Admin: false },
+  { page: "Admin", path: "/admin", Admin: true }
 ];
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      
-    }
+    this.state = {};
   }
   componentDidMount() {}
+  CheckAdmin = admin => {
+    if (cookie.load("jwt") === undefined) return false;
+    if (!admin) return true;
+    let token = jwt.decode(cookie.load("jwt"), "bookingsign");
+    if (token.Role !== "admin") return false;
+    return true;
+  };
   render() {
     return (
       <Bar
@@ -48,15 +55,20 @@ class Sidebar extends React.Component {
       >
         <div>
           {Pages.map(page => {
+            console.log(this.CheckAdmin(page.Admin));
             return (
               <Link to={page.path}>
                 <Test
-                  className="media active"
+                  className={
+                    "media active " + (this.CheckAdmin(page.Admin)
+                      ? "d-block"
+                      : "d-none")
+                  }
                   style={
                     this.props.active === page.page
                       ? {
                           backgroundColor: "#4c629b",
-                          borderLeft: "7px solid #ffb22d",
+                          borderLeft: "7px solid #ffb22d"
                         }
                       : {}
                   }
