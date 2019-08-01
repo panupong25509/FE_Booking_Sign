@@ -59,24 +59,14 @@ class Admin extends React.Component {
                 <div className="d-md-flex align-items-center">
                   <div>
                     <CardTitle>Admin</CardTitle>
-                    {/* <CardSubtitle>History of your booking</CardSubtitle> */}
                   </div>
-                  {/* <div className="ml-auto align-items-center">
-                    <div className="">
-                      <Link to="/booking">
-                        <button type="button" className="btn btn-success">
-                          Booking
-                        </button>
-                      </Link>
-                    </div>
-                  </div> */}
                 </div>
-                <div className="d-none d-md-block">
+                <div>
                   <Table className="no-wrap v-middle" responsive>
                     <thead>
                       <tr className="border-0">
-                        <th className="border-0">Name</th>
-                        <th className="border-0">Organization Name</th>
+                        <th className="border-0 d-none d-md-table-cell">Name</th>
+                        <th className="border-0 d-none d-md-table-cell">Organization Name</th>
                         <th className="border-0">Place</th>
                         <th className="border-0">Booking date</th>
                         <th className="border-0">Status</th>
@@ -86,12 +76,12 @@ class Admin extends React.Component {
                       {this.state.history.map(booking => {
                         return (
                           <tr>
-                            <td>
+                            <td className='d-none d-md-table-cell'>
                               {booking.applicant.fname +
                                 " " +
                                 booking.applicant.lname}
                             </td>
-                            <td>{booking.applicant.organization}</td>
+                            <td className='d-none d-md-table-cell'>{booking.applicant.organization}</td>
                             <td>{booking.sign.location}</td>
                             <td>
                               {moment(booking.first_date).format("DD/MM/YY")}-
@@ -110,44 +100,6 @@ class Admin extends React.Component {
                                   Reject
                                 </button>
                               </div>
-                              {/* <div className="col-12 p-0 d-flex justify-content-between">
-                                <button className="btn btn-success">
-                                  Approve
-                                </button>
-                                <button className="btn btn-danger">
-                                  Reject
-                                </button>
-                              </div> */}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                </div>
-                <div className="d-block d-md-none">
-                  <Table className="no-wrap v-middle" responsive>
-                    <thead>
-                      <tr className="border-0">
-                        <th className="border-0">Place</th>
-                        <th className="border-0">Booking date</th>
-                        <th className="border-0">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.history.map(booking => {
-                        return (
-                          <tr>
-                            <td>{booking.sign.location}</td>
-                            <td>
-                              {moment(booking.first_date).format("DD/MM/YY")}-
-                              {moment(booking.last_date).format("DD/MM/YY")}
-                            </td>
-                            <td>
-                              <button className="btn btn-primary">
-                                Approve
-                              </button>
-                              <button className="btn btn-danger">Reject</button>
                             </td>
                           </tr>
                         );
