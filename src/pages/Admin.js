@@ -5,6 +5,7 @@ import moment from "moment";
 import cookie from "react-cookies";
 import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
+import sweetalert from "sweetalert2";
 
 import {
   Row,
@@ -48,6 +49,50 @@ class Admin extends React.Component {
         // }
       });
   };
+  Approve = id => {
+    sweetalert
+      .fire({
+        title: "Confirm to approve?",
+        showCancelButton: true,
+        confirmButtonColor: "#28A745",
+        cancelButtonColor: "#DC3545",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+      })
+      .then(result => {
+        if (result.value) {
+          const AuthStr = "Bearer ".concat(cookie.load("jwt"));
+          const headers = {
+            headers: {
+              Authorization: AuthStr
+            }
+          };
+          var bodyFormData = new FormData();
+          bodyFormData.set("id", id);
+          axios({
+            method: "post",
+            url: `process.env.REACT_APP_BE_PATH + "/admin/booking/approve"`,
+            data: bodyFormData,
+            headers: headers
+          })
+            .then(() => {
+              sweetalert.fire({
+                type: "success",
+                title: "Success",
+                showConfirmButton: false,
+                timer: 1000
+              });
+            })
+            .catch(err => {
+              sweetalert.fire({
+                type: "error",
+                title: `${err.response.data.message}`,
+                confirmButtonColor: "#28A745"
+              });
+            });
+        }
+      });
+  };
 
   render() {
     return (
@@ -65,8 +110,12 @@ class Admin extends React.Component {
                   <Table className="no-wrap v-middle" responsive>
                     <thead>
                       <tr className="border-0">
-                        <th className="border-0 d-none d-md-table-cell">Name</th>
-                        <th className="border-0 d-none d-md-table-cell">Organization Name</th>
+                        <th className="border-0 d-none d-md-table-cell">
+                          Name
+                        </th>
+                        <th className="border-0 d-none d-md-table-cell">
+                          Organization Name
+                        </th>
                         <th className="border-0">Place</th>
                         <th className="border-0">Booking date</th>
                         <th className="border-0">Status</th>
@@ -76,12 +125,14 @@ class Admin extends React.Component {
                       {this.state.history.map(booking => {
                         return (
                           <tr>
-                            <td className='d-none d-md-table-cell'>
+                            <td className="d-none d-md-table-cell">
                               {booking.applicant.fname +
                                 " " +
                                 booking.applicant.lname}
                             </td>
-                            <td className='d-none d-md-table-cell'>{booking.applicant.organization}</td>
+                            <td className="d-none d-md-table-cell">
+                              {booking.applicant.organization}
+                            </td>
                             <td>{booking.sign.location}</td>
                             <td>
                               {moment(booking.first_date).format("DD/MM/YY")}-
@@ -93,7 +144,11 @@ class Admin extends React.Component {
                                 role="group"
                                 aria-label="Basic example"
                               >
-                                <button type="button" class="btn btn-success">
+                                <button
+                                  onClick={() => this.Approve(booking.id)}
+                                  type="button"
+                                  class="btn btn-success"
+                                >
                                   Approve
                                 </button>
                                 <button type="button" class="btn btn-danger">
