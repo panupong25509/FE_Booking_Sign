@@ -10,3 +10,7 @@ body {
 .card-body {
 white-space: pre;
 }
+
+.font-s{
+  font-size: 0.9rem;
+}

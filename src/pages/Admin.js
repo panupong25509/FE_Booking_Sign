@@ -1,5 +1,4 @@
 import React from "react";
-import "../assets/history.css";
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
@@ -214,10 +213,16 @@ class Admin extends React.Component {
                       })}
                     </tbody>
                   </Table>
-                  <div>
-                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.minuspage()}>Back</button>
-                    <span>{this.state.numofpage}/{this.state.totalpage}</span>
-                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.pluspage()}>Next</button>
+                  <div className="row ml-auto">
+                    <div className="col-12 p-0 d-flex">
+                      <div className="ml-auto">
+                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.minuspage()}>Back</button>
+                        <span>{this.state.numofpage}/{this.state.totalpage}</span>
+                      </div>
+                      <div>
+                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.pluspage()}>Next</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardBody>

@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import sweetalert from "sweetalert2";
 import DatePicker from "../components/Datepicker";
 import cookie from "react-cookies";
-import "../assets/booking.css";
 import WithAuth from "../hocs/withAuth";
+import "../assets/booking.css";
 
 import { Col, Card, CardBody, CardTitle } from "reactstrap";
 
@@ -261,19 +261,20 @@ class Booking extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="row ">
-                  <div className="col-12 p-0 d-flex justify-content-between">
+                <div className="row ml-auto">
+                  <div className="col-12 p-0 d-flex">
+                    <div className="ml-auto">
                     <Link to="/">
-                      <button type="button" className="btn btn-outline-danger">
+                      <button type="button" className="btn btn-danger font-s">
                         Back
                       </button>
                     </Link>
-                    <button
-                      type="submit"
-                      className="btn btn-outline-success"
-                    >
-                      Submit
-                    </button>
+                    </div>
+                    <div className="ml-3">
+                      <button type="submit" className="btn btn-success font-s">
+                        Submit
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
