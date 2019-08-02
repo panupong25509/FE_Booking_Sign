@@ -20,34 +20,46 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: []
+      history: [],
+      numofpage: 1,
+      totalpage: 0,
+      Bookings: [],
     };
   }
   componentWillMount() {
     this.props.page("Dashboard");
-    this.fetchHistory();
+    this.fetchBookings();
   }
-  fetchHistory = async () => {
+
+  fetchBookings = async () => {
     const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
         Authorization: AuthStr
       }
     };
-    await axios
-      .get(process.env.REACT_APP_BE_PATH + "/booking", headers)
-      .then(history => {
-        console.log(history.data);
-        if (history.data.bookings !== null) {
-          this.setState({ history: history.data.bookings });
-        }
+    await axios.get(`http://127.0.0.1:3000/booking/${this.state.numofpage}`,headers).then(booking => {
+      this.setState({
+        Bookings: booking.data.Bookings,
+        totalpage: booking.data.TotalPage
       })
-      .catch(err => {
-        // if (err.response.status !== undefined) {
-        //   window.location.href = `/error/${err.response.status}`;
-        // }
-      });
-  };
+      console.log(this.state.Bookings)
+    })
+  }
+
+  async pluspage() {
+    if(this.state.totalpage > this.state.numofpage){
+      await this.setState({numofpage : this.state.numofpage+1})
+    }
+    this.fetchBookings()
+  }
+
+  async minuspage() {
+    if(this.state.numofpage > 1){
+      await this.setState({ numofpage: this.state.numofpage-1 })
+    }
+    this.fetchBookings()
+  }
 
   render() {
     return (
@@ -62,13 +74,11 @@ class History extends React.Component {
                     <CardSubtitle>History of your booking</CardSubtitle>
                   </div>
                   <div className="ml-auto align-items-center">
-                    <div className="">
-                      <Link to="/booking">
-                        <button type="button" className="btn btn-success">
-                          Booking
-                        </button>
-                      </Link>
-                    </div>
+                    <Link to="/booking">
+                      <button type="button" className="btn btn-success">
+                        Booking
+                      </button>
+                    </Link>
                   </div>
                 </div>
                 <div>
@@ -85,28 +95,33 @@ class History extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.history.map(booking => {
+                      {this.state.Bookings.map(Bookings => {
                         return (
                           <tr>
                             <td className="d-none d-md-table-cell">
-                              {booking.applicant.fname +
+                              {Bookings.applicant.fname +
                                 " " +
-                                booking.applicant.lname}
+                                Bookings.applicant.lname}
                             </td>
                             <td className="d-none d-md-table-cell">
-                              {booking.applicant.organization}
+                              {Bookings.applicant.organization}
                             </td>
-                            <td>{booking.sign.location}</td>
+                            <td>{Bookings.sign.location}</td>
                             <td>
-                              {moment(booking.first_date).format("DD/MM/YY")}-
-                              {moment(booking.last_date).format("DD/MM/YY")}
+                              {moment(Bookings.first_date).format("DD/MM/YY")}-
+                              {moment(Bookings.last_date).format("DD/MM/YY")}
                             </td>
-                            <td>{booking.status}</td>
+                            <td>{Bookings.status}</td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </Table>
+                  <div>
+                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.minuspage()}>Back</button>
+                    <span>{this.state.numofpage}/{this.state.totalpage}</span>
+                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.pluspage()}>Next</button>
+                  </div>
                 </div>
               </CardBody>
             </Card>

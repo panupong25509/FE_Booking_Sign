@@ -6,6 +6,7 @@ import cookie from "react-cookies";
 // import { Link, Redirect } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
 import sweetalert from "sweetalert2";
+import '../assets/admin.css'
 
 import {
   Row,
@@ -13,7 +14,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
   Table
 } from "reactstrap";
 
@@ -22,34 +22,47 @@ class Admin extends React.Component {
     super(props);
     this.state = {
       history: [],
+      numofpage: 1,
+      totalpage: 0,
+      Bookings: [],
     };
   }
   componentWillMount() {
     this.props.page("Admin");
-    this.fetchBooking();
+    // this.fetchBooking();
+    this.fetchBookings();
   }
-  fetchBooking = async () => {
-    const path = process.env.REACT_APP_BE_PATH + "/admin/booking";
+
+  fetchBookings = async () => {
     const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
         Authorization: AuthStr
       }
     };
-    await axios
-      .get(path, headers)
-      .then(bookings => {
-        // console.log(history.data);
-        if (bookings.data.bookings !== null) {
-          this.setState({ history: bookings.data.bookings });
-        }
+    await axios.get(`http://127.0.0.1:3000/admin/booking/${this.state.numofpage}`,headers).then(booking => {
+      this.setState({
+        Bookings: booking.data.Bookings,
+        totalpage: booking.data.TotalPage
       })
-      .catch(err => {
-        // if (err.response.status !== undefined) {
-        //   window.location.href = `/error/${err.response.status}`;
-        // }
-      });
-  };
+      
+    })
+  }
+
+  async pluspage() {
+    if(this.state.totalpage > this.state.numofpage){
+      await this.setState({numofpage : this.state.numofpage+1})
+    }
+    this.fetchBookings()
+  }
+
+  async minuspage() {
+    if(this.state.numofpage > 1){
+      await this.setState({ numofpage: this.state.numofpage-1 })
+    }
+    this.fetchBookings()
+  }
+  
   Approve = id => {
     sweetalert
       .fire({
@@ -93,8 +106,6 @@ class Admin extends React.Component {
         }
       });
   };
-
-  
 
   Reject = async id => {
     await sweetalert.fire({
@@ -141,6 +152,8 @@ class Admin extends React.Component {
       });
   };
 
+  
+
   render() {
     return (
       <div className="page-content container-fluid">
@@ -169,7 +182,7 @@ class Admin extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.history.map(booking => {
+                      {this.state.Bookings.map(booking => {
                         return (
                           <tr>
                             <td className="d-none d-md-table-cell">
@@ -186,19 +199,11 @@ class Admin extends React.Component {
                               {moment(booking.last_date).format("DD/MM/YY")}
                             </td>
                             <td>
-                              <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Basic example"
-                              >
-                                <button
-                                  onClick={() => this.Approve(booking.id)}
-                                  type="button"
-                                  class="btn btn-success"
-                                >
+                              <div className="btn-group font-s" role="group" aria-label="Basic example">
+                                <button onClick={() => this.Approve(booking.id)} type="button" className="font-s btn btn-success">
                                   Approve
                                 </button>
-                                <button type="button" onClick={() => this.Reject(booking.id)} class="btn btn-danger">
+                                <button type="button" onClick={() => this.Reject(booking.id)} className="font-s btn btn-danger">
                                   Reject
                                 </button>
                               </div>
@@ -208,6 +213,11 @@ class Admin extends React.Component {
                       })}
                     </tbody>
                   </Table>
+                  <div>
+                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.minuspage()}>Back</button>
+                    <span>{this.state.numofpage}/{this.state.totalpage}</span>
+                    <button type="button" className="mx-4 btn btn-success" onClick={() => this.pluspage()}>Next</button>
+                  </div>
                 </div>
               </CardBody>
             </Card>
