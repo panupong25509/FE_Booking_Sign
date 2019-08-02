@@ -55,7 +55,6 @@ class Sidebar extends React.Component {
       >
         <div>
           {Pages.map(page => {
-            console.log(this.CheckAdmin(page.Admin));
             return (
               <Link to={page.path}>
                 <Test

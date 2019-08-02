@@ -75,11 +75,17 @@ export default class Example extends React.Component {
     await dates.map(date => {
       let firstdate = new Date(moment(date.firstdate).format("YYYY-MM-DD"));
       let lastdate = new Date(moment(date.lastdate).format("YYYY-MM-DD"));
-      bookingDates.push(
-        { after: firstdate, before: lastdate },
-        firstdate,
-        lastdate
-      );
+      if (firstdate.getTime() !== lastdate.getTime()) {
+        bookingDates.push(
+          { after: firstdate, before: lastdate },
+          firstdate,
+          lastdate
+        );
+      } else {
+        bookingDates.push(
+          firstdate,
+        );
+      }
     });
     this.setState({ bookingDates: bookingDates });
   };

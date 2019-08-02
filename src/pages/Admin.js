@@ -3,7 +3,7 @@ import "../assets/history.css";
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
-import { Link } from "react-router-dom";
+// import { Link, Redirect } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
 import sweetalert from "sweetalert2";
 
@@ -29,6 +29,7 @@ class Admin extends React.Component {
     this.fetchBooking();
   }
   fetchBooking = async () => {
+    const path = process.env.REACT_APP_BE_PATH + "/admin/booking";
     const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
@@ -36,7 +37,7 @@ class Admin extends React.Component {
       }
     };
     await axios
-      .get(process.env.REACT_APP_BE_PATH + "/admin/booking", headers)
+      .get(path, headers)
       .then(bookings => {
         // console.log(history.data);
         if (bookings.data.bookings !== null) {
@@ -63,25 +64,24 @@ class Admin extends React.Component {
         if (result.value) {
           const AuthStr = "Bearer ".concat(cookie.load("jwt"));
           const headers = {
-            headers: {
-              Authorization: AuthStr
-            }
+            Authorization: AuthStr
           };
           var bodyFormData = new FormData();
           bodyFormData.set("id", id);
           axios({
             method: "post",
-            url: `process.env.REACT_APP_BE_PATH + "/admin/booking/approve"`,
+            url: process.env.REACT_APP_BE_PATH + "/admin/booking/approve",
             data: bodyFormData,
             headers: headers
           })
-            .then(() => {
-              sweetalert.fire({
+            .then(async status => {
+              await sweetalert.fire({
                 type: "success",
                 title: "Success",
                 showConfirmButton: false,
                 timer: 1000
               });
+              window.location.reload();
             })
             .catch(err => {
               sweetalert.fire({
