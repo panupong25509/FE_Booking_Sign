@@ -12,6 +12,9 @@ const Bar = styled.div`
   overflow-y: auto;
   font-weight: 1000;
   background-color: #435687;
+  a {
+    text-decoration: none !important;
+  }
 `;
 
 const Test = styled.div`
@@ -31,7 +34,8 @@ const Test = styled.div`
 const Pages = [
   { page: "Dashboard", path: "/dashboard", Admin: false },
   { page: "Booking", path: "/booking", Admin: false },
-  { page: "Admin", path: "/admin", Admin: true }
+  { page: "Admin", path: "/admin", Admin: true },
+  { page: "Addsign", path: "/addsign", Admin: true },
 ];
 
 class Sidebar extends React.Component {

@@ -9,6 +9,9 @@ const Navs = styled.nav`
   background-color: #f47836;
   color: white;
   height: ${props => props.height}px;
+  a {
+    text-decoration: none !important;
+  }
 `;
 const Icon = styled.i`
   font-size: 25px;
