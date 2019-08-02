@@ -122,13 +122,14 @@ class Admin extends React.Component {
             data: bodyFormData,
             headers: headers
           })
-            .then(() => {
-              sweetalert.fire({
+            .then(async() => {
+              await sweetalert.fire({
                 type: "success",
                 title: "Success",
                 showConfirmButton: false,
                 timer: 1000
               });
+              window.location.reload();
             })
             .catch(err => {
               sweetalert.fire({
