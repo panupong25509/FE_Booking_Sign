@@ -12,6 +12,7 @@ import Booking from "./pages/Booking";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Error from "./pages/Error";
+import Addsign from './pages/AddSign'
 
 const Font = styled.div`
   font-family: 'Sukhumvit';
@@ -23,6 +24,7 @@ const Pages = [
   { path: "/dashboard", component: Dashboard, fullheader: true },
   { path: "/booking", component: Booking, fullheader: true },
   { path: "/admin", component: Admin, fullheader: true },
+  { path: "/addsign", component: Addsign, fullheader: true },
   { path: "/error/:status", component: Error, fullheader: true }
 ];
 function CheckFullHeaderPages(Component, fullheader) {
