@@ -21,7 +21,7 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: []
+      history: [],
     };
   }
   componentWillMount() {
@@ -72,6 +72,53 @@ class Admin extends React.Component {
           axios({
             method: "post",
             url: `process.env.REACT_APP_BE_PATH + "/admin/booking/approve"`,
+            data: bodyFormData,
+            headers: headers
+          })
+            .then(() => {
+              sweetalert.fire({
+                type: "success",
+                title: "Success",
+                showConfirmButton: false,
+                timer: 1000
+              });
+            })
+            .catch(err => {
+              sweetalert.fire({
+                type: "error",
+                title: `${err.response.data.message}`,
+                confirmButtonColor: "#28A745"
+              });
+            });
+        }
+      });
+  };
+
+  
+
+  Reject = async id => {
+    await sweetalert.fire({
+      title: "Confirm to Reject?",      
+      input: 'textarea',
+      inputPlaceholder: 'Type your message here...',
+      showCancelButton: true,
+      confirmButtonColor: "#28A745",
+      cancelButtonColor: "#DC3545",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    })
+      .then(function(result) {
+        if (result.value) {
+          const AuthStr = "Bearer ".concat(cookie.load("jwt"));
+          const headers = {
+            Authorization: AuthStr
+          };
+          var bodyFormData = new FormData();
+          bodyFormData.set("id", id);
+          bodyFormData.set("comment", result.value);
+          axios({
+            method: "post",
+            url: process.env.REACT_APP_BE_PATH + "/admin/booking/reject",
             data: bodyFormData,
             headers: headers
           })
@@ -151,7 +198,7 @@ class Admin extends React.Component {
                                 >
                                   Approve
                                 </button>
-                                <button type="button" class="btn btn-danger">
+                                <button type="button" onClick={() => this.Reject(booking.id)} class="btn btn-danger">
                                   Reject
                                 </button>
                               </div>
