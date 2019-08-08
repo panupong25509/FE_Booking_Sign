@@ -77,7 +77,7 @@ class Login extends React.Component {
       }
     })
       .then(async jwt => {
-        await cookie.save("jwt", jwt.data);
+        await cookie.save("jwt", jwt.data.jwt);
         await this.setState({
           redirect: true
         });
