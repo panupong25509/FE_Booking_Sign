@@ -85,9 +85,9 @@ class Home extends React.Component {
                         </div>
                     </div>
                     <div className="mx-3">
-                        <button type="submit" class="btn btn-outline-success mr-3">Add</button>
+                        <button type="submit" class="btn btn-success mr-3">Add</button>
                         <Link to="/">
-                            <button type="button" class="btn btn-outline-danger">กลับ</button>
+                            <button type="button" class="btn btn-danger">กลับ</button>
                         </Link>
                     </div>
                 </form>

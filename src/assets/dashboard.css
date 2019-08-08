@@ -43,5 +43,8 @@ body {
 .card .card-title {
   position: relative;
   font-weight: 600;
-  
+}
+
+.font-s{
+  font-size: 0.9rem;
 }
