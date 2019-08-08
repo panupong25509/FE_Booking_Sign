@@ -148,7 +148,7 @@ class Login extends React.Component {
                         required
                       />
                     </InputGroup>
-                    <p className="text-danger">{this.state.error}</p>
+                    {/* <p className="text-danger">{this.state.error}</p>
                     <div className="d-flex no-block align-items-center mb-3">
                       <div className="ml-auto">
                         <a
@@ -159,7 +159,7 @@ class Login extends React.Component {
                           <i className="fa fa-lock mr-1" /> Forgot pwd?
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                     <Row className="mb-3">
                       <Col xs="12">
                         <Button
@@ -176,7 +176,7 @@ class Login extends React.Component {
                 </Col>
               </Row>
             </div>
-            <div>
+            {/* <div>
               <Row className={"mt-3 " + this.state.FormForgetPassword}>
                 <div className="col-12 text-center">
                   <h5 className="font-medium mb-3">Recover Password</h5>
@@ -208,7 +208,7 @@ class Login extends React.Component {
                   </Form>
                 </Col>
               </Row>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
