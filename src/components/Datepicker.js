@@ -58,8 +58,12 @@ export default class Example extends React.Component {
       });
     }
   };
-  handleResetClick = () => {
-    this.setState(this.getInitialState());
+  handleResetClick = async () => {
+    await this.setState(this.getInitialState());
+    this.props.date({
+      firstdate: this.state.from,
+      lastdate: this.state.to
+    });
   };
 
   fetchBookingDates = async signid => {
