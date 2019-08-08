@@ -20,7 +20,8 @@ class Booking extends React.Component {
       lastdate: null,
       description: "",
       signs: [],
-      sign: {}
+      sign: {},
+      file: null
     };
   }
 
@@ -80,6 +81,7 @@ class Booking extends React.Component {
     bodyFormData.set("applicant_id", this.state.applicant.id);
     bodyFormData.append("sign_id", this.state.sign.id);
     bodyFormData.append("description", this.state.description);
+    bodyFormData.append('file', this.state.file);
     bodyFormData.append(
       "first_date",
       moment(this.state.firstdate).format("YYYY-MM-DD")
@@ -163,6 +165,10 @@ class Booking extends React.Component {
       return false;
     }
     return true;
+  }
+
+  handleChangeFile = (event) => {
+    this.setState({ file: event.target.files[0] })
   }
 
   render() {
@@ -259,6 +265,12 @@ class Booking extends React.Component {
                       }
                       required
                     />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label className="col-12 col-md-3 p-0">อัพรูปป้าย</label>
+                  <div className="col-12 col-md-9 p-0">
+                    <input required type="file" accept=".jpg" onChange={this.handleChangeFile} />
                   </div>
                 </div>
                 <div className="row ml-auto">

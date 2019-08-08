@@ -158,6 +158,28 @@ class Admin extends React.Component {
     return (
       <div className="page-content container-fluid">
         <Row>
+            <Col className="col-5">
+              <Card>
+                <CardBody className="shadow">
+                  <CardTitle>Request</CardTitle>
+                  <div className="text-center">
+                    asdasd
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col className="col-5">
+              <Card>
+                <CardBody className="shadow">
+                  <CardTitle>AllBooking / Year</CardTitle>
+                  <div className="text-center">
+                    sdfkposgop
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+        </Row>
+        <Row>
           <Col lg="12">
             <Card>
               <CardBody className="shadow">
