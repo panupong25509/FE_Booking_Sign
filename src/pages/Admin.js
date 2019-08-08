@@ -2,19 +2,12 @@ import React from "react";
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
-// import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
 import sweetalert from "sweetalert2";
-import '../assets/admin.css'
+import "../assets/admin.css";
 
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-  Table
-} from "reactstrap";
+import { Row, Col, Card, CardBody, CardTitle, Table } from "reactstrap";
 
 class Admin extends React.Component {
   constructor(props) {
@@ -23,7 +16,7 @@ class Admin extends React.Component {
       history: [],
       numofpage: 1,
       totalpage: 0,
-      Bookings: [],
+      Bookings: []
     };
   }
   componentWillMount() {
@@ -39,29 +32,33 @@ class Admin extends React.Component {
         Authorization: AuthStr
       }
     };
-    await axios.get(`http://127.0.0.1:3000/admin/booking/${this.state.numofpage}`,headers).then(booking => {
-      this.setState({
-        Bookings: booking.data.bookings,
-        totalpage: booking.data.allpage
-      })
-      
-    })
-  }
+    await axios
+      .get(
+        `http://127.0.0.1:3000/admin/booking/${this.state.numofpage}`,
+        headers
+      )
+      .then(booking => {
+        this.setState({
+          Bookings: booking.data.bookings,
+          totalpage: booking.data.allpage
+        });
+      });
+  };
 
   async pluspage() {
-    if(this.state.totalpage > this.state.numofpage){
-      await this.setState({numofpage : this.state.numofpage+1})
+    if (this.state.totalpage > this.state.numofpage) {
+      await this.setState({ numofpage: this.state.numofpage + 1 });
     }
-    this.fetchBookings()
+    this.fetchBookings();
   }
 
   async minuspage() {
-    if(this.state.numofpage > 1){
-      await this.setState({ numofpage: this.state.numofpage-1 })
+    if (this.state.numofpage > 1) {
+      await this.setState({ numofpage: this.state.numofpage - 1 });
     }
-    this.fetchBookings()
+    this.fetchBookings();
   }
-  
+
   Approve = id => {
     sweetalert
       .fire({
@@ -107,16 +104,17 @@ class Admin extends React.Component {
   };
 
   Reject = async id => {
-    await sweetalert.fire({
-      title: "Confirm to Reject?",      
-      input: 'textarea',
-      inputPlaceholder: 'Type your message here...',
-      showCancelButton: true,
-      confirmButtonColor: "#28A745",
-      cancelButtonColor: "#DC3545",
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
-    })
+    await sweetalert
+      .fire({
+        title: "Confirm to Reject?",
+        input: "textarea",
+        inputPlaceholder: "Type your message here...",
+        showCancelButton: true,
+        confirmButtonColor: "#28A745",
+        cancelButtonColor: "#DC3545",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+      })
       .then(function(result) {
         if (result.value) {
           const AuthStr = "Bearer ".concat(cookie.load("jwt"));
@@ -132,7 +130,7 @@ class Admin extends React.Component {
             data: bodyFormData,
             headers: headers
           })
-            .then(async() => {
+            .then(async () => {
               await sweetalert.fire({
                 type: "success",
                 title: "Success",
@@ -152,8 +150,6 @@ class Admin extends React.Component {
       });
   };
 
-  
-
   render() {
     return (
       <div className="page-content container-fluid">
@@ -161,68 +157,109 @@ class Admin extends React.Component {
           <Col lg="12">
             <Card>
               <CardBody className="shadow">
-                <div className="d-md-flex align-items-center">
-                  <div>
-                    <CardTitle>Admin</CardTitle>
+                <div
+                  className={
+                    this.state.Bookings.length == 0 ? "d-none" : "d-block"
+                  }
+                >
+                  <div className="d-md-flex align-items-center">
+                    <div>
+                      <CardTitle>Admin</CardTitle>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <Table className="no-wrap v-middle" responsive>
-                    <thead>
-                      <tr className="border-0">
-                        <th className="border-0 d-none d-md-table-cell">
-                          Name
-                        </th>
-                        <th className="border-0 d-none d-md-table-cell">
-                          Organization Name
-                        </th>
-                        <th className="border-0">Place</th>
-                        <th className="border-0">Booking date</th>
-                        <th className="border-0">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.Bookings.map(booking => {
-                        return (
-                          <tr>
-                            <td className="d-none d-md-table-cell">
-                              {booking.applicant.fname +
-                                " " +
-                                booking.applicant.lname}
-                            </td>
-                            <td className="d-none d-md-table-cell">
-                              {booking.applicant.organization}
-                            </td>
-                            <td>{booking.sign.location}</td>
-                            <td>
-                              {moment(booking.first_date).format("DD/MM/YY")}-
-                              {moment(booking.last_date).format("DD/MM/YY")}
-                            </td>
-                            <td>
-                              <div className="btn-group font-s" role="group" aria-label="Basic example">
-                                <button onClick={() => this.Approve(booking.id)} type="button" className="font-s btn btn-success">
-                                  Approve
-                                </button>
-                                <button type="button" onClick={() => this.Reject(booking.id)} className="font-s btn btn-danger">
-                                  Reject
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                  <div className="row ml-auto">
-                    <div className="col-12 p-0 d-flex">
-                      <div className="ml-auto">
-                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.minuspage()}>Back</button>
-                        <span>{this.state.numofpage}/{this.state.totalpage}</span>
-                      </div>
-                      <div>
-                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.pluspage()}>Next</button>
+                  <div>
+                    <Table className="no-wrap v-middle" responsive>
+                      <thead>
+                        <tr className="border-0">
+                          <th className="border-0 d-none d-md-table-cell">
+                            Name
+                          </th>
+                          <th className="border-0 d-none d-md-table-cell">
+                            Organization Name
+                          </th>
+                          <th className="border-0">Place</th>
+                          <th className="border-0">Booking date</th>
+                          <th className="border-0">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.Bookings.map(booking => {
+                          return (
+                            <tr>
+                              <td className="d-none d-md-table-cell">
+                                {booking.applicant.fname +
+                                  " " +
+                                  booking.applicant.lname}
+                              </td>
+                              <td className="d-none d-md-table-cell">
+                                {booking.applicant.organization}
+                              </td>
+                              <td>{booking.sign.location}</td>
+                              <td>
+                                {moment(booking.first_date).format("DD/MM/YY")}-
+                                {moment(booking.last_date).format("DD/MM/YY")}
+                              </td>
+                              <td>
+                                <div
+                                  className="btn-group font-s"
+                                  role="group"
+                                  aria-label="Basic example"
+                                >
+                                  <button
+                                    onClick={() => this.Approve(booking.id)}
+                                    type="button"
+                                    className="font-s btn btn-success"
+                                  >
+                                    Approve
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => this.Reject(booking.id)}
+                                    className="font-s btn btn-danger"
+                                  >
+                                    Reject
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </Table>
+                    <div className="row ml-auto">
+                      <div className="col-12 p-0 d-flex">
+                        <div className="ml-auto">
+                          <button
+                            type="button"
+                            className="mx-4 btn btn-success font-s"
+                            onClick={() => this.minuspage()}
+                          >
+                            Back
+                          </button>
+                          <span>
+                            {this.state.numofpage}/{this.state.totalpage}
+                          </span>
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            className="mx-4 btn btn-success font-s"
+                            onClick={() => this.pluspage()}
+                          >
+                            Next
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div
+                  className={
+                    this.state.Bookings.length == 0 ? "d-block" : "d-none"
+                  }
+                >
+                  <div className="text-center">
+                    <span>Not have booking request</span>
                   </div>
                 </div>
               </CardBody>
