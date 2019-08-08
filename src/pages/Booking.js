@@ -111,7 +111,7 @@ class Booking extends React.Component {
     } else {
       sweetalert.fire({
         type: "error",
-        title: "กรอกข้อมูลไม่ครบ"
+        title: "Please fill in all fields "
       });
     }
     e.preventDefault();
