@@ -4,7 +4,7 @@ import moment from "moment";
 import cookie from "react-cookies";
 import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
-import '../assets/dashboard.css'
+import "../assets/dashboard.css";
 
 import {
   Row,
@@ -24,7 +24,7 @@ class History extends React.Component {
       numofpage: 1,
       totalpage: 0,
       Bookings: [],
-      Order: "first_date asc",
+      Order: "first_date asc"
     };
   }
   componentWillMount() {
@@ -40,46 +40,54 @@ class History extends React.Component {
       }
     };
     // await axios(`http://127.0.0.1:3000/booking/${this.state.numofpage}/${this.state.Order}`,headers).then(booking => {
-    await axios(`http://127.0.0.1:3000/booking/${this.state.numofpage}`,headers).then(booking => {
-      console.log(booking.data)
+    await axios(
+      `http://127.0.0.1:3000/booking/${this.state.numofpage}`,
+      headers
+    ).then(booking => {
+      console.log(booking.data);
       this.setState({
         Bookings: booking.data.bookings,
         totalpage: booking.data.allpage
-      })
-    })
-  }
+      });
+    });
+  };
 
   async pluspage() {
-    if(this.state.totalpage > this.state.numofpage){
-      await this.setState({numofpage : this.state.numofpage+1})
+    if (this.state.totalpage > this.state.numofpage) {
+      await this.setState({ numofpage: this.state.numofpage + 1 });
     }
-    this.fetchBookings()
+    this.fetchBookings();
   }
 
   async minuspage() {
-    if(this.state.numofpage > 1){
-      await this.setState({ numofpage: this.state.numofpage-1 })
+    if (this.state.numofpage > 1) {
+      await this.setState({ numofpage: this.state.numofpage - 1 });
     }
-    this.fetchBookings()
+    this.fetchBookings();
   }
 
-  SetOrder = async (value) => {
+  SetOrder = async value => {
     await this.setState({
-      Order : value
-    })
+      Order: value
+    });
     const AuthStr = "Bearer ".concat(cookie.load("jwt"));
     const headers = {
       headers: {
         Authorization: AuthStr
       }
     };
-    await axios(`http://127.0.0.1:3000/booking/${this.state.numofpage}/${this.state.Order}`,headers).then(booking => {
+    await axios(
+      `http://127.0.0.1:3000/booking/${this.state.numofpage}/${
+        this.state.Order
+      }`,
+      headers
+    ).then(booking => {
       this.setState({
         Bookings: booking.data.Bookings,
         totalpage: booking.data.TotalPage
-      })
-    })
-  }
+      });
+    });
+  };
 
   render() {
     return (
@@ -93,27 +101,39 @@ class History extends React.Component {
                     <CardTitle>Dashboard</CardTitle>
                     <CardSubtitle>History of your booking</CardSubtitle>
                   </div>
-                  <div className="ml-auto mr-4 align-items-center">
-                    <select class="custom-select mr-sm-2 font-s" id="inlineFormCustomSelect" onChange={(e) => this.SetOrder(e.target.value)}>
-                      <option value="first_date asc" selected>Date</option>
-                      <option value="sign_id asc">Place</option>
-                      <option value="status asc">Status</option>
-                    </select>
+                  <div className="d-flex justify-content">
+                    <div className="ml-auto mr-3 align-items-center">
+                      <select
+                        class="custom-select mr-sm-2 font-s"
+                        id="inlineFormCustomSelect"
+                        onChange={e => this.SetOrder(e.target.value)}
+                      >
+                        <option value="first_date asc" selected>
+                          Date
+                        </option>
+                        <option value="sign_id asc">Place</option>
+                        <option value="status asc">Status</option>
+                      </select>
+                    </div>
+                    <div className="align-items-center">
+                      <Link to="/booking">
+                        <button
+                          type="button"
+                          className="font-s btn btn-success"
+                        >
+                          Booking
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                  <div className="align-items-center">
-                    <Link to="/booking">
-                      <button type="button" className="font-s btn btn-success">
-                        Booking
-                      </button>
-                    </Link>
-                  </div>
-                  
                 </div>
                 <div>
                   <Table className="no-wrap v-middle" responsive>
                     <thead>
                       <tr className="border-0">
-                        <th className="border-0 d-none d-md-table-cell">Name</th>
+                        <th className="border-0 d-none d-md-table-cell">
+                          Name
+                        </th>
                         <th className="border-0 d-none d-md-table-cell">
                           Organization Name
                         </th>
@@ -145,17 +165,27 @@ class History extends React.Component {
                       })}
                     </tbody>
                   </Table>
-                  <div className="row ml-auto">
-                    <div className="col-12 p-0 d-flex">
-                      <div className="ml-auto">
-                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.minuspage()}>Back</button>
-                        <span>{this.state.numofpage}/{this.state.totalpage}</span>
-                      </div>
-                      <div>
-                        <button type="button" className="mx-4 btn btn-success font-s" onClick={() => this.pluspage()}>Next</button>
-                      </div>
+                </div>
+                <div className="d-flex justify-content-end">
+                    <div>
+                      <button
+                        type="button"
+                        className="btn btn-success mr-3 font-s"
+                        onClick={() => this.minuspage()}
+                      >
+                        Back
+                      </button>
+                    <span>
+                      {this.state.numofpage}/{this.state.totalpage}
+                    </span>
+                      <button
+                        type="button"
+                        className="btn btn-success ml-3 font-s"
+                        onClick={() => this.pluspage()}
+                      >
+                        Next
+                      </button>
                     </div>
-                  </div>
                 </div>
               </CardBody>
             </Card>
