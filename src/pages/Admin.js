@@ -41,8 +41,8 @@ class Admin extends React.Component {
     };
     await axios.get(`http://127.0.0.1:3000/admin/booking/${this.state.numofpage}`,headers).then(booking => {
       this.setState({
-        Bookings: booking.data.Bookings,
-        totalpage: booking.data.TotalPage
+        Bookings: booking.data.bookings,
+        totalpage: booking.data.allpage
       })
       
     })

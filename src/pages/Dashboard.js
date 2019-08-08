@@ -40,7 +40,7 @@ class History extends React.Component {
       }
     };
     // await axios(`http://127.0.0.1:3000/booking/${this.state.numofpage}/${this.state.Order}`,headers).then(booking => {
-    await axios(`http://127.0.0.1:3000/booking/1`,headers).then(booking => {
+    await axios(`http://127.0.0.1:3000/booking/${this.state.numofpage}`,headers).then(booking => {
       console.log(booking.data)
       this.setState({
         Bookings: booking.data.bookings,
