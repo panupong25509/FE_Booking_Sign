@@ -64,31 +64,41 @@ class Home extends React.Component {
                 <form onSubmit={this.handleAddSign}>
                     <div className="container mt-2">
                         <div class="form-group">
-                            <label className="m-2">ชื่อป้าย</label>
+                            <label className="m-2">Signname</label>
                             <input required type="text" class="form-control" value={this.state.signname} onChange={(e) => this.handleChange(e.target.value, "signname") }/>
                         </div>
                         <div class="form-group">
-                            <label className="mx-2">สถานที่</label>
+                            <label className="mx-2">Place</label>
                             <input required type="text" class="form-control" value={this.state.location} onChange={(e) => this.handleChange(e.target.value, "location")}/>
                         </div>
                         <div class="form-group">
-                            <label className="mx-2">ต้องจองก่อนกี่วัน</label>
+                            <label className="mx-2">Before Booking</label>
                             <input required type="number" class="form-control" value={this.state.beforebooking} onChange={(e) => this.handleChange(e.target.value, "beforebooking")}/>
                         </div>
                         <div class="form-group">
-                            <label className="mx-2">จองได้มากสุดกี่วัน</label>
+                            <label className="mx-2">Limit Booking</label>
                             <input required type="number" class="form-control" value={this.state.limitdate} onChange={(e) => this.handleChange(e.target.value, "limitdate")}/>
                         </div>
                         <div class="form-group">
-                            <label className="mx-2">อัพรูปป้าย</label>
+                            <label className="mx-2">Picture Sign</label>
                             <input required type="file" accept=".jpg" onChange={this.handleChangeFile} />
                         </div>
                     </div>
-                    <div className="mx-3">
-                        <button type="submit" class="btn btn-success mr-3">Add</button>
-                        <Link to="/">
-                            <button type="button" class="btn btn-danger">กลับ</button>
-                        </Link>
+                    <div className="row mx-2">
+                        <div className="col-12 d-flex">
+                            <div className="">
+                            <Link to="/">
+                            <button type="button" className="btn btn-danger font-s">
+                                Back
+                            </button>
+                            </Link>
+                            </div>
+                            <div className="ml-3">
+                            <button type="submit" className="btn btn-success font-s">
+                                Submit
+                            </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
