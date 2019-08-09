@@ -13,7 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Error from "./pages/Error";
 import Addsign from './pages/AddSign'
-import Summary from './pages/Summary'
+import Summary from './pages/SummaryM'
 import DetailBooking from './pages/DetailBooking'
 
 const Font = styled.div`

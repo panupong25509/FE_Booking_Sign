@@ -36,6 +36,7 @@ const Pages = [
   { page: "Booking", path: "/booking", Admin: false },
   { page: "Admin", path: "/admin", Admin: true },
   { page: "Addsign", path: "/addsign", Admin: true },
+  { page: "Summary", path: "/admin/summary", Admin: true },
 ];
 
 class Sidebar extends React.Component {

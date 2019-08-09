@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
-import { Link } from "react-router-dom";
+import { Link , Redirect } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
 import sweetalert from "sweetalert2";
 import "../assets/admin.css";
@@ -18,17 +18,18 @@ class Admin extends React.Component {
       organization: null,
       sign: null,
       month: null,
-      year: null,
-      bookings: [],
+      summarys: [],
       signs: [],
       numofpage: 1,
-      totalpage: 0
+      totalpage: 0,
+      totaldata: 0,
     };
   }
   componentWillMount() {
     this.props.page("Summary");
     this.fetchBookings();
     this.fetchSign();
+    console.log(this.state.summarys)
   }
   async pluspage() {
     if (this.state.totalpage > this.state.numofpage) {
@@ -53,17 +54,17 @@ class Admin extends React.Component {
     await axios
       .get(
         process.env.REACT_APP_BE_PATH +
-          `/admin/booking/${this.state.month}/${this.state.year}/${
-            this.state.sign
-          }/${this.state.organization}/${this.state.numofpage}`,
+          `/admin/summary/month/${this.state.month}/${this.state.sign}/${this.state.organization}/${this.state.numofpage}`,
         headers
       )
       .then(async booking => {
         await this.setState({
-          bookings: booking.data.bookings,
-          totalpage: booking.data.allpage
+          summarys: booking.data.summarys,
+          totalpage: booking.data.allpage,
+          totaldata: booking.data.total
         });
-        console.log(booking)
+        console.log(booking.data)
+        console.log(booking.data.summarys)
       });
   };
 
@@ -89,6 +90,11 @@ class Admin extends React.Component {
     this.fetchBookings()
 
   };
+
+  Reset = async () => {
+    window.location.reload();
+  }
+  
   render() {
     return (
       <div className="page-content container-fluid">
@@ -106,6 +112,9 @@ class Admin extends React.Component {
                       <CardTitle>Summary</CardTitle>
                     </div>
                     <div className="d-flex">
+                      <button onClick={() => this.Reset()} type="button" className="btn btn-success mx-2" >
+                        Reset
+                      </button>
                       <select
                         class="custom-select mr-sm-2 font-s"
                         onChange={e => this.SetOrder("month", e.target.value)}
@@ -121,24 +130,13 @@ class Admin extends React.Component {
                       </select>
                       <select
                         class="custom-select mr-sm-2 font-s"
-                        onChange={e => this.SetOrder("year", e.target.value)}
-                      >
-                        <option value={"null"} selected>
-                          Year
-                        </option>
-                        {Year.map(year => {
-                          return <option value={year}>{year}</option>;
-                        })}
-                      </select>
-                      <select
-                        class="custom-select mr-sm-2 font-s"
                         onChange={e => this.SetOrder("sign", e.target.value)}
                       >
                         <option value={"null"} selected>
                           Sign
                         </option>
                         {this.state.signs.map(sign => {
-                          return <option value={sign.id}>{sign.name}</option>;
+                          return <option value={sign.name}>{sign.name}</option>;
                         })}
                       </select>
                       <select
@@ -163,39 +161,41 @@ class Admin extends React.Component {
                       <thead>
                         <tr className="border-0">
                           <th className="border-0 d-none d-md-table-cell">
-                            Name
+                            Month
                           </th>
                           <th className="border-0 d-none d-md-table-cell">
-                            Organization Name
+                          Sign
                           </th>
-                          <th className="border-0">Place</th>
-                          <th className="border-0">Booking date</th>
+                          <th className="border-0">Organization</th>
+                          <th className="border-0">Total</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {this.state.bookings.map(booking => {
+                        {this.state.summarys.map(summary => {
                           return (
                             <tr>
                               <td className="d-none d-md-table-cell">
-                                {booking.applicant.fname +
-                                  " " +
-                                  booking.applicant.lname}
+                                {summary.Month}
                               </td>
                               <td className="d-none d-md-table-cell">
-                                {booking.applicant.organization}
+                                {summary.Sign}
                               </td>
-                              <td>{booking.sign.location}</td>
+                              <td>{summary.Organization}</td>
                               <td>
-                                {moment(booking.first_date).format("DD/MM/YY")}-
-                                {moment(booking.last_date).format("DD/MM/YY")}
+                                {summary.Total}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
                     </Table>
+
                     <div className="row ml-auto">
-                      <div className="col-12 p-0 d-flex">
+                      <div className="ml-auto align-self-center">
+                        <span><h5 className="mr-4 ">{this.state.month==null ? "Total Booking" : "Total Booking In This Month"} : {this.state.totaldata}</h5></span>
+                      </div>
+                      <div className="col-12 p-0 d-flex ">
+                        
                         <div className="ml-auto">
                           <button
                             type="button"

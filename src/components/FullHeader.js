@@ -18,7 +18,6 @@ class FullHeader extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.id)
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }

@@ -1,6 +1,3 @@
-import axios from 'axios'
-import { resolve, reject } from 'q';
-
 export const Month = [
   { number: 1, name: "January" },
   { number: 2, name: "February" },
