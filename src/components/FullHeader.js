@@ -18,6 +18,7 @@ class FullHeader extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(this.props.id)
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
@@ -48,7 +49,7 @@ class FullHeader extends React.Component {
     });
   };
 
-  render() {
+  render(props) {
     const Page = this.props.Page;
     return (
       <div>
@@ -67,7 +68,7 @@ class FullHeader extends React.Component {
               />
             </div>
             <div className={this.state.PageWidth + " p-0"}>
-              <Page page={this.SetPage} />
+              <Page id={this.props.id} page={this.SetPage} />
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Error from "./pages/Error";
 import Addsign from './pages/AddSign'
+import DetailBooking from './pages/DetailBooking'
 
 const Font = styled.div`
   font-family: 'Sukhumvit';
@@ -25,10 +26,12 @@ const Pages = [
   { path: "/booking", component: Booking, fullheader: true },
   { path: "/admin", component: Admin, fullheader: true },
   { path: "/addsign", component: Addsign, fullheader: true },
+  { path: "/booking/:id", component: DetailBooking, fullheader: true },
   { path: "/error/:status", component: Error, fullheader: true }
+  
 ];
-function CheckFullHeaderPages(Component, fullheader) {
-  if (fullheader) return <FullHeader Page={Component} />;
+function CheckFullHeaderPages(props, Component, fullheader) {
+  if (fullheader) return <FullHeader id={props.match.params.id} Page={Component} />;
   return <Component />;
 }
 function AppRouter() {
@@ -41,8 +44,8 @@ function AppRouter() {
               <Route
                 exact
                 path={page.path}
-                component={() =>
-                  CheckFullHeaderPages(page.component, page.fullheader)
+                component={(props) =>
+                  CheckFullHeaderPages(props,page.component, page.fullheader)
                 }
               />
             );
