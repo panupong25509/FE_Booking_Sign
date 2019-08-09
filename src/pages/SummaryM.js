@@ -112,9 +112,6 @@ class Admin extends React.Component {
                       <CardTitle>Summary</CardTitle>
                     </div>
                     <div className="d-flex">
-                      <button onClick={() => this.Reset()} type="button" className="btn btn-success mx-2" >
-                        Reset
-                      </button>
                       <select
                         class="custom-select mr-sm-2 font-s"
                         onChange={e => this.SetOrder("month", e.target.value)}
@@ -154,6 +151,9 @@ class Admin extends React.Component {
                           );
                         })}
                       </select>
+                      <button onClick={() => this.Reset()} type="button" className="btn btn-success mx-2" >
+                        Reset
+                      </button>
                     </div>
                   </div>
                   <div>
