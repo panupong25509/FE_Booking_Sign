@@ -152,19 +152,34 @@ class History extends React.Component {
                           return (
                             <tr>
                               <td className="d-none d-md-table-cell">
-                                {Bookings.applicant.fname +
-                                  " " +
-                                  Bookings.applicant.lname}
+                                <Link to={`/booking/${Bookings.id}`} className="font-color" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                  {Bookings.applicant.fname +
+                                    " " +
+                                    Bookings.applicant.lname}
+                                </Link>
                               </td>
                               <td className="d-none d-md-table-cell">
-                                {Bookings.applicant.organization}
+                                <Link to={`/booking/${Bookings.id}`} className="font-color" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                  {Bookings.applicant.organization}
+                                </Link>
                               </td>
-                              <td>{Bookings.sign.location}</td>
                               <td>
-                                {moment(Bookings.first_date).format("DD/MM/YY")}
-                                -{moment(Bookings.last_date).format("DD/MM/YY")}
+                                <Link to={`/booking/${Bookings.id}`} className="font-color" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                  {Bookings.sign.location}
+                                </Link>
                               </td>
-                              <td>{Bookings.status}</td>
+                              <td>
+                                <Link to={`/booking/${Bookings.id}`} className="font-color" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                
+                                  {moment(Bookings.first_date).format("DD/MM/YY")}
+                                  -{moment(Bookings.last_date).format("DD/MM/YY")}
+                                </Link>
+                              </td>
+                              <td>
+                                <Link to={`/booking/${Bookings.id}`} className="font-color" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                  {Bookings.status}
+                                </Link>
+                              </td>
                             </tr>
                           );
                         })}

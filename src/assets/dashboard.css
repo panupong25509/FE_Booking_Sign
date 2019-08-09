@@ -48,3 +48,8 @@ body {
 .font-s{
   font-size: 0.9rem;
 }
+
+.font-color{
+  color: inherit;
+  text-decoration:none; 
+}
