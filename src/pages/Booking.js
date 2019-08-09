@@ -50,8 +50,6 @@ class Booking extends React.Component {
     await axios
       .get(process.env.REACT_APP_BE_PATH + "/user", header)
       .then(user => {
-        console.log(user.data);
-        // if(user.data.)
         this.setState({
           applicant: user.data
         });
@@ -140,7 +138,6 @@ class Booking extends React.Component {
           });
       })
       .catch(err => {
-        console.log(err);
         sweetalert.fire({
           type: "error",
           title: `${err.response.data.message}`,

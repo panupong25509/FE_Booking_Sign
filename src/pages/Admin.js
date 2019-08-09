@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import moment from "moment";
 import cookie from "react-cookies";
-import { Link } from "react-router-dom";
 import withAuth from "../hocs/withAuth";
 import sweetalert from "sweetalert2";
 import "../assets/admin.css";
@@ -23,7 +22,6 @@ class Admin extends React.Component {
   }
   componentWillMount() {
     this.props.page("Admin");
-    // this.fetchBooking();
     this.fetchBookings();
   }
 

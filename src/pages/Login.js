@@ -91,14 +91,10 @@ class Login extends React.Component {
   };
   Reset = e => {
     e.preventDefault();
-    console.log(this.state.Username, this.state.Password);
   };
   render() {
     return (
       <div className="">
-        {/*--------------------------------------------------------------------------------*/}
-        {/*Login Cards*/}
-        {/*--------------------------------------------------------------------------------*/}
         <div
           className="auth-wrapper d-flex no-block justify-content-center align-items-center"
           style={sidebarBackground}
@@ -148,18 +144,6 @@ class Login extends React.Component {
                         required
                       />
                     </InputGroup>
-                    {/* <p className="text-danger">{this.state.error}</p>
-                    <div className="d-flex no-block align-items-center mb-3">
-                      <div className="ml-auto">
-                        <a
-                          href="#forgetpassword"
-                          onClick={this.handleClick}
-                          className="forgot text-dark float-right"
-                        >
-                          <i className="fa fa-lock mr-1" /> Forgot pwd?
-                        </a>
-                      </div>
-                    </div> */}
                     <Row className="mb-3">
                       <Col xs="12">
                         <Button
@@ -176,39 +160,6 @@ class Login extends React.Component {
                 </Col>
               </Row>
             </div>
-            {/* <div>
-              <Row className={"mt-3 " + this.state.FormForgetPassword}>
-                <div className="col-12 text-center">
-                  <h5 className="font-medium mb-3">Recover Password</h5>
-                  <span>
-                    Enter your Email and instructions will be sent to you!
-                  </span>
-                </div>
-                <Col xs="12">
-                  <Form onSubmit={this.Reset}>
-                    <FormGroup>
-                      <Input
-                        value={this.state.Username}
-                        onChange={e =>
-                          this.handleChange("Username", e.target.value)
-                        }
-                        type="text"
-                        bsSize="lg"
-                        placeholder="Username"
-                        required
-                      />
-                    </FormGroup>
-                    <Row className="mt-3">
-                      <Col xs="12">
-                        <Button color="danger" size="lg" type="submit" block>
-                          Reset
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form>
-                </Col>
-              </Row>
-            </div> */}
           </div>
         </div>
       </div>

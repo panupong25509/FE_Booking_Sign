@@ -11,7 +11,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
 } from "reactstrap";
 
 class History extends React.Component {
@@ -45,7 +44,6 @@ class History extends React.Component {
       await this.setState({
         booking: booking.data,
       });
-      console.log(booking.data)
     });
   };
 
@@ -105,10 +103,6 @@ class History extends React.Component {
                                 {bookings.status}
                               </span>
                               <br />
-                              {/* <span>
-                                <span> : </span>
-                                {bookings.sign.limitdate} days
-                              </span> */}
                             </div>
                           </div>
                         </Row>

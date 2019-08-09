@@ -5,9 +5,9 @@ import styled from "styled-components";
 import "./assets/font.css";
 
 import FullHeader from "./components/FullHeader";
+
 //Pages
 import Login from "./pages/Login";
-
 import Booking from "./pages/Booking";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";

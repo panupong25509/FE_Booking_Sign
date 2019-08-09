@@ -29,7 +29,6 @@ class Admin extends React.Component {
     this.props.page("Summary");
     this.fetchBookings();
     this.fetchSign();
-    console.log(this.state.summarys)
   }
   async pluspage() {
     if (this.state.totalpage > this.state.numofpage) {
@@ -63,8 +62,6 @@ class Admin extends React.Component {
           totalpage: booking.data.allpage,
           totaldata: booking.data.total
         });
-        console.log(booking.data)
-        console.log(booking.data.summarys)
       });
   };
 
@@ -81,12 +78,6 @@ class Admin extends React.Component {
     await this.setState({
       [state]: value
     });
-    console.log(
-      this.state.month,
-      this.state.year,
-      this.state.sign,
-      this.state.organization
-    );
     this.fetchBookings()
 
   };
@@ -102,11 +93,7 @@ class Admin extends React.Component {
           <Col lg="12">
             <Card>
               <CardBody className="shadow">
-                <div
-                // className={
-                //   this.state.bookings.length == 0 ? "d-none" : "d-block"
-                // }
-                >
+                <div>
                   <div className="d-md-flex align-items-center justify-content-between">
                     <div>
                       <CardTitle>Summary</CardTitle>
@@ -221,15 +208,6 @@ class Admin extends React.Component {
                     </div>
                   </div>
                 </div>
-                {/* <div
-                  className={
-                    this.state.bookings.length == 0 ? "d-block" : "d-none"
-                  }
-                >
-                  <div className="text-center">
-                    <span>Not have booking request</span>
-                  </div>
-                </div> */}
               </CardBody>
             </Card>
           </Col>
