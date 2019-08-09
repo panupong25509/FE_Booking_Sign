@@ -34,7 +34,7 @@ const Test = styled.div`
 const Pages = [
   { page: "Dashboard", path: "/dashboard", Admin: false },
   { page: "Booking", path: "/booking", Admin: false },
-  { page: "Admin", path: "/admin", Admin: true },
+  { page: "Dashboard", path: "/admin", Admin: true },
   { page: "Addsign", path: "/addsign", Admin: true },
   { page: "Summary", path: "/admin/summary", Admin: true },
 ];
@@ -47,10 +47,11 @@ class Sidebar extends React.Component {
   componentDidMount() {}
   CheckAdmin = admin => {
     if (cookie.load("jwt") === undefined) return false;
-    if (!admin) return true;
     let token = jwt.decode(cookie.load("jwt"), "bookingsign");
-    if (token.Role !== "admin") return false;
-    return true;
+    let adminStatus = false
+    if (token.Role === "admin") adminStatus = true;
+    if (admin === adminStatus) return true;
+    return false;
   };
   render() {
     return (
