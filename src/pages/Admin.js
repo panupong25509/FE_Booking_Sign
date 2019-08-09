@@ -16,7 +16,9 @@ class Admin extends React.Component {
       history: [],
       numofpage: 1,
       totalpage: 0,
-      Bookings: []
+      Bookings: [],
+      allrequest: 0,
+      allbookingthisyear:0
     };
   }
   componentWillMount() {
@@ -40,7 +42,9 @@ class Admin extends React.Component {
       .then(booking => {
         this.setState({
           Bookings: booking.data.bookings,
-          totalpage: booking.data.allpage
+          totalpage: booking.data.allpage,
+          allrequest: booking.data.allrequest,
+          allbookingthisyear: booking.data.allbookingthisyear,
         });
       });
   };
@@ -159,7 +163,7 @@ class Admin extends React.Component {
                 <CardBody className="shadow">
                   <CardTitle>Request</CardTitle>
                   <div className="text-center">
-                    asdasd
+                    {this.state.allrequest}
                   </div>
                 </CardBody>
               </Card>
@@ -169,7 +173,7 @@ class Admin extends React.Component {
                 <CardBody className="shadow">
                   <CardTitle>AllBooking / Year</CardTitle>
                   <div className="text-center">
-                    sdfkposgop
+                    {this.state.allbookingthisyear}
                   </div>
                 </CardBody>
               </Card>
