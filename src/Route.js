@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Error from "./pages/Error";
 import Addsign from './pages/AddSign'
+import Summary from './pages/Summary'
 import DetailBooking from './pages/DetailBooking'
 
 const Font = styled.div`
@@ -25,6 +26,7 @@ const Pages = [
   { path: "/dashboard", component: Dashboard, fullheader: true },
   { path: "/booking", component: Booking, fullheader: true },
   { path: "/admin", component: Admin, fullheader: true },
+  { path: "/admin/summary", component: Summary, fullheader: true },
   { path: "/addsign", component: Addsign, fullheader: true },
   { path: "/booking/:id", component: DetailBooking, fullheader: true },
   { path: "/error/:status", component: Error, fullheader: true }
