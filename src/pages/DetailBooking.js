@@ -82,7 +82,7 @@ class History extends React.Component {
                               />
                             </div>
                           </div>
-                          <div className="col-12 mt-3">
+                          <div className="col-12 my-3">
                             <div className="card-body p-0">
                               <span>
                                 Name<span> : </span>
